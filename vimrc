@@ -1,3 +1,5 @@
+" this file should be linked to ~/.vimrc
+" the following lines are to determine which computer it is
 let computer = system('scutil --get LocalHostName')[:-2]
 let is_pro = computer == 'ZhuXYs-Pro'
 let is_air = computer == 'ZhuXYs-Air'
@@ -406,6 +408,19 @@ autocmd FileType tex,cpp,python autocmd BufWritePre <buffer> :call <SID>StripTra
 au BufRead * if &key!= ""
     \ | setlocal history=0 nobackup nomodeline noshelltemp noswapfile noundofile nowritebackup secure viminfo=""
     \ | endif
+
+" show the differences between the current unsaved buffer and the previously
+" saved original file.
+function! s:DiffWithSaved()
+  let filetype=&ft
+  diffthis
+  vnew | r # | normal! 1Gdd
+  diffthis
+  exe "setlocal bt=nofile bh=wipe nobl noswf ro ft=" . filetype
+endfunction
+com! DiffSaved call s:DiffWithSaved()
+noremap <Leader>d :DiffSaved<return>
+
 "--------------------------------------------------------------------------
 "| vim terminal
 "--------------------------------------------------------------------------

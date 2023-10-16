@@ -1,5 +1,7 @@
 # this file is sourced only in interactive shell
+# this file should be linked to ~/.zshrc
 
+# the following line is to determine which computer it is
 localhostname=`scutil --get LocalHostName` && is=${localhostname:0-3}
 
 export SHELL='/bin/zsh'
