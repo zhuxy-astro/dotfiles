@@ -449,8 +449,10 @@ function DelComment(commentchar)
     normal j
 endfunction
 
-autocmd FileType python,zsh,sh,tmux,crontab noremap ]/ :call AddComment('#')<return>
-autocmd FileType python,zsh,sh,tmux,crontab noremap [/ :call DelComment('#')<return>
+" autocmd FileType python,zsh,sh,tmux,crontab noremap ]/ :call AddComment('#')<return>
+" autocmd FileType python,zsh,sh,tmux,crontab noremap [/ :call DelComment('#')<return>
+noremap ]/ :call AddComment('#')<return>
+noremap [/ :call DelComment('#')<return>
 autocmd FileType vim    noremap ]/ :call AddComment('"')<return>
 autocmd FileType vim    noremap [/ :call DelComment('"')<return>
 autocmd FileType tex    noremap ]/ :call AddComment('%')<return>
