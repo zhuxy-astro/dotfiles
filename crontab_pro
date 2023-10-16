@@ -1,0 +1,37 @@
+# crontab -e
+
+# crontab doesn't read the variables in `.zshrc` but read those in `.zshenv`.
+# When using python, the full path of `python` should be explicitly included, or that it will fail to import.
+# There is no way to attach to running crontab jobs.
+# `sleep $(((RANDOM \% 5) + 1))` cannot be used in crontab.
+
+# tell cron to read zsh configs
+SHELL=/bin/zsh
+# defining PATHs
+# including /opt/homebrew/bin here will cause python to fail to find selenium, which is strange
+PATH=/bin:/usr/bin:/sbin:/usr/sbin:/usr/local/bin:/opt/homebrew/sbin:/Users/ZhuXY/Projects/computer/mypath
+# COMPUTER_PATH=/Users/ZhuXY/Projects/computer
+
+# disable sending mails
+# MAILTO=""
+
+# Example of job definition:
+# *: any value
+# ,: value list seperator
+# -: range of values
+# /: step values
+# .---------------- minute (0 - 59)
+# |  .------------- hour (0 - 23)
+# |  |  .---------- day of month (1 - 31)
+# |  |  |  .------- month (1 - 12) OR jan,feb,mar,apr ...
+# |  |  |  |  .---- day of week (0 - 6) (Sunday=0 or 7) OR sun,mon,tue,wed,thu,fri,sat
+# |  |  |  |  |
+# *  *  *  *  * user-name  command to be executed
+
+#00 23  *  *  * osascript -e 'display notification "and have a rest!" with title "Stop coding" ' && afplay /System/Library/PrivateFrameworks/ToneLibrary.framework/Versions/A/Resources/AlertTones/Modern/Chord.m4r
+
+00  *  *  *  * /opt/homebrew/bin/python3 /Users/ZhuXY/Projects/computer/mypath/weibo -w
+
+# Run in PKU:
+21 */3 *  *  * /opt/homebrew/bin/python3 /Users/ZhuXY/Projects/computer/mypath/its -1
+00  *  *  *  * /Users/zhuxy/Projects/computer/mypath/remote quiet

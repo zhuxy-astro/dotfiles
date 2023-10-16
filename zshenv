@@ -1,6 +1,8 @@
 # this file is sourced when a .sh file is run non-interactively.
 # this file should be linked to ~/.zshenv
 
+export SHELL='/bin/zsh'
+
 export TERM="xterm-256color"
 # computer path for scripts ... 
 export COMPUTER_PATH="/Users/ZhuXY/Projects/computer"
@@ -27,5 +29,3 @@ findname()
     fi
     find . -type ${2:-f} -maxdepth ${3:-2} -name "$1*$suf"
 }
-
-

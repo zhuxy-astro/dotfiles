@@ -4,8 +4,6 @@
 # the following line is to determine which computer it is
 localhostname=`scutil --get LocalHostName` && is=${localhostname:0-3}
 
-export SHELL='/bin/zsh'
-
 if [[ $is = 'Pro' ]]
 then
     eval "$(/opt/homebrew/bin/brew shellenv)"

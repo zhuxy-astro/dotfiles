@@ -6,6 +6,7 @@ ln -nfs $dotpath/gitconfig ~/.gitconfig
 ln -nfs $dotpath/gitignore ~/.gitignore
 ln -nfs $dotpath/zshrc ~/.zshrc
 ln -nfs $dotpath/zshenv ~/.zshenv
+ln -nfs $dotpath/crontab ~/.crontab
 ln -nfs $dotpath/vimrc ~/.vimrc
 ln -nfs $dotpath/tmux.conf ~/.tmux.conf
 ln -nfs $dotpath/bashrc ~/.bashrc
