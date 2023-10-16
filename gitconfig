@@ -11,3 +11,5 @@
 	prompt = false
 [core]
 	excludesfile = /Users/zhuxy/.gitignore
+[pull]
+	rebase = false
