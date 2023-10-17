@@ -79,7 +79,9 @@ bgcheck()
     #tmux a -t bg \; new-window "its" \; detach
 }
 
-# Notes管理
+# my own simple paths
+export scr="$COMPUTER_PATH"/scripts
+export dot="$COMPUTER_PATH"/dotfiles
 export note="/Users/ZhuXY/Documents/notes/Computer"
 alias note="note_core $note"
 
