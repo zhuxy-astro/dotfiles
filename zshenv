@@ -12,6 +12,8 @@ export mypath="$COMPUTER_PATH"/mypath
 # 自己的scripts进入path
 PATH="${mypath}":"${PATH}"
 
+export PYTHONPATH="$PYTHONPATH:$HOME/Projects/pylib/"
+
 # aliases
 alias git-add-commit='git add -A && git commit -m "`date +%y%m%d`"'
 alias hostn='scutil --get LocalHostName'

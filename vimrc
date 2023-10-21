@@ -94,11 +94,11 @@ if is_pro
 
     " Keyboard mappings. <Leader> is \ (backslash) by default
     " map <Leader>s to start IPython
-    autocmd FileType python noremap <Leader>s :SlimeSend1 ipython --matplotlib<return>
+    autocmd FileType python noremap <Leader>s :SlimeSend1 ipython<return>
     " map <Leader>q to exit debug mode or IPython
     autocmd FileType python noremap <Leader>q :SlimeSend1 exit<return>
     " map <Leader>Q to restart ipython
-    autocmd FileType python noremap <Leader>Q :SlimeSend1 exit<return>:SlimeSend1 ipython --matplotlib<return>
+    autocmd FileType python noremap <Leader>Q :SlimeSend1 exit<return>:SlimeSend1 ipython<return>
 
     " Run the whole script
     " autocmd FileType python noremap <Leader>r :IPythonCellRun<return>
