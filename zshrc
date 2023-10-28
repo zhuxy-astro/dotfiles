@@ -11,9 +11,17 @@ is=${localhostname:0-3}
 if [[ $is = 'Pro' ]]
 then
     eval "$(/opt/homebrew/bin/brew shellenv)"
+    # allow screen to output the correct color
+    export screen="/opt/homebrew/bin/screen"
 fi
 
-#for crontab
+# ################ #
+# BASIC ZSH CONFIG #
+# ################ #
+
+export TERM="xterm-256color"
+
+# for crontab
 export EDITOR="vim"
 
 bindkey -v
@@ -34,8 +42,15 @@ alias bc='bc -lq'
 # tree, in order to print chinese characters properly
 alias tree='tree -N'
 
-# allow screen to output the correct color
-export screen="/opt/homebrew/bin/screen"
+autoload zmv
+
+# You may need to manually set your language environment
+# export LANG=en_US.UTF-8
+# export LC_ALL=en_US.UTF-8
+
+# ########################### #
+# THE END OF BASIC ZSH CONFIG #
+# ########################### #
 
 alias down="cd ~/Downloads && ls"
 alias desk="cd ~/Desktop && ls"
@@ -148,12 +163,6 @@ then
     #export SAS_CCFPATH=/usr/local/SAS/ccf
 
 fi
-
-autoload zmv
-
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
-# export LC_ALL=en_US.UTF-8
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
