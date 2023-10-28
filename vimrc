@@ -53,9 +53,10 @@ set nu
 
 " 设定vim内部编码格式
 set fenc=utf-8
-"set fencs=utf-8,usc-bom,euc-jp,gb18030,gbk,gb2312,cp936
+set fencs=utf-8,usc-bom,euc-jp,gb18030,gbk,gb2312,cp936
 
 " 设定默认文件编码
+set encoding=utf8
 set fileencoding=utf-8
 set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
 
@@ -179,9 +180,6 @@ set completeopt-=preview
 
 " 搜索时大小写不敏感
 set ignorecase
-
-" vim terminal
-tnoremap <C-w><C-u> <C-\><C-n>
 
 " 设置下列内容，否则TMUX中粘贴时会在缩进上出错
 " 见vim中:h xterm-bracketed-paste
@@ -313,6 +311,9 @@ map （ (
 map ） )
 
 " THE END OF BASIC VIM CONFIG
+
+" vim terminal
+tnoremap <C-w><C-u> <C-\><C-n>
 
 if is_pro
     "-----------------------------------------------------------------------
