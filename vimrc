@@ -34,213 +34,8 @@ call vundle#end()            " required
 filetype plugin indent on    " required, equals to filetype type on, filetype indent on, filetype plugin on
 "--End of Vundle
 
-if is_pro
-    "--------------------------------------------------------------------------
-    "| ALE configuration
-    "--------------------------------------------------------------------------
-    let g:ale_linters = {
-    \   'python': ['mypy', 'flake8'],
-    \}
-
-    " :ALEFix will fix the whole file
-    let g:ale_fixers = {
-    \   'python': ['black'],
-    \}
-
-    " map \f to :ALEFix
-    nnoremap <Leader>f :ALEFix<return>
-
-    " For Flake8
-    " W503: line break before binary operator
-    let g:ale_python_flake8_options="--ignore=W503 --max-line-length=120"
-
-    " use \j and \k to jump to the next/previous error
-    map <silent> <leader>j :ALENext<return>
-    map <silent> <leader>k :ALEPrevious<return>
-
-
-    "--------------------------------------------------------------------------
-    "| slime configuration
-    "--------------------------------------------------------------------------
-    " always use tmux
-    let g:slime_target = 'tmux'
-    " let g:slime_target = "vimterminal"
-
-    " always send text to the top right pane in the current tmux tab without asking
-    let g:slime_default_config = {'target_pane': '{top-right}',
-                \ 'socket_name': get(split($TMUX, ','), 0)}
-                " \ 'socket_name': 'default'}
-
-    let g:slime_dont_ask_default = 1
-
-    " fix paste issues in ipython
-    " let g:slime_python_ipython = 1
-    " ↑ not recommended in tmux
-    let g:slime_bracketed_paste = 1
-
-    xmap <c-c><c-c> <Plug>SlimeRegionSend
-    " line-by-line sending will cause bugs in ipython. <c-c><c-c> is redefined for
-    " python
-
-    "--------------------------------------------------------------------------
-    "| ipython-cell configuration
-    "--------------------------------------------------------------------------
-
-    " calculate time when running each cell. Default: '%paste -q'
-    let g:ipython_cell_cell_command = '%time %paste -q'
-
-    " the tag is the same as default, but without trailing white space
-    let g:ipython_cell_insert_tag = '# %%'
-
-    " Keyboard mappings. <Leader> is \ (backslash) by default
-    " map <Leader>s to start IPython
-    autocmd FileType python noremap <Leader>s :SlimeSend1 ipython<return>
-    " map <Leader>q to exit debug mode or IPython
-    autocmd FileType python noremap <Leader>q :SlimeSend1 exit<return>
-    " map <Leader>Q to restart ipython
-    autocmd FileType python noremap <Leader>Q :SlimeSend1 exit<return>:SlimeSend1 ipython<return>
-
-    " Run the whole script
-    " autocmd FileType python noremap <Leader>r :IPythonCellRun<return>
-    autocmd FileType python noremap <Leader>R :IPythonCellRunTime<return>
-
-    " Run cell
-    autocmd FileType python noremap <Leader>c :IPythonCellExecuteCellJump<return>jzz
-    autocmd FileType python noremap <Leader>r :IPythonCellExecuteCell<return>
-
-    " Run from the beginning to this cell
-    autocmd FileType python noremap <Leader>C :IPythonCellNextCell<return>kVggy:SlimeSend1 %time %paste -q<return>``
-
-    " map [c and ]c to jump to the previous and next cell header
-    " for [c, I the jumping is stacked to avoid jumping to the current header when
-    " the cursur is between headers. But a new bug is that when at the last cell,
-    " it will jump to 2 cells before.
-    autocmd FileType python noremap [c :IPythonCellNextCell<return>:IPythonCellPrevCell<return>:IPythonCellPrevCell<return>jzz
-    autocmd FileType python noremap ]c :IPythonCellNextCell<return>jzz
-
-    " map <Leader>a and <Leader>b to insert a cell header tag above/below and enter insert mode
-    autocmd FileType python noremap <Leader>a :IPythonCellInsertAbove<return>zzo
-    autocmd FileType python noremap <Leader>b :IPythonCellInsertBelow<return>zzo
-
-    autocmd FileType python noremap <Leader>L :IPythonCellClear<return>
-    autocmd FileType python noremap <Leader>X :IPythonCellClose<return>
-
-    " map <c-c> to send the current line or current selection to IPython
-    autocmd FileType python nmap <c-c><c-c> <Plug>SlimeLineSend
-    autocmd FileType python xmap <c-c><c-c> m]y:SlimeSend1 %time %paste -q<return>`]
-
-    " map <Leader>p to run the previous command
-    autocmd FileType python noremap <Leader>p :IPythonCellPrevCommand<return>
-
-    "--------------------------------------------------------------------------
-    "| vim-markdown configuration
-    "--------------------------------------------------------------------------
-    " vim-markdown is useful in the TOC when there are #s as code comments
-    let g:vim_markdown_toc_autofit = 1
-    let g:vim_markdown_math = 1
-    " disable most key mappings
-    let g:vim_markdown_no_default_key_mappings = 1
-    " but re-define gx
-    autocmd FileType markdown noremap gx <Plug>Markdown_OpenUrlUnderCursor
-
-    "--------------------------------------------------------------------------
-    "| TOC
-    "--------------------------------------------------------------------------
-    " map \t to check titles as a table of content
-    " and \T to close the titles
-    " markdown uses vim-markdown shown in location list
-    autocmd FileType markdown noremap <Leader>t :Toc<return>:ll 
-    " others is shown in the quickfix, because the ALE uses location list
-    " python and vim use TocCleaned 
-    autocmd FileType python noremap <Leader>t :call TocCleaned("# %%\\s")<return>:cc 
-    autocmd FileType vim noremap <Leader>t :call TocCleaned('\"\|')<return>:cc 
-    " tex uses its own configuration
-    autocmd FileType tex noremap <Leader>t :call TocCleanedTex()<return>:cc 
-    noremap <Leader>x :cclose<return>
-    autocmd FileType markdown noremap <Leader>x :lclose<return>
-
-    " map [t and ]t to jump between titles
-    noremap [t :cprev<return>
-    noremap ]t :cnext<return>
-    " markdown uses vim-markdown
-    autocmd FileType markdown noremap [t <Plug>Markdown_MoveToPreviousHeader
-    autocmd FileType markdown noremap ]t <Plug>Markdown_MoveToNextHeader
-
-    function TocCleaned(titlestr)
-        silent exe "vimgrep /^\\s*".a:titlestr."/j %"
-        copen
-        wincmd H
-        setlocal conceallevel=2
-        setlocal concealcursor=nvic
-        silent exe "syntax match qfFileName /^[^|]*|[^|]*|\\s*".a:titlestr."/ transparent conceal"
-        vertical resize 25
-        setlocal nowrap 
-    endfunction
-
-    function TocCleanedTex()
-        vimgrep /^\s*\\\(sub\)*section{/j %
-        copen
-        wincmd H
-        setlocal conceallevel=2
-        setlocal concealcursor=nvic
-        syntax match qfFileName /}.*$/ transparent conceal
-        syntax match qfFileName /^[^|]*|[^|]*|\s*\\section{/ transparent conceal
-        syntax match qfFileName /^[^|]*|[^|]*|\s*\\subsection{/ transparent conceal cchar={
-        syntax match qfFileName /^[^|]*|[^|]*|\s*\\subsubsection{/ transparent conceal cchar=[
-        syntax match qfFileName /^[^|]*|[^|]*|\s*\\subsubsection{/ transparent conceal cchar=(
-        vertical resize 25
-        setlocal nowrap 
-    endfunction
-endif
-
 "--------------------------------------------------------------------------
-"| vim-latex configuration
-"--------------------------------------------------------------------------
-" this is mostly a matter of taste. but LaTeX looks good with just a bit
-" of indentation.
-set sw=2
-" TIP: if you write your \label's as \label{fig:something}, then if you
-" type in \ref{fig: and press <C-n> you will automatically cycle through
-" all the figure labels. Very useful!
-set iskeyword+=:
-let g:Tex_DefaultTargetFormat = 'pdf' 
-let g:Tex_CompileRule_pdf = 'xelatex -synctex=0 $*' "compile with xelatex, if want to refresh automatically, add `-interaction=nonstopmode' and `-synctex=1'
-let g:Tex_ViewRule_pdf = 'open -a pdf\ expert' "preview pdf
-let g:Tex_Folding = 0 "fold nothing
-let g:Tex_IgnoreLevel = 7 "ignore the default 7 warnings
-let g:Tex_GotoError=0 "即使有Error，编译后也回到文件。
-let g:Tex_Menus=0 "不显示任何目录，比如template，package之类
-let g:Imap_FreezeImap=1 "断绝所有快捷键
-let g:tex_flavor='xelatex -interaction=nonstopmode'
-let g:vimtex_view_method='open -a pdf\ expert'
-let g:Tex_MultipleCompileFormats='pdf,bibtex,pdf'
-let g:Tex_BibtexFlavor='bibtex'
-let g:Imap_UsePlaceHolders=0
-let g:vimtex_quickfix_mode=0
-let g:Tex_ShowErrorContext = 0  " 不要再在quickfix窗口下面显示log了
-let g:Tex_IgnoredWarnings =
-            \'Package fontspec Warning:'."\n"  " 如果在下面继续加，要在本行最后再加一个.
-
-
-
-" Use \c and \r to save and \ll
-autocmd FileType tex nnoremap <Leader>c :w<return>:call Tex_RunLaTeX()<return>
-autocmd FileType tex nnoremap <Leader>r :w<return>:call Tex_RunLaTeX()<return>
-" Use \v to \lv
-" autocmd FileType tex nmap <Leader>v <Leader>lv
-autocmd FileType tex nmap <Leader>v :call Tex_ViewLaTeX()<return>
-" Use c-b to map the biblography seaerch
-autocmd FileType tex nmap <C-b> hf}i<F9>
-autocmd FileType tex imap <C-b> <F9>
-
-
-" inoremap <C-f> <Esc>: silent exec '.!inks "'.getline('.').'" %:p:h > /dev/null '<CR>:w<CR>i
-" 在i模式下读取当行并吃掉，然后第一个参数给当行内容（允许含空格），第二个参数给当前tex文件的路径位置。运行后保存tex并进入i模式
-" nnoremap <C-f> : silent exec '.!echo "'.getline('.').'" ; inks "'.input('.').'" %:p:h > /dev/null '<CR>
-" 在n模式下读取当行、吃掉并输出（保留当行），然后敲入文件名，第二个参数给当前tex文件的路径位置。运行后进入n模式
-
-"--------------------------------------------------------------------------
-"| pure vim configuration
+"| basic vim configuration
 "--------------------------------------------------------------------------
 
 " replace all occurences of the word under the cursor
@@ -258,9 +53,10 @@ set nu
 
 " 设定vim内部编码格式
 set fenc=utf-8
-"set fencs=utf-8,usc-bom,euc-jp,gb18030,gbk,gb2312,cp936
+set fencs=utf-8,usc-bom,euc-jp,gb18030,gbk,gb2312,cp936
 
 " 设定默认文件编码
+set encoding=utf8
 set fileencoding=utf-8
 set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
 
@@ -422,10 +218,6 @@ com! DiffSaved call s:DiffWithSaved()
 noremap <Leader>d :DiffSaved<return>
 
 "--------------------------------------------------------------------------
-"| vim terminal
-"--------------------------------------------------------------------------
-tnoremap <C-w><C-u> <C-\><C-n>
-"--------------------------------------------------------------------------
 "| comment & uncomment
 "--------------------------------------------------------------------------
 " map { and } to comment and uncomment
@@ -517,3 +309,214 @@ map ， ,
 map ～ ~
 map （ (
 map ） )
+
+" THE END OF BASIC VIM CONFIG
+
+" vim terminal
+tnoremap <C-w><C-u> <C-\><C-n>
+
+if is_pro
+    "-----------------------------------------------------------------------
+    "| ALE configuration
+    "-----------------------------------------------------------------------
+    let g:ale_linters = {
+    \   'python': ['mypy', 'flake8'],
+    \}
+
+    " :ALEFix will fix the whole file
+    let g:ale_fixers = {
+    \   'python': ['black'],
+    \}
+
+    " map \f to :ALEFix
+    nnoremap <Leader>f :ALEFix<return>
+
+    " For Flake8
+    " W503: line break before binary operator
+    let g:ale_python_flake8_options="--ignore=W503 --max-line-length=120"
+
+    " use \j and \k to jump to the next/previous error
+    map <silent> <leader>j :ALENext<return>
+    map <silent> <leader>k :ALEPrevious<return>
+
+
+    "-----------------------------------------------------------------------
+    "| slime configuration
+    "-----------------------------------------------------------------------
+    " always use tmux
+    let g:slime_target = 'tmux'
+    " let g:slime_target = "vimterminal"
+
+    " always send text to the top right pane in the current tmux tab without asking
+    let g:slime_default_config = {'target_pane': '{top-right}',
+                \ 'socket_name': get(split($TMUX, ','), 0)}
+                " \ 'socket_name': 'default'}
+
+    let g:slime_dont_ask_default = 1
+
+    " fix paste issues in ipython
+    " let g:slime_python_ipython = 1
+    " ↑ not recommended in tmux
+    let g:slime_bracketed_paste = 1
+
+    xmap <c-c><c-c> <Plug>SlimeRegionSend
+    " line-by-line sending will cause bugs in ipython. <c-c><c-c> is redefined for
+    " python
+
+    "-----------------------------------------------------------------------
+    "| ipython-cell configuration
+    "-----------------------------------------------------------------------
+
+    " calculate time when running each cell. Default: '%paste -q'
+    let g:ipython_cell_cell_command = '%time %paste -q'
+
+    " the tag is the same as default, but without trailing white space
+    let g:ipython_cell_insert_tag = '# %%'
+
+    " Keyboard mappings. <Leader> is \ (backslash) by default
+    " map <Leader>s to start IPython
+    autocmd FileType python noremap <Leader>s :SlimeSend1 ipython<return>
+    " map <Leader>q to exit debug mode or IPython
+    autocmd FileType python noremap <Leader>q :SlimeSend1 exit<return>
+    " map <Leader>Q to restart ipython
+    autocmd FileType python noremap <Leader>Q :SlimeSend1 exit<return>:SlimeSend1 ipython<return>
+
+    " Run the whole script
+    " autocmd FileType python noremap <Leader>r :IPythonCellRun<return>
+    autocmd FileType python noremap <Leader>R :IPythonCellRunTime<return>
+
+    " Run cell
+    autocmd FileType python noremap <Leader>c :IPythonCellExecuteCellJump<return>jzz
+    autocmd FileType python noremap <Leader>r :IPythonCellExecuteCell<return>
+
+    " Run from the beginning to this cell
+    autocmd FileType python noremap <Leader>C :IPythonCellNextCell<return>kVggy:SlimeSend1 %time %paste -q<return>``
+
+    " map [c and ]c to jump to the previous and next cell header
+    " for [c, I the jumping is stacked to avoid jumping to the current header when
+    " the cursur is between headers. But a new bug is that when at the last cell,
+    " it will jump to 2 cells before.
+    autocmd FileType python noremap [c :IPythonCellNextCell<return>:IPythonCellPrevCell<return>:IPythonCellPrevCell<return>jzz
+    autocmd FileType python noremap ]c :IPythonCellNextCell<return>jzz
+
+    " map <Leader>a and <Leader>b to insert a cell header tag above/below and enter insert mode
+    autocmd FileType python noremap <Leader>a :IPythonCellInsertAbove<return>zzo
+    autocmd FileType python noremap <Leader>b :IPythonCellInsertBelow<return>zzo
+
+    autocmd FileType python noremap <Leader>L :IPythonCellClear<return>
+    autocmd FileType python noremap <Leader>X :IPythonCellClose<return>
+
+    " map <c-c> to send the current line or current selection to IPython
+    autocmd FileType python nmap <c-c><c-c> <Plug>SlimeLineSend
+    autocmd FileType python xmap <c-c><c-c> m]y:SlimeSend1 %time %paste -q<return>`]
+
+    " map <Leader>p to run the previous command
+    autocmd FileType python noremap <Leader>p :IPythonCellPrevCommand<return>
+
+    "-----------------------------------------------------------------------
+    "| vim-markdown configuration
+    "-----------------------------------------------------------------------
+    " vim-markdown is useful in the TOC when there are #s as code comments
+    let g:vim_markdown_toc_autofit = 1
+    let g:vim_markdown_math = 1
+    " disable most key mappings
+    let g:vim_markdown_no_default_key_mappings = 1
+    " but re-define gx
+    autocmd FileType markdown noremap gx <Plug>Markdown_OpenUrlUnderCursor
+
+    "-----------------------------------------------------------------------
+    "| TOC
+    "-----------------------------------------------------------------------
+    " map \t to check titles as a table of content
+    " and \T to close the titles
+    " markdown uses vim-markdown shown in location list
+    autocmd FileType markdown noremap <Leader>t :Toc<return>:ll 
+    " others is shown in the quickfix, because the ALE uses location list
+    " python and vim use TocCleaned 
+    autocmd FileType python noremap <Leader>t :call TocCleaned("# %%\\s")<return>:cc 
+    autocmd FileType vim noremap <Leader>t :call TocCleaned('\"\|')<return>:cc 
+    " tex uses its own configuration
+    autocmd FileType tex noremap <Leader>t :call TocCleanedTex()<return>:cc 
+    noremap <Leader>x :cclose<return>
+    autocmd FileType markdown noremap <Leader>x :lclose<return>
+
+    " map [t and ]t to jump between titles
+    noremap [t :cprev<return>
+    noremap ]t :cnext<return>
+    " markdown uses vim-markdown
+    autocmd FileType markdown noremap [t <Plug>Markdown_MoveToPreviousHeader
+    autocmd FileType markdown noremap ]t <Plug>Markdown_MoveToNextHeader
+
+    function TocCleaned(titlestr)
+        silent exe "vimgrep /^\\s*".a:titlestr."/j %"
+        copen
+        wincmd H
+        setlocal conceallevel=2
+        setlocal concealcursor=nvic
+        silent exe "syntax match qfFileName /^[^|]*|[^|]*|\\s*".a:titlestr."/ transparent conceal"
+        vertical resize 25
+        setlocal nowrap 
+    endfunction
+
+    function TocCleanedTex()
+        vimgrep /^\s*\\\(sub\)*section{/j %
+        copen
+        wincmd H
+        setlocal conceallevel=2
+        setlocal concealcursor=nvic
+        syntax match qfFileName /}.*$/ transparent conceal
+        syntax match qfFileName /^[^|]*|[^|]*|\s*\\section{/ transparent conceal
+        syntax match qfFileName /^[^|]*|[^|]*|\s*\\subsection{/ transparent conceal cchar={
+        syntax match qfFileName /^[^|]*|[^|]*|\s*\\subsubsection{/ transparent conceal cchar=[
+        syntax match qfFileName /^[^|]*|[^|]*|\s*\\subsubsection{/ transparent conceal cchar=(
+        vertical resize 25
+        setlocal nowrap 
+    endfunction
+endif
+
+"--------------------------------------------------------------------------
+"| vim-latex configuration
+"--------------------------------------------------------------------------
+" this is mostly a matter of taste. but LaTeX looks good with just a bit
+" of indentation.
+set sw=2
+" TIP: if you write your \label's as \label{fig:something}, then if you
+" type in \ref{fig: and press <C-n> you will automatically cycle through
+" all the figure labels. Very useful!
+set iskeyword+=:
+let g:Tex_DefaultTargetFormat = 'pdf' 
+let g:Tex_CompileRule_pdf = 'xelatex -synctex=0 $*' "compile with xelatex, if want to refresh automatically, add `-interaction=nonstopmode' and `-synctex=1'
+let g:Tex_ViewRule_pdf = 'open -a pdf\ expert' "preview pdf
+let g:Tex_Folding = 0 "fold nothing
+let g:Tex_IgnoreLevel = 7 "ignore the default 7 warnings
+let g:Tex_GotoError=0 "即使有Error，编译后也回到文件。
+let g:Tex_Menus=0 "不显示任何目录，比如template，package之类
+let g:Imap_FreezeImap=1 "断绝所有快捷键
+let g:tex_flavor='xelatex -interaction=nonstopmode'
+let g:vimtex_view_method='open -a pdf\ expert'
+let g:Tex_MultipleCompileFormats='pdf,bibtex,pdf'
+let g:Tex_BibtexFlavor='bibtex'
+let g:Imap_UsePlaceHolders=0
+let g:vimtex_quickfix_mode=0
+let g:Tex_ShowErrorContext = 0  " 不要再在quickfix窗口下面显示log了
+let g:Tex_IgnoredWarnings =
+            \'Package fontspec Warning:'."\n"  " 如果在下面继续加，要在本行最后再加一个.
+
+
+
+" Use \c and \r to save and \ll
+autocmd FileType tex nnoremap <Leader>c :w<return>:call Tex_RunLaTeX()<return>
+autocmd FileType tex nnoremap <Leader>r :w<return>:call Tex_RunLaTeX()<return>
+" Use \v to \lv
+" autocmd FileType tex nmap <Leader>v <Leader>lv
+autocmd FileType tex nmap <Leader>v :call Tex_ViewLaTeX()<return>
+" Use c-b to map the biblography seaerch
+autocmd FileType tex nmap <C-b> hf}i<F9>
+autocmd FileType tex imap <C-b> <F9>
+
+
+" inoremap <C-f> <Esc>: silent exec '.!inks "'.getline('.').'" %:p:h > /dev/null '<CR>:w<CR>i
+" 在i模式下读取当行并吃掉，然后第一个参数给当行内容（允许含空格），第二个参数给当前tex文件的路径位置。运行后保存tex并进入i模式
+" nnoremap <C-f> : silent exec '.!echo "'.getline('.').'" ; inks "'.input('.').'" %:p:h > /dev/null '<CR>
+" 在n模式下读取当行、吃掉并输出（保留当行），然后敲入文件名，第二个参数给当前tex文件的路径位置。运行后进入n模式
+

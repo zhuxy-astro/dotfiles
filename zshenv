@@ -4,7 +4,6 @@
 
 export SHELL='/bin/zsh'
 
-export TERM="xterm-256color"
 # computer path for scripts ... 
 export COMPUTER_PATH="/Users/ZhuXY/Projects/computer"
 export mypath="$COMPUTER_PATH"/mypath

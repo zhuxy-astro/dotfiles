@@ -1,5 +1,8 @@
 export SHELL='/bin/bash'
 
+# set vi
+set -o vi
+
 #    . /Applications/exelis/idl82/bin/idl_setup.bash
 #
 EXELIS_DIR=/Applications/exelis
