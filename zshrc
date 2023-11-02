@@ -100,15 +100,16 @@ bgcheck()
 }
 
 # my own simple paths
+export pylib=$HOME"/Projects/pylib"
 export scr="$COMPUTER_PATH"/scripts
 export dot="$COMPUTER_PATH"/dotfiles
-export note="/Users/ZhuXY/Documents/notes/Computer"
+export note=$HOME"/Documents/notes/Computer"
 alias note="note_core $note"
 
-alias tex-md="vi /Users/zhuxy/Documents/notes/Astronomy/tex_md.tex; open -a Obsidian"
+alias tex-md="vi "$HOME"/Documents/notes/Astronomy/tex_md.tex; open -a Obsidian"
 
 # diary
-alias diary='vi -c "colorscheme default" -c "set laststatus=0" -c "set nonu" +$ /Users/zhuxy/Documents/others/diary'
+alias diary='vi -c "colorscheme default" -c "set laststatus=0" -c "set nonu" +$ '$HOME'/Documents/others/diary'
 
 # if connecting from ssh, use tmux automatically
 if [[ $- =~ i ]] && [[ -z "$TMUX" ]] && [[ -n "$SSH_TTY" ]]; then
