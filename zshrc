@@ -49,6 +49,10 @@ autoload zmv
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 
+# ignore cases
+zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
+autoload -Uz compinit && compinit
+
 # ########################### #
 # THE END OF BASIC ZSH CONFIG #
 # ########################### #
