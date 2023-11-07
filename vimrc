@@ -89,10 +89,10 @@ imap <Down> <C-O>gj
 
 "tab缩进
 set tabstop=4
-set shiftwidth=4
 set expandtab
 set smarttab
 set softtabstop=4
+set shiftwidth=4
 
 " 在c,c++,python文件中用空格代替制表符
 "autocmd FileType c,cpp,python,py set shiftwidth=4 | set expandtab
@@ -479,7 +479,7 @@ endif
 "--------------------------------------------------------------------------
 " this is mostly a matter of taste. but LaTeX looks good with just a bit
 " of indentation.
-set sw=2
+autocmd FileType tex set shiftwidth=2
 " TIP: if you write your \label's as \label{fig:something}, then if you
 " type in \ref{fig: and press <C-n> you will automatically cycle through
 " all the figure labels. Very useful!
@@ -501,7 +501,6 @@ let g:vimtex_quickfix_mode=0
 let g:Tex_ShowErrorContext = 0  " 不要再在quickfix窗口下面显示log了
 let g:Tex_IgnoredWarnings =
             \'Package fontspec Warning:'."\n"  " 如果在下面继续加，要在本行最后再加一个.
-
 
 
 " Use \c and \r to save and \ll
