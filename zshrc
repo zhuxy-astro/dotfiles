@@ -65,7 +65,6 @@ alias data="cd ~/Projects/Data && ls"
 alias phd="cd ~/Projects/PhD && ls"
 alias drop="cd ~/Desktop/Drop\ Box && ls"
 
-alias bbs="ssh bbs"
 alias du="du -sm * | sort -nr"
 alias df="df -lh"
 
