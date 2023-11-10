@@ -128,7 +128,7 @@ set showmatch
 set nocompatible
 
 "启动状态行
-" set laststatus=2
+set laststatus=2
 "状态行显示设定
 set statusline=%<%f%h%m%r\ %y%=\ Ln\ %l/%L\,\ Col\ %c\ \ %p%%
 
