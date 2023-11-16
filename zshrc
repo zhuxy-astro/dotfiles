@@ -103,6 +103,8 @@ bgcheck()
 }
 
 # my own simple paths
+export data=$HOME"/Projects/Data"
+export phd=$HOME"/Projects/phd"
 export pylib=$HOME"/Projects/pylib"
 export scr="$COMPUTER_PATH"/scripts
 export dot="$COMPUTER_PATH"/dotfiles

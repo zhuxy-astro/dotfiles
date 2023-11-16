@@ -122,13 +122,13 @@ set hlsearch
 set showmatch
 
 "显示标尺，就是在右下角显示光标位置
-"set ruler
+set ruler
 
 "去除vi的一致性
 set nocompatible
 
 "启动状态行
-set laststatus=2
+" set laststatus=2
 "状态行显示设定
 set statusline=%<%f%h%m%r\ %y%=\ Ln\ %l/%L\,\ Col\ %c\ \ %p%%
 
