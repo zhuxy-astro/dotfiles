@@ -333,7 +333,8 @@ if is_pro
 
     " For Flake8
     " W503: line break before binary operator
-    let g:ale_python_flake8_options="--ignore=W503 --max-line-length=120"
+    " W605: invalid escape sequence '\l'
+    let g:ale_python_flake8_options="--ignore=W503,W605 --max-line-length=120"
 
     " use \j and \k to jump to the next/previous error
     map <silent> <leader>j :ALENext<return>
