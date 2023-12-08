@@ -12,7 +12,7 @@ filetype off                  " required
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
-Plugin 'PVundleVim/Vundle.vim' " let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim' " let Vundle manage Vundle, required
 Plugin 'ycm-core/YouCompleteMe'
     set updatetime=2000
 Plugin 'SirVer/ultisnips' "补全的引擎
