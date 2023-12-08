@@ -13,6 +13,10 @@ PATH="${mypath}":"${PATH}"
 
 export PYTHONPATH="$PYTHONPATH:$HOME/Projects/pylib/"
 
+# ipython version
+alias ipython='python3 -m IPython'
+alias ipython3='python3 -m IPython'
+
 # aliases
 alias git-add-commit='git add -A && git commit -m "`date +%y%m%d`"'
 alias hostn='scutil --get LocalHostName'
