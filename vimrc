@@ -12,7 +12,7 @@ filetype off                  " required
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
-Plugin 'PVundleVim/Vundle.vim' " let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim' " let Vundle manage Vundle, required
 Plugin 'ycm-core/YouCompleteMe'
     set updatetime=2000
 Plugin 'SirVer/ultisnips' "补全的引擎
@@ -31,12 +31,12 @@ if is_pro
 endif
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
-filetype plugin indent on    " required, equals to filetype type on, filetype indent on, filetype plugin on
 "--End of Vundle
 
 "--------------------------------------------------------------------------
 "| basic vim configuration
 "--------------------------------------------------------------------------
+filetype plugin indent on    " required by Vundle, equals to filetype type on, filetype indent on, filetype plugin on
 
 " replace all occurences of the word under the cursor
 :nnoremap <Leader>w :%s/\<<C-r><C-w>\>/<C-r><C-w>/g<Left><Left>
