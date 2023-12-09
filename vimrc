@@ -13,11 +13,11 @@ filetype off                  " required
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim' " let Vundle manage Vundle, required
-Plugin 'ycm-core/YouCompleteMe'
-    set updatetime=2000
+" Plugin 'ycm-core/YouCompleteMe'
+    " set updatetime=2000
 Plugin 'SirVer/ultisnips' "补全的引擎
-    let g:UltiSnipsExpandTrigger=";;" "默认为<tab>
-    let g:UltiSnipsJumpForwardTrigger=";;" "默认为<c-b>
+    let g:UltiSnipsExpandTrigger="jj" "默认为<tab>
+    let g:UltiSnipsJumpForwardTrigger="jj" "默认为<c-b>
     let g:UltiSnipsJumpBackwardTrigger="kk" "默认为<c-z>
 Plugin 'vim-latex/vim-latex' "LaTeX plug
 Plugin 'cormacrelf/vim-colors-github'
@@ -38,12 +38,17 @@ call vundle#end()            " required
 "--------------------------------------------------------------------------
 filetype plugin indent on    " required by Vundle, equals to filetype type on, filetype indent on, filetype plugin on
 
-" find files:
+" find files. `path` is only available for `find` but not `e`.
+" `**` means all the files inside. Without **, only for the first layer.
+set path+=$note/**
 set path+=**
+" show the menu for available possibilities
 set wildmenu
 
-" use tags (need to install `ctag` using brew)
-command! MakeTags !ctags -R .
+" generate tags using :MakeTags
+" command! MakeTags !ctags -R .
+" use tags for python 
+" autocmd BufWritePost *.py silent !ctags -R .
 
 " replace all occurences of the word under the cursor
 :nnoremap <Leader>w :%s/\<<C-r><C-w>\>/<C-r><C-w>/g<Left><Left>
@@ -67,7 +72,9 @@ set encoding=utf8
 set fileencoding=utf-8
 set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
 
+" 设置语言和词典
 lan en_US.UTF-8 "zh_CN.UTF-8
+set dictionary+=/usr/share/dict/words
 
 "语法高亮
 syntax on
@@ -170,7 +177,20 @@ syntax keyword cppSTLtype initializer_list
 
 " 基于缩进或语法进行代码折叠
 set foldmethod=indent
-"set foldmethod=syntax
+" set foldmethod=syntax
+
+" 对python，基于ipython cell的标题折叠
+function! IPyFolds()
+   let thisline = getline(v:lnum)
+   if match(thisline, '^# %%') >= 0
+      return ">1"
+   else
+      return "="
+   endif
+endfunction
+
+autocmd FileType python setlocal foldmethod=expr
+autocmd FileType python setlocal foldexpr=IPyFolds()
 
 " 启动 vim 时关闭折叠代码
 set nofoldenable

@@ -1,8 +1,6 @@
 [user]
 	name = ZhuXY
 	email = tonyzhu77@126.com
-[url "https://gitclone.com/github.com"]
-	insteadOf = https://github.com
 [color]
 	ui = auto
 [diff]
@@ -13,3 +11,5 @@
 	excludesfile = /Users/zhuxy/.gitignore
 [pull]
 	rebase = false
+[url "https://gitclone.com/github.com"]
+	insteadOf = https://github.com

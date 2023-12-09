@@ -2,6 +2,7 @@
 
 dotpath='/Users/zhuxy/Projects/computer/dotfiles'
 
+ln -nfs $dotpath/ssh_config ~/.ssh/config
 ln -nfs $dotpath/gitconfig ~/.gitconfig
 ln -nfs $dotpath/gitignore ~/.gitignore
 ln -nfs $dotpath/zshrc ~/.zshrc

@@ -1,0 +1,24 @@
+Host bbs
+    User ZhuXY
+    Hostname bbs.pku.edu.cn
+
+Host *.github.com
+    User "tonyzhu77@126com"
+    Hostname ssh.github.com
+    Port 443
+    PreferredAuthentications publickey
+    AddKeysToAgent yes
+    UseKeychain yes
+    IdentityFile ~/.ssh/id_ed25519
+
+Host pkulogin
+    User 2101110287
+    Hostname wmsk1-login.pku.edu.cn
+Host pkudata
+    User 2101110287
+    Hostname wmsk1-data.pku.edu.cn
+
+# This will make the ssh connection available for other shell window as long as a connection is running
+Host *
+   ControlMaster auto
+   ControlPath ~/.ssh/master-%r@%h:%p
