@@ -38,6 +38,13 @@ call vundle#end()            " required
 "--------------------------------------------------------------------------
 filetype plugin indent on    " required by Vundle, equals to filetype type on, filetype indent on, filetype plugin on
 
+" find files:
+set path+=**
+set wildmenu
+
+" use tags (need to install `ctag` using brew)
+command! MakeTags !ctags -R .
+
 " replace all occurences of the word under the cursor
 :nnoremap <Leader>w :%s/\<<C-r><C-w>\>/<C-r><C-w>/g<Left><Left>
 
