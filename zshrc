@@ -106,12 +106,18 @@ bgcheck()
 export data=$HOME"/Projects/Data"
 export phd=$HOME"/Projects/phd"
 export pylib=$HOME"/Projects/pylib"
+export astro_toolbox="$pylib"/astro_toolbox
 export scr="$COMPUTER_PATH"/scripts
 export dot="$COMPUTER_PATH"/dotfiles
+export snip="$COMPUTER_PATH"/dotfiles/UltiSnips
 export note=$HOME"/Documents/notes/Computer"
 alias note="note_core $note"
 
 alias tex-md="vi "$HOME"/Documents/notes/Astronomy/tex_md.tex; open -a Obsidian"
+
+# scp name for vim
+export scp_data_home="scp://2101110287@wmsk1-data.pku.edu.cn//gpfs/share/home/2101110287"
+export scp_login_home="scp://2101110287@wmsk1-login.pku.edu.cn//gpfs/share/home/2101110287"
 
 # diary
 alias diary='vi -c "colorscheme default" -c "set laststatus=0" -c "set nonu" +$ '$HOME'/Documents/others/diary'

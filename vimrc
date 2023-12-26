@@ -13,21 +13,19 @@ filetype off                  " required
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim' " let Vundle manage Vundle, required
-" Plugin 'ycm-core/YouCompleteMe'
-    " set updatetime=2000
 Plugin 'SirVer/ultisnips' "补全的引擎
-    let g:UltiSnipsExpandTrigger="jj" "默认为<tab>
-    let g:UltiSnipsJumpForwardTrigger="jj" "默认为<c-b>
+    let g:UltiSnipsExpandTrigger="<tab>" "默认为<tab>
+    let g:UltiSnipsJumpForwardTrigger="<tab>" "默认为<c-b>
     let g:UltiSnipsJumpBackwardTrigger="kk" "默认为<c-z>
 Plugin 'vim-latex/vim-latex' "LaTeX plug
 Plugin 'cormacrelf/vim-colors-github'
 Plugin 'christoomey/vim-tmux-navigator'
 if is_pro
+    " python3.7 in Air is too old for ycm
+    " Plugin 'ycm-core/YouCompleteMe'
+        " set updatetime=2000
     Plugin 'jpalardy/vim-slime'
-    Plugin 'hanschen/vim-ipython-cell'
     Plugin 'dense-analysis/ale'
-    Plugin 'godlygeek/tabular' " required by vim-markdown
-    Plugin 'preservim/vim-markdown'
 endif
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -41,6 +39,9 @@ filetype plugin indent on    " required by Vundle, equals to filetype type on, f
 " find files. `path` is only available for `find` but not `e`.
 " `**` means all the files inside. Without **, only for the first layer.
 set path+=$note/**
+set path+=$dot/**
+set path+=$scr/**
+set path+=$snip/**
 set path+=**
 " show the menu for available possibilities
 set wildmenu
@@ -179,25 +180,14 @@ syntax keyword cppSTLtype initializer_list
 set foldmethod=indent
 " set foldmethod=syntax
 
-" 对python，基于ipython cell的标题折叠
-function! IPyFolds()
-   let thisline = getline(v:lnum)
-   if match(thisline, '^# %%') >= 0
-      return ">1"
-   else
-      return "="
-   endif
-endfunction
-
-autocmd FileType python setlocal foldmethod=expr
-autocmd FileType python setlocal foldexpr=IPyFolds()
-
 " 启动 vim 时关闭折叠代码
 set nofoldenable
+" 启动时折叠全打开，并且za只管手头的这个fold
+" set foldlevel=999
 " the following commands is used for saving and loading the folding
 " information
-nmap <silent> <leader>m :mkview<return>
-nmap <silent> <leader>l :loadview<return>
+nmap <silent> <leader>m :mkview<CR>
+nmap <silent> <leader>l :loadview<CR>
 
 "允许用退格键删除字符
 set backspace=2
@@ -242,14 +232,22 @@ function! s:DiffWithSaved()
   exe "setlocal bt=nofile bh=wipe nobl noswf ro ft=" . filetype
 endfunction
 com! DiffSaved call s:DiffWithSaved()
-noremap <Leader>d :DiffSaved<return>
+noremap <Leader>d :DiffSaved<CR>
+
+
+" file browsing
+" let g:netrw_banner=0
+let g:netrw_liststyle=3  " use tree mode
+let g:netrw_altv=1
+let g:netrw_preview=1  " preview in vertical split
+let g:netrw_winsize=30  " use 70% of the columns for preview
 
 "--------------------------------------------------------------------------
 "| comment & uncomment
 "--------------------------------------------------------------------------
-" map { and } to comment and uncomment
+" map comment and uncomment
 " works for both n and v mode. move one line down after executing
-" <C-/> can't used in mac Terminal.app+tmux. pity.
+" <C-/> can't be used in mac Terminal.app+tmux. pity.
 function AddComment(commentchar)
     :silent exe 's/^\(\s*\)\('.a:commentchar.'\)*\s*\([^'.a:commentchar.']\)/\1'.a:commentchar.' \3/ge'
     " noh
@@ -268,16 +266,18 @@ function DelComment(commentchar)
     normal j
 endfunction
 
-" autocmd FileType python,zsh,sh,tmux,crontab noremap ]/ :call AddComment('#')<return>
-" autocmd FileType python,zsh,sh,tmux,crontab noremap [/ :call DelComment('#')<return>
-noremap ]/ :call AddComment('#')<return>
-noremap [/ :call DelComment('#')<return>
-autocmd FileType vim    noremap ]/ :call AddComment('"')<return>
-autocmd FileType vim    noremap [/ :call DelComment('"')<return>
-autocmd FileType tex    noremap ]/ :call AddComment('%')<return>
-autocmd FileType tex    noremap [/ :call DelComment('%')<return>
-autocmd FileType cpp    noremap ]/ :call AddComment('\/\/')<return>
-autocmd FileType cpp    noremap [/ :call DelComment('\/\/')<return>
+" at least for: python,zsh,sh,tmux,crontab
+" I don't use { and } because I want to use the function themselves
+" I don't use [/ and ]/ because if I fail to strike [ or ], / will lead to
+" searching
+noremap <Leader>] :call AddComment('#')<CR>
+noremap <Leader>[ :call DelComment('#')<CR>
+autocmd FileType vim    noremap <Leader>] :call AddComment('"')<CR>
+autocmd FileType vim    noremap <Leader>[ :call DelComment('"')<CR>
+autocmd FileType tex    noremap <Leader>] :call AddComment('%')<CR>
+autocmd FileType tex    noremap <Leader>[ :call DelComment('%')<CR>
+autocmd FileType cpp    noremap <Leader>] :call AddComment('\/\/')<CR>
+autocmd FileType cpp    noremap <Leader>[ :call DelComment('\/\/')<CR>
 
 " # `"""` in python
 function! SurroundWithTripleQuotes()
@@ -308,9 +308,9 @@ inoremap "" ""<left>
 inoremap '' ''<left>
 inoremap `` ``<left>
 " The change here will affect the vnoremap above!
-autocmd FileType python inoremap """ """"""<left><left><left><return><esc>O
-autocmd FileType python inoremap ''' ''''''<left><left><left><return><esc>O
-autocmd FileType markdown inoremap ``` ``````<left><left><left><return><esc>O
+autocmd FileType python inoremap """ """"""<left><left><left><CR><esc>O
+autocmd FileType python inoremap ''' ''''''<left><left><left><CR><esc>O
+autocmd FileType markdown inoremap ``` ``````<left><left><left><CR><esc>O
 
 "--------------------------------------------------------------------------
 "| mapping chinese marks
@@ -340,7 +340,7 @@ map ） )
 " THE END OF BASIC VIM CONFIG
 
 " vim terminal
-tnoremap <C-w><C-u> <C-\><C-n>
+tnoremap <C-w><C-[> <C-\><C-n>
 
 if is_pro
     "-----------------------------------------------------------------------
@@ -356,7 +356,7 @@ if is_pro
     \}
 
     " map \f to :ALEFix
-    nnoremap <Leader>f :ALEFix<return>
+    nnoremap <Leader>f :ALEFix<CR>
 
     " For Flake8
     " W503: line break before binary operator
@@ -364,8 +364,8 @@ if is_pro
     let g:ale_python_flake8_options="--ignore=W503,W605 --max-line-length=120"
 
     " use \j and \k to jump to the next/previous error
-    map <silent> <leader>j :ALENext<return>
-    map <silent> <leader>k :ALEPrevious<return>
+    map <silent> <leader>j :ALENext<CR>
+    map <silent> <leader>k :ALEPrevious<CR>
 
 
     "-----------------------------------------------------------------------
@@ -389,57 +389,92 @@ if is_pro
 
     xmap <c-c><c-c> <Plug>SlimeRegionSend
     " line-by-line sending will cause bugs in ipython. <c-c><c-c> is redefined for
-    " python
+    " python, see below
 
     "-----------------------------------------------------------------------
     "| ipython-cell configuration
     "-----------------------------------------------------------------------
-
-    " calculate time when running each cell. Default: '%paste -q'
-    let g:ipython_cell_cell_command = '%time %paste -q'
+    " the Plugin 'hanschen/vim-ipython-cell' has problems on pasting, so I
+    " write simple substitution here
 
     " the tag is the same as default, but without trailing white space
-    let g:ipython_cell_insert_tag = '# %%'
+    let g:ipython_cell_tag = '^# %%'
+
+    highlight link CellTag Folded
+    autocmd FileType python call matchadd('CellTag', g:ipython_cell_tag.'.*')
+    " To use `match Search /pattern/` is a more simple way, but the highlight
+    " form cannot be set
+
+    " CellPrev is the prev cell tag. In content it is the title of the present cell, and in title it is the last title.
+    autocmd FileType python command! CellPrev try | silent exe '?\%<.l'.g:ipython_cell_tag | catch | exe '0' | endtry
+    " In the last cell, CellNextAbove will jump to the last line of the file.
+    autocmd FileType python command! CellNextAbove try | silent exe '/\%>.l'.g:ipython_cell_tag | - | catch | exe '$' | endtry
+
+    " 对python，基于ipython cell的标题折叠
+    function! IPyFolds()
+       let thisline = getline(v:lnum)
+       if match(thisline, g:ipython_cell_tag) >= 0
+          return ">1"
+       else
+          return "="
+       endif
+    endfunction
+
+    autocmd FileType python setlocal foldmethod=expr
+    autocmd FileType python setlocal foldexpr=IPyFolds()
 
     " Keyboard mappings. <Leader> is \ (backslash) by default
-    " map <Leader>s to start IPython
-    autocmd FileType python noremap <Leader>s :SlimeSend1 ipython<return>
-    " map <Leader>q to exit debug mode or IPython
-    autocmd FileType python noremap <Leader>q :SlimeSend1 exit<return>
-    " map <Leader>Q to restart ipython
-    autocmd FileType python noremap <Leader>Q :SlimeSend1 exit<return>:SlimeSend1 ipython<return>
-
-    " Run the whole script
-    " autocmd FileType python noremap <Leader>r :IPythonCellRun<return>
-    autocmd FileType python noremap <Leader>R :IPythonCellRunTime<return>
-
-    " Run cell
-    autocmd FileType python noremap <Leader>c :IPythonCellExecuteCellJump<return>jzz
-    autocmd FileType python noremap <Leader>r :IPythonCellExecuteCell<return>
-
-    " Run from the beginning to this cell
-    autocmd FileType python noremap <Leader>C :IPythonCellNextCell<return>kVggy:SlimeSend1 %time %paste -q<return>``
 
     " map [c and ]c to jump to the previous and next cell header
     " for [c, I the jumping is stacked to avoid jumping to the current header when
-    " the cursur is between headers. But a new bug is that when at the last cell,
-    " it will jump to 2 cells before.
-    autocmd FileType python noremap [c :IPythonCellNextCell<return>:IPythonCellPrevCell<return>:IPythonCellPrevCell<return>jzz
-    autocmd FileType python noremap ]c :IPythonCellNextCell<return>jzz
+    " the cursur is between headers.
+    " Small bug: when cursor is on the last line which itself is a title, [c
+    " will jump to two cells before.
+    autocmd FileType python noremap [c :CellNextAbove<CR>:CellPrev<CR>:CellPrev<CR>jzz
+    autocmd FileType python noremap ]c :CellNextAbove<CR>jjzz
 
     " map <Leader>a and <Leader>b to insert a cell header tag above/below and enter insert mode
-    autocmd FileType python noremap <Leader>a :IPythonCellInsertAbove<return>zzo
-    autocmd FileType python noremap <Leader>b :IPythonCellInsertBelow<return>zzo
+    autocmd FileType python noremap <Leader>a :CellNextAbove<CR>:CellPrev<CR>zzO# %%<enter><enter><up>
+    function! NewCellBelow()
+        CellNextAbove
+        normal zz
+        if line('.')==line('$')
+            call append(".", '')
+            normal j
+        endif
+        call append(".", '# %%')
+        normal j
+        call append(".", '')
+        normal j
+        call append(".", '')
+    endfunction
+    autocmd FileType python noremap <Leader>b :call NewCellBelow()<CR>i
 
-    autocmd FileType python noremap <Leader>L :IPythonCellClear<return>
-    autocmd FileType python noremap <Leader>X :IPythonCellClose<return>
+    " The following operations require slime
+    " map <Leader>s to start IPython
+    autocmd FileType python noremap <Leader>s :SlimeSend1 ipython<CR>
+    " map <Leader>q to exit debug mode or IPython
+    autocmd FileType python noremap <Leader>q :SlimeSend1 exit<CR>
+    " map <Leader>Q to restart ipython
+    autocmd FileType python noremap <Leader>Q :SlimeSend1 exit<CR>:SlimeSend1 ipython<CR>
+
+    " Run cell (\r) and jump to next cell (\c)
+    " mark ] to the above of next cell
+    autocmd FileType python noremap <Leader>c :CellNextAbove<CR>m]:CellPrev<CR>V`]y:SlimeSend1 %time %paste -q<CR>`]jjzz
+    autocmd FileType python noremap <Leader>r :mkview<CR>:CellNextAbove<CR>m]:CellPrev<CR>V`]y:SlimeSend1 %time %paste -q<CR>:loadview<CR>
+    autocmd FileType python noremap <Leader>v :CellNextAbove<CR>m]:CellPrev<CR>V`]
+
+    " Run from the beginning to this cell
+    autocmd FileType python noremap <Leader>C :mkview<CR>:CellNextAbove<CR>Vggy:SlimeSend1 %time %paste -q<CR>:loadview<CR>
+
+    autocmd FileType python noremap <Leader>L :SlimeSend1 %clear<CR>
+    autocmd FileType python noremap <Leader>X :SlimeSend1 plt.close('all')<CR>
+    autocmd FileType python noremap <Leader>p :SlimeSend1 %rerun<CR>
 
     " map <c-c> to send the current line or current selection to IPython
     autocmd FileType python nmap <c-c><c-c> <Plug>SlimeLineSend
-    autocmd FileType python xmap <c-c><c-c> m]y:SlimeSend1 %time %paste -q<return>`]
-
-    " map <Leader>p to run the previous command
-    autocmd FileType python noremap <Leader>p :IPythonCellPrevCommand<return>
+    " mark ] to current cursor position
+    autocmd FileType python xmap <c-c><c-c> m]y:SlimeSend1 %time %paste -q<CR>`]
 
     "-----------------------------------------------------------------------
     "| vim-markdown configuration
@@ -458,19 +493,19 @@ if is_pro
     " map \t to check titles as a table of content
     " and \T to close the titles
     " markdown uses vim-markdown shown in location list
-    autocmd FileType markdown noremap <Leader>t :Toc<return>:ll 
+    autocmd FileType markdown noremap <Leader>t :Toc<CR>:ll 
     " others is shown in the quickfix, because the ALE uses location list
     " python and vim use TocCleaned 
-    autocmd FileType python noremap <Leader>t :call TocCleaned("# %%\\s")<return>:cc 
-    autocmd FileType vim noremap <Leader>t :call TocCleaned('\"\|')<return>:cc 
+    autocmd FileType python noremap <Leader>t :call TocCleaned("# %%\\s")<CR>:cc 
+    autocmd FileType vim noremap <Leader>t :call TocCleaned('\"\|')<CR>:cc 
     " tex uses its own configuration
-    autocmd FileType tex noremap <Leader>t :call TocCleanedTex()<return>:cc 
-    noremap <Leader>x :cclose<return>
-    autocmd FileType markdown noremap <Leader>x :lclose<return>
+    autocmd FileType tex noremap <Leader>t :call TocCleanedTex()<CR>:cc 
+    noremap <Leader>x :cclose<CR>
+    autocmd FileType markdown noremap <Leader>x :lclose<CR>
 
     " map [t and ]t to jump between titles
-    noremap [t :cprev<return>
-    noremap ]t :cnext<return>
+    noremap [t :cprev<CR>
+    noremap ]t :cnext<CR>
     " markdown uses vim-markdown
     autocmd FileType markdown noremap [t <Plug>Markdown_MoveToPreviousHeader
     autocmd FileType markdown noremap ]t <Plug>Markdown_MoveToNextHeader
@@ -532,11 +567,11 @@ let g:Tex_IgnoredWarnings =
 
 
 " Use \c and \r to save and \ll
-autocmd FileType tex nnoremap <Leader>c :w<return>:call Tex_RunLaTeX()<return>
-autocmd FileType tex nnoremap <Leader>r :w<return>:call Tex_RunLaTeX()<return>
+autocmd FileType tex nnoremap <Leader>c :w<CR>:call Tex_RunLaTeX()<CR>
+autocmd FileType tex nnoremap <Leader>r :w<CR>:call Tex_RunLaTeX()<CR>
 " Use \v to \lv
 " autocmd FileType tex nmap <Leader>v <Leader>lv
-autocmd FileType tex nmap <Leader>v :call Tex_ViewLaTeX()<return>
+autocmd FileType tex nmap <Leader>v :call Tex_ViewLaTeX()<CR>
 " Use c-b to map the biblography seaerch
 autocmd FileType tex nmap <C-b> hf}i<F9>
 autocmd FileType tex imap <C-b> <F9>
@@ -546,4 +581,3 @@ autocmd FileType tex imap <C-b> <F9>
 " 在i模式下读取当行并吃掉，然后第一个参数给当行内容（允许含空格），第二个参数给当前tex文件的路径位置。运行后保存tex并进入i模式
 " nnoremap <C-f> : silent exec '.!echo "'.getline('.').'" ; inks "'.input('.').'" %:p:h > /dev/null '<CR>
 " 在n模式下读取当行、吃掉并输出（保留当行），然后敲入文件名，第二个参数给当前tex文件的路径位置。运行后进入n模式
-
