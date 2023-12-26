@@ -20,11 +20,11 @@ Plugin 'SirVer/ultisnips' "补全的引擎
 Plugin 'vim-latex/vim-latex' "LaTeX plug
 Plugin 'cormacrelf/vim-colors-github'
 Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'jpalardy/vim-slime'
 if is_pro
     " python3.7 in Air is too old for ycm
     " Plugin 'ycm-core/YouCompleteMe'
         " set updatetime=2000
-    Plugin 'jpalardy/vim-slime'
     Plugin 'dense-analysis/ale'
 endif
 " All of your Plugins must be added before the following line
@@ -160,8 +160,8 @@ set showcmd
 
 " 配色方案
 " colorscheme default
-set background=light
-colorscheme github
+" set background=dark
+" colorscheme github
 " colorscheme lunaperche 
 " colorscheme shine
 
@@ -183,7 +183,7 @@ set foldmethod=indent
 " 启动 vim 时关闭折叠代码
 set nofoldenable
 " 启动时折叠全打开，并且za只管手头的这个fold
-" set foldlevel=999
+set foldlevel=999
 " the following commands is used for saving and loading the folding
 " information
 nmap <silent> <leader>m :mkview<CR>
@@ -342,31 +342,6 @@ map ） )
 " vim terminal
 tnoremap <C-w><C-[> <C-\><C-n>
 
-if is_pro
-    "-----------------------------------------------------------------------
-    "| ALE configuration
-    "-----------------------------------------------------------------------
-    let g:ale_linters = {
-    \   'python': ['mypy', 'flake8'],
-    \}
-
-    " :ALEFix will fix the whole file
-    let g:ale_fixers = {
-    \   'python': ['black'],
-    \}
-
-    " map \f to :ALEFix
-    nnoremap <Leader>f :ALEFix<CR>
-
-    " For Flake8
-    " W503: line break before binary operator
-    " W605: invalid escape sequence '\l'
-    let g:ale_python_flake8_options="--ignore=W503,W605 --max-line-length=120"
-
-    " use \j and \k to jump to the next/previous error
-    map <silent> <leader>j :ALENext<CR>
-    map <silent> <leader>k :ALEPrevious<CR>
-
 
     "-----------------------------------------------------------------------
     "| slime configuration
@@ -476,66 +451,81 @@ if is_pro
     " mark ] to current cursor position
     autocmd FileType python xmap <c-c><c-c> m]y:SlimeSend1 %time %paste -q<CR>`]
 
+if is_pro
     "-----------------------------------------------------------------------
-    "| vim-markdown configuration
+    "| ALE configuration
     "-----------------------------------------------------------------------
-    " vim-markdown is useful in the TOC when there are #s as code comments
-    let g:vim_markdown_toc_autofit = 1
-    let g:vim_markdown_math = 1
-    " disable most key mappings
-    let g:vim_markdown_no_default_key_mappings = 1
-    " but re-define gx
-    autocmd FileType markdown noremap gx <Plug>Markdown_OpenUrlUnderCursor
+    let g:ale_linters = {
+    \   'python': ['mypy', 'flake8'],
+    \}
 
-    "-----------------------------------------------------------------------
-    "| TOC
-    "-----------------------------------------------------------------------
-    " map \t to check titles as a table of content
-    " and \T to close the titles
-    " markdown uses vim-markdown shown in location list
-    autocmd FileType markdown noremap <Leader>t :Toc<CR>:ll 
-    " others is shown in the quickfix, because the ALE uses location list
-    " python and vim use TocCleaned 
-    autocmd FileType python noremap <Leader>t :call TocCleaned("# %%\\s")<CR>:cc 
-    autocmd FileType vim noremap <Leader>t :call TocCleaned('\"\|')<CR>:cc 
-    " tex uses its own configuration
-    autocmd FileType tex noremap <Leader>t :call TocCleanedTex()<CR>:cc 
-    noremap <Leader>x :cclose<CR>
-    autocmd FileType markdown noremap <Leader>x :lclose<CR>
+    " :ALEFix will fix the whole file
+    let g:ale_fixers = {
+    \   'python': ['black'],
+    \}
 
-    " map [t and ]t to jump between titles
-    noremap [t :cprev<CR>
-    noremap ]t :cnext<CR>
-    " markdown uses vim-markdown
-    autocmd FileType markdown noremap [t <Plug>Markdown_MoveToPreviousHeader
-    autocmd FileType markdown noremap ]t <Plug>Markdown_MoveToNextHeader
+    " map \f to :ALEFix
+    nnoremap <Leader>f :ALEFix<CR>
 
-    function TocCleaned(titlestr)
-        silent exe "vimgrep /^\\s*".a:titlestr."/j %"
-        copen
-        wincmd H
-        setlocal conceallevel=2
-        setlocal concealcursor=nvic
-        silent exe "syntax match qfFileName /^[^|]*|[^|]*|\\s*".a:titlestr."/ transparent conceal"
-        vertical resize 25
-        setlocal nowrap 
-    endfunction
+    " For Flake8
+    " W503: line break before binary operator
+    " W605: invalid escape sequence '\l'
+    let g:ale_python_flake8_options="--ignore=W503,W605 --max-line-length=120"
 
-    function TocCleanedTex()
-        vimgrep /^\s*\\\(sub\)*section{/j %
-        copen
-        wincmd H
-        setlocal conceallevel=2
-        setlocal concealcursor=nvic
-        syntax match qfFileName /}.*$/ transparent conceal
-        syntax match qfFileName /^[^|]*|[^|]*|\s*\\section{/ transparent conceal
-        syntax match qfFileName /^[^|]*|[^|]*|\s*\\subsection{/ transparent conceal cchar={
-        syntax match qfFileName /^[^|]*|[^|]*|\s*\\subsubsection{/ transparent conceal cchar=[
-        syntax match qfFileName /^[^|]*|[^|]*|\s*\\subsubsection{/ transparent conceal cchar=(
-        vertical resize 25
-        setlocal nowrap 
-    endfunction
+    " use \j and \k to jump to the next/previous error
+    map <silent> <leader>j :ALENext<CR>
+    map <silent> <leader>k :ALEPrevious<CR>
 endif
+
+"-----------------------------------------------------------------------
+"| TOC
+"-----------------------------------------------------------------------
+" map \t to check titles as a table of content
+" and \T to close the titles
+" markdown uses vim-markdown shown in location list
+" autocmd FileType markdown noremap <Leader>t :Toc<CR>:ll 
+autocmd FileType markdown noremap <Leader>t :call TocCleaned("#")<CR>:ll 
+" others is shown in the quickfix, because the ALE uses location list
+" python and vim use TocCleaned 
+autocmd FileType python noremap <Leader>t :call TocCleaned("# %%\\s")<CR>:cc 
+autocmd FileType vim noremap <Leader>t :call TocCleaned('\"\|')<CR>:cc 
+" tex uses its own configuration
+autocmd FileType tex noremap <Leader>t :call TocCleanedTex()<CR>:cc 
+noremap <Leader>x :cclose<CR>
+autocmd FileType markdown noremap <Leader>x :lclose<CR>
+
+" map [t and ]t to jump between titles
+noremap [t :cprev<CR>
+noremap ]t :cnext<CR>
+" markdown uses vim-markdown
+autocmd FileType markdown noremap [t <Plug>Markdown_MoveToPreviousHeader
+autocmd FileType markdown noremap ]t <Plug>Markdown_MoveToNextHeader
+
+function TocCleaned(titlestr)
+    silent exe "vimgrep /^\\s*".a:titlestr."/j %"
+    copen
+    wincmd H
+    setlocal conceallevel=2
+    setlocal concealcursor=nvic
+    silent exe "syntax match qfFileName /^[^|]*|[^|]*|\\s*".a:titlestr."/ transparent conceal"
+    vertical resize 25
+    setlocal nowrap 
+endfunction
+
+function TocCleanedTex()
+    vimgrep /^\s*\\\(sub\)*section{/j %
+    copen
+    wincmd H
+    setlocal conceallevel=2
+    setlocal concealcursor=nvic
+    syntax match qfFileName /}.*$/ transparent conceal
+    syntax match qfFileName /^[^|]*|[^|]*|\s*\\section{/ transparent conceal
+    syntax match qfFileName /^[^|]*|[^|]*|\s*\\subsection{/ transparent conceal cchar={
+    syntax match qfFileName /^[^|]*|[^|]*|\s*\\subsubsection{/ transparent conceal cchar=[
+    syntax match qfFileName /^[^|]*|[^|]*|\s*\\subsubsection{/ transparent conceal cchar=(
+    vertical resize 25
+    setlocal nowrap 
+endfunction
 
 "--------------------------------------------------------------------------
 "| vim-latex configuration
