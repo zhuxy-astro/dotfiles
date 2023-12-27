@@ -26,6 +26,7 @@ if is_pro
     " Plugin 'ycm-core/YouCompleteMe'
         " set updatetime=2000
     Plugin 'dense-analysis/ale'
+    Plugin 'github/copilot.vim'
 endif
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
