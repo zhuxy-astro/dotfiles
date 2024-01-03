@@ -14,9 +14,6 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim' " let Vundle manage Vundle, required
 Plugin 'SirVer/ultisnips' "补全的引擎
-    let g:UltiSnipsExpandTrigger="<tab>" "默认为<tab>
-    let g:UltiSnipsJumpForwardTrigger="<tab>" "默认为<c-b>
-    let g:UltiSnipsJumpBackwardTrigger="kk" "默认为<c-z>
 Plugin 'vim-latex/vim-latex' "LaTeX plug
 Plugin 'cormacrelf/vim-colors-github'
 Plugin 'christoomey/vim-tmux-navigator'
@@ -39,13 +36,15 @@ filetype plugin indent on    " required by Vundle, equals to filetype type on, f
 
 " find files. `path` is only available for `find` but not `e`.
 " `**` means all the files inside. Without **, only for the first layer.
-set path+=$note/**
-set path+=$dot/**
-set path+=$scr/**
-set path+=$snip/**
+" set path+=$note/**
+" set path+=$dot/**
+" set path+=$scr/**
 set path+=**
 " show the menu for available possibilities
 set wildmenu
+
+" add the following line to ~/.vim/after/syntax/markdown.vim error pattern on the underscore
+" syn match markdownError "\w\@<=\w\@="
 
 " generate tags using :MakeTags
 " command! MakeTags !ctags -R .
@@ -162,13 +161,13 @@ set showcmd
 " 配色方案
 " colorscheme default
 " set background=dark
-" colorscheme github
+colorscheme github
 " colorscheme lunaperche 
 " colorscheme morning
 " colorscheme shine
 " colorscheme retrobox
 " colorscheme slate
-colorscheme wildcharm
+" colorscheme wildcharm
 
 "折行且顺滑滚动
 set wrap smoothscroll
@@ -347,114 +346,125 @@ map ） )
 " vim terminal
 tnoremap <C-w><C-[> <C-\><C-n>
 
+"-----------------------------------------------------------------------
+"| completing
+"-----------------------------------------------------------------------
+" do not use tab in copilot, but use alt-right instead
+imap <silent><script><expr> <Esc>f copilot#Accept("\<CR>")
+let g:copilot_no_tab_map = v:true
 
-    "-----------------------------------------------------------------------
-    "| slime configuration
-    "-----------------------------------------------------------------------
-    " always use tmux
-    let g:slime_target = 'tmux'
-    " let g:slime_target = "vimterminal"
+" use tab in ultisnips
+let g:UltiSnipsExpandTrigger="<tab>" "默认为<tab>
+let g:UltiSnipsJumpForwardTrigger="<tab>" "默认为<c-b>
+let g:UltiSnipsJumpBackwardTrigger="kk" "默认为<c-z>
 
-    " always send text to the top right pane in the current tmux tab without asking
-    let g:slime_default_config = {'target_pane': '{top-right}',
-                \ 'socket_name': get(split($TMUX, ','), 0)}
-                " \ 'socket_name': 'default'}
+"-----------------------------------------------------------------------
+"| slime configuration
+"-----------------------------------------------------------------------
+" always use tmux
+let g:slime_target = 'tmux'
+" let g:slime_target = "vimterminal"
 
-    let g:slime_dont_ask_default = 1
+" always send text to the top right pane in the current tmux tab without asking
+let g:slime_default_config = {'target_pane': '{top-right}',
+            \ 'socket_name': get(split($TMUX, ','), 0)}
+            " \ 'socket_name': 'default'}
 
-    " fix paste issues in ipython
-    " let g:slime_python_ipython = 1
-    " ↑ not recommended in tmux
-    let g:slime_bracketed_paste = 1
+let g:slime_dont_ask_default = 1
 
-    xmap <c-c><c-c> <Plug>SlimeRegionSend
-    " line-by-line sending will cause bugs in ipython. <c-c><c-c> is redefined for
-    " python, see below
+" fix paste issues in ipython
+" let g:slime_python_ipython = 1
+" ↑ not recommended in tmux
+let g:slime_bracketed_paste = 1
 
-    "-----------------------------------------------------------------------
-    "| ipython-cell configuration
-    "-----------------------------------------------------------------------
-    " the Plugin 'hanschen/vim-ipython-cell' has problems on pasting, so I
-    " write simple substitution here
+xmap <c-c><c-c> <Plug>SlimeRegionSend
+" line-by-line sending will cause bugs in ipython. <c-c><c-c> is redefined for
+" python, see below
 
-    " the tag is the same as default, but without trailing white space
-    let g:ipython_cell_tag = '^# %%'
+"-----------------------------------------------------------------------
+"| ipython-cell configuration
+"-----------------------------------------------------------------------
+" the Plugin 'hanschen/vim-ipython-cell' has problems on pasting, so I
+" write simple substitution here
 
-    highlight link CellTag Folded
-    autocmd FileType python call matchadd('CellTag', g:ipython_cell_tag.'.*')
-    " To use `match Search /pattern/` is a more simple way, but the highlight
-    " form cannot be set
+" the tag is the same as default, but without trailing white space
+let g:ipython_cell_tag = '^# %%'
 
-    " CellPrev is the prev cell tag. In content it is the title of the present cell, and in title it is the last title.
-    autocmd FileType python command! CellPrev try | silent exe '?\%<.l'.g:ipython_cell_tag | catch | exe '0' | endtry
-    " In the last cell, CellNextAbove will jump to the last line of the file.
-    autocmd FileType python command! CellNextAbove try | silent exe '/\%>.l'.g:ipython_cell_tag | - | catch | exe '$' | endtry
+highlight link CellTag Folded
+autocmd FileType python call matchadd('CellTag', g:ipython_cell_tag.'.*')
+" To use `match Search /pattern/` is a more simple way, but the highlight
+" form cannot be set
 
-    " 对python，基于ipython cell的标题折叠
-    function! IPyFolds()
-       let thisline = getline(v:lnum)
-       if match(thisline, g:ipython_cell_tag) >= 0
-          return ">1"
-       else
-          return "="
-       endif
-    endfunction
+" CellPrev is the prev cell tag. In content it is the title of the present cell, and in title it is the last title.
+autocmd FileType python command! CellPrev try | silent exe '?\%<.l'.g:ipython_cell_tag | catch | exe '0' | endtry
+" In the last cell, CellNextAbove will jump to the last line of the file.
+autocmd FileType python command! CellNextAbove try | silent exe '/\%>.l'.g:ipython_cell_tag | - | catch | exe '$' | endtry
 
-    autocmd FileType python setlocal foldmethod=expr
-    autocmd FileType python setlocal foldexpr=IPyFolds()
+" 对python，基于ipython cell的标题折叠
+function! IPyFolds()
+   let thisline = getline(v:lnum)
+   if match(thisline, g:ipython_cell_tag) >= 0
+      return ">1"
+   else
+      return "="
+   endif
+endfunction
 
-    " Keyboard mappings. <Leader> is \ (backslash) by default
+autocmd FileType python setlocal foldmethod=expr
+autocmd FileType python setlocal foldexpr=IPyFolds()
 
-    " map [c and ]c to jump to the previous and next cell header
-    " for [c, I the jumping is stacked to avoid jumping to the current header when
-    " the cursur is between headers.
-    " Small bug: when cursor is on the last line which itself is a title, [c
-    " will jump to two cells before.
-    autocmd FileType python noremap [c :CellNextAbove<CR>:CellPrev<CR>:CellPrev<CR>jzz
-    autocmd FileType python noremap ]c :CellNextAbove<CR>jjzz
+" Keyboard mappings. <Leader> is \ (backslash) by default
 
-    " map <Leader>a and <Leader>b to insert a cell header tag above/below and enter insert mode
-    autocmd FileType python noremap <Leader>a :CellNextAbove<CR>:CellPrev<CR>zzO# %%<enter><enter><up>
-    function! NewCellBelow()
-        CellNextAbove
-        normal zz
-        if line('.')==line('$')
-            call append(".", '')
-            normal j
-        endif
-        call append(".", '# %%')
-        normal j
+" map [c and ]c to jump to the previous and next cell header
+" for [c, I the jumping is stacked to avoid jumping to the current header when
+" the cursur is between headers.
+" Small bug: when cursor is on the last line which itself is a title, [c
+" will jump to two cells before.
+autocmd FileType python noremap [c :CellNextAbove<CR>:CellPrev<CR>:CellPrev<CR>jzz
+autocmd FileType python noremap ]c :CellNextAbove<CR>jjzz
+
+" map <Leader>a and <Leader>b to insert a cell header tag above/below and enter insert mode
+autocmd FileType python noremap <Leader>a :CellNextAbove<CR>:CellPrev<CR>zzO# %%<enter><enter><up>
+function! NewCellBelow()
+    CellNextAbove
+    normal zz
+    if line('.')==line('$')
         call append(".", '')
         normal j
-        call append(".", '')
-    endfunction
-    autocmd FileType python noremap <Leader>b :call NewCellBelow()<CR>i
+    endif
+    call append(".", '# %%')
+    normal j
+    call append(".", '')
+    normal j
+    call append(".", '')
+endfunction
+autocmd FileType python noremap <Leader>b :call NewCellBelow()<CR>i
 
-    " The following operations require slime
-    " map <Leader>s to start IPython
-    autocmd FileType python noremap <Leader>s :SlimeSend1 ipython<CR>
-    " map <Leader>q to exit debug mode or IPython
-    autocmd FileType python noremap <Leader>q :SlimeSend1 exit<CR>
-    " map <Leader>Q to restart ipython
-    autocmd FileType python noremap <Leader>Q :SlimeSend1 exit<CR>:SlimeSend1 ipython<CR>
+" The following operations require slime
+" map <Leader>s to start IPython
+autocmd FileType python noremap <Leader>s :SlimeSend1 ipython<CR>
+" map <Leader>q to exit debug mode or IPython
+autocmd FileType python noremap <Leader>q :SlimeSend1 exit<CR>
+" map <Leader>Q to restart ipython
+autocmd FileType python noremap <Leader>Q :SlimeSend1 exit<CR>:SlimeSend1 ipython<CR>
 
-    " Run cell (\r) and jump to next cell (\c)
-    " mark ] to the above of next cell
-    autocmd FileType python noremap <Leader>c :CellNextAbove<CR>m]:CellPrev<CR>V`]y:SlimeSend1 %time %paste -q<CR>`]jjzz
-    autocmd FileType python noremap <Leader>r :mkview<CR>:CellNextAbove<CR>m]:CellPrev<CR>V`]y:SlimeSend1 %time %paste -q<CR>:loadview<CR>
-    autocmd FileType python noremap <Leader>v :CellNextAbove<CR>m]:CellPrev<CR>V`]
+" Run cell (\r) and jump to next cell (\c)
+" mark ] to the above of next cell
+autocmd FileType python noremap <Leader>c :CellNextAbove<CR>m]:CellPrev<CR>V`]y:SlimeSend1 %time %paste -q<CR>`]jjzz
+autocmd FileType python noremap <Leader>r :mkview<CR>:CellNextAbove<CR>m]:CellPrev<CR>V`]y:SlimeSend1 %time %paste -q<CR>:loadview<CR>
+autocmd FileType python noremap <Leader>v :CellNextAbove<CR>m]:CellPrev<CR>V`]
 
-    " Run from the beginning to this cell
-    autocmd FileType python noremap <Leader>C :mkview<CR>:CellNextAbove<CR>Vggy:SlimeSend1 %time %paste -q<CR>:loadview<CR>
+" Run from the beginning to this cell
+autocmd FileType python noremap <Leader>C :mkview<CR>:CellNextAbove<CR>Vggy:SlimeSend1 %time %paste -q<CR>:loadview<CR>
 
-    autocmd FileType python noremap <Leader>L :SlimeSend1 %clear<CR>
-    autocmd FileType python noremap <Leader>X :SlimeSend1 plt.close('all')<CR>
-    autocmd FileType python noremap <Leader>p :SlimeSend1 %rerun<CR>
+autocmd FileType python noremap <Leader>L :SlimeSend1 %clear<CR>
+autocmd FileType python noremap <Leader>X :SlimeSend1 plt.close('all')<CR>
+autocmd FileType python noremap <Leader>p :SlimeSend1 %rerun<CR>
 
-    " map <c-c> to send the current line or current selection to IPython
-    autocmd FileType python nmap <c-c><c-c> <Plug>SlimeLineSend
-    " mark ] to current cursor position
-    autocmd FileType python xmap <c-c><c-c> m]y:SlimeSend1 %time %paste -q<CR>`]
+" map <c-c> to send the current line or current selection to IPython
+autocmd FileType python nmap <c-c><c-c> <Plug>SlimeLineSend
+" mark ] to current cursor position
+autocmd FileType python xmap <c-c><c-c> m]y:SlimeSend1 %time %paste -q<CR>`]
 
 if is_pro
     "-----------------------------------------------------------------------
