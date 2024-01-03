@@ -60,14 +60,6 @@ alias gitclone-unset='git config --global --unset url.https://gitclone.com/githu
 # THE END OF BASIC ZSH CONFIG #
 # ########################### #
 
-alias down="cd ~/Downloads && ls"
-alias desk="cd ~/Desktop && ls"
-alias doc="cd ~/Documents && ls"
-alias proj="cd ~/Projects && ls"
-alias data="cd ~/Projects/Data && ls"
-alias phd="cd ~/Projects/PhD && ls"
-alias drop="cd ~/Desktop/Drop\ Box && ls"
-
 alias du="du -sm * | sort -nr"
 alias df="df -lh"
 
@@ -106,15 +98,26 @@ bgcheck()
 }
 
 # my own simple paths
-export data=$HOME"/Projects/Data"
-export phd=$HOME"/Projects/phd"
-export pylib=$HOME"/Projects/pylib"
-export astro_toolbox="$pylib"/astro_toolbox
+export data="$HOME"/Projects/Data
+export phd="$HOME"/Projects/phd
+export pylib="$HOME"/Projects/pylib
+export ast="$pylib"/astro_toolbox
 export scr="$COMPUTER_PATH"/scripts
 export dot="$COMPUTER_PATH"/dotfiles
-export snip="$COMPUTER_PATH"/dotfiles/UltiSnips
-export note=$HOME"/Documents/notes/Computer"
-alias note="note_core $note"
+export snip="$dot"/UltiSnips
+
+export nc=$HOME"/Documents/notes/Computer"
+alias nc='note_core $nc'
+export na=$HOME"/Documents/notes/Astronomy"
+export nn=$HOME"/Documents/notes/daily"
+
+alias down='cd ~/Downloads && ls'
+alias desk='cd ~/Desktop && ls'
+alias doc='cd ~/Documents && ls'
+alias proj='cd "$HOME"/Projects && ls'
+alias data='cd "$data" && ls'
+alias phd='cd "$phd" && ls'
+alias drop='cd ~/Desktop/Drop\ Box && ls'
 
 alias tex-md="vi "$HOME"/Documents/notes/Astronomy/tex_md.tex; open -a Obsidian"
 

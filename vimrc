@@ -21,12 +21,12 @@ Plugin 'vim-latex/vim-latex' "LaTeX plug
 Plugin 'cormacrelf/vim-colors-github'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'jpalardy/vim-slime'
+Plugin 'github/copilot.vim'
 if is_pro
     " python3.7 in Air is too old for ycm
     " Plugin 'ycm-core/YouCompleteMe'
         " set updatetime=2000
     Plugin 'dense-analysis/ale'
-    Plugin 'github/copilot.vim'
 endif
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -164,7 +164,11 @@ set showcmd
 " set background=dark
 " colorscheme github
 " colorscheme lunaperche 
+" colorscheme morning
 " colorscheme shine
+" colorscheme retrobox
+" colorscheme slate
+colorscheme wildcharm
 
 "折行且顺滑滚动
 set wrap smoothscroll
@@ -482,25 +486,19 @@ endif
 "| TOC
 "-----------------------------------------------------------------------
 " map \t to check titles as a table of content
-" and \T to close the titles
-" markdown uses vim-markdown shown in location list
-" autocmd FileType markdown noremap <Leader>t :Toc<CR>:ll 
-autocmd FileType markdown noremap <Leader>t :call TocCleaned("#")<CR>:ll 
+" and \x to close the titles
+autocmd FileType markdown noremap <Leader>t :call TocCleaned("#")<CR>
 " others is shown in the quickfix, because the ALE uses location list
 " python and vim use TocCleaned 
-autocmd FileType python noremap <Leader>t :call TocCleaned("# %%\\s")<CR>:cc 
-autocmd FileType vim noremap <Leader>t :call TocCleaned('\"\|')<CR>:cc 
+autocmd FileType python noremap <Leader>t :call TocCleaned("# %%\\s")<CR>
+autocmd FileType vim noremap <Leader>t :call TocCleaned('\"\|')<CR>
 " tex uses its own configuration
-autocmd FileType tex noremap <Leader>t :call TocCleanedTex()<CR>:cc 
+autocmd FileType tex noremap <Leader>t :call TocCleanedTex()<CR> 
 noremap <Leader>x :cclose<CR>
-autocmd FileType markdown noremap <Leader>x :lclose<CR>
 
 " map [t and ]t to jump between titles
 noremap [t :cprev<CR>
 noremap ]t :cnext<CR>
-" markdown uses vim-markdown
-autocmd FileType markdown noremap [t <Plug>Markdown_MoveToPreviousHeader
-autocmd FileType markdown noremap ]t <Plug>Markdown_MoveToNextHeader
 
 function TocCleaned(titlestr)
     silent exe "vimgrep /^\\s*".a:titlestr."/j %"
