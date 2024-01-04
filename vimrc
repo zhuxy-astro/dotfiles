@@ -14,16 +14,25 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim' " let Vundle manage Vundle, required
 Plugin 'SirVer/ultisnips' "补全的引擎
+    " use tab in ultisnips
+    let g:UltiSnipsExpandTrigger="<tab>" "默认为<tab>
+    let g:UltiSnipsJumpForwardTrigger="<tab>" "默认为<c-b>
+    let g:UltiSnipsJumpBackwardTrigger="kk" "默认为<c-z>
 Plugin 'vim-latex/vim-latex' "LaTeX plug
 Plugin 'cormacrelf/vim-colors-github'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'jpalardy/vim-slime'
+Plugin 'dense-analysis/ale'
 Plugin 'github/copilot.vim'
+    " do not use tab in copilot, but use alt-right instead
+    imap <silent><script><expr> <Esc>f copilot#Accept("\<CR>")
+    let g:copilot_no_tab_map = v:true
+Plugin 'ybian/smartim'
+    let g:smartim_default = 'com.apple.keylayout.ABC'
 if is_pro
     " python3.7 in Air is too old for ycm
     " Plugin 'ycm-core/YouCompleteMe'
         " set updatetime=2000
-    Plugin 'dense-analysis/ale'
 endif
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -345,18 +354,6 @@ map ） )
 
 " vim terminal
 tnoremap <C-w><C-[> <C-\><C-n>
-
-"-----------------------------------------------------------------------
-"| completing
-"-----------------------------------------------------------------------
-" do not use tab in copilot, but use alt-right instead
-imap <silent><script><expr> <Esc>f copilot#Accept("\<CR>")
-let g:copilot_no_tab_map = v:true
-
-" use tab in ultisnips
-let g:UltiSnipsExpandTrigger="<tab>" "默认为<tab>
-let g:UltiSnipsJumpForwardTrigger="<tab>" "默认为<c-b>
-let g:UltiSnipsJumpBackwardTrigger="kk" "默认为<c-z>
 
 "-----------------------------------------------------------------------
 "| slime configuration
