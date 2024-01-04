@@ -463,31 +463,29 @@ autocmd FileType python nmap <c-c><c-c> <Plug>SlimeLineSend
 " mark ] to current cursor position
 autocmd FileType python xmap <c-c><c-c> m]y:SlimeSend1 %time %paste -q<CR>`]
 
-if is_pro
-    "-----------------------------------------------------------------------
-    "| ALE configuration
-    "-----------------------------------------------------------------------
-    let g:ale_linters = {
-    \   'python': ['mypy', 'flake8'],
-    \}
+"-----------------------------------------------------------------------
+"| ALE configuration
+"-----------------------------------------------------------------------
+let g:ale_linters = {
+\   'python': ['mypy', 'flake8'],
+\}
 
-    " :ALEFix will fix the whole file
-    let g:ale_fixers = {
-    \   'python': ['black'],
-    \}
+" :ALEFix will fix the whole file
+let g:ale_fixers = {
+\   'python': ['black'],
+\}
 
-    " map \f to :ALEFix
-    nnoremap <Leader>f :ALEFix<CR>
+" map \f to :ALEFix
+nnoremap <Leader>f :ALEFix<CR>
 
-    " For Flake8
-    " W503: line break before binary operator
-    " W605: invalid escape sequence '\l'
-    let g:ale_python_flake8_options="--ignore=W503,W605 --max-line-length=120"
+" For Flake8
+" W503: line break before binary operator
+" W605: invalid escape sequence '\l'
+let g:ale_python_flake8_options="--ignore=W503,W605 --max-line-length=120"
 
-    " use \j and \k to jump to the next/previous error
-    map <silent> <leader>j :ALENext<CR>
-    map <silent> <leader>k :ALEPrevious<CR>
-endif
+" use \j and \k to jump to the next/previous error
+map <silent> <leader>j :ALENext<CR>
+map <silent> <leader>k :ALEPrevious<CR>
 
 "-----------------------------------------------------------------------
 "| TOC
