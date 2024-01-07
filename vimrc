@@ -27,8 +27,6 @@ Plugin 'github/copilot.vim'
     " do not use tab in copilot, but use alt-right instead
     imap <silent><script><expr> <Esc>f copilot#Accept("\<CR>")
     let g:copilot_no_tab_map = v:true
-Plugin 'ybian/smartim'
-    let g:smartim_default = 'com.apple.keylayout.ABC'
 if is_pro
     " python3.7 in Air is too old for ycm
     " Plugin 'ycm-core/YouCompleteMe'
