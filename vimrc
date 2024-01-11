@@ -247,11 +247,12 @@ noremap <Leader>d :DiffSaved<CR>
 
 
 " file browsing
-" let g:netrw_banner=0
+let g:netrw_banner=0
 let g:netrw_liststyle=3  " use tree mode
 let g:netrw_altv=1
 let g:netrw_preview=1  " preview in vertical split
 let g:netrw_winsize=30  " use 70% of the columns for preview
+let g:netrw_use_errorwindow=0  " disable the popup error window
 
 "--------------------------------------------------------------------------
 "| comment & uncomment
