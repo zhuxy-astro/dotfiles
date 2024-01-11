@@ -23,7 +23,7 @@ Plugin 'cormacrelf/vim-colors-github'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'jpalardy/vim-slime'
 Plugin 'dense-analysis/ale'
-Plugin 'github/copilot.vim'
+Plugin 'github/copilot.vim'  " , {'for': ['python', 'sh', 'cpp', 'vim'] }
     " do not use tab in copilot, but use shift-right instead
     " using the alt-right will cause <esc> + f in insert mode to be slow
     imap <silent><script><expr> <S-right> copilot#Accept("\<CR>")
