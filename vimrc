@@ -302,7 +302,7 @@ function! SurroundWithTripleQuotes()
     " here the \"\"\" is mapped to the double \"\"\" below
     normal O"""
     " so we need to delete the empty line and cut the end line
-    normal dddd
+    normal dd
     " Add the line after the selected region
     exe l:lnum_end + 1
     normal p
@@ -321,9 +321,9 @@ inoremap "" ""<left>
 inoremap '' ''<left>
 inoremap `` ``<left>
 " The change here will affect the vnoremap above!
-autocmd FileType python inoremap """ """"""<left><left><left><CR><esc>O
-autocmd FileType python inoremap ''' ''''''<left><left><left><CR><esc>O
-autocmd FileType markdown inoremap ``` ``````<left><left><left><CR><esc>O
+autocmd FileType python inoremap """ """"""<left><left><left><CR><esc>kA
+autocmd FileType python inoremap ''' ''''''<left><left><left><CR><esc>kA
+autocmd FileType markdown inoremap ``` ``````<left><left><left><CR><esc>kA
 
 "--------------------------------------------------------------------------
 "| mapping chinese marks
