@@ -467,7 +467,7 @@ autocmd FileType python xmap <c-c><c-c> m]y:SlimeSend1 %time %paste -q<CR>`]
 "| ALE configuration
 "-----------------------------------------------------------------------
 let g:ale_linters = {
-\   'python': ['python3 -m flake8',],}
+\   'python': ['flake8',],}
 " 'mypy'
 
 " :ALEFix will fix the whole file
