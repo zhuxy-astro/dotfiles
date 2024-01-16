@@ -53,8 +53,8 @@ export LC_ALL=en_US.UTF-8
 zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
 autoload -Uz compinit && compinit
 
-alias gitclone-set='git config --global url."https://gitclone.com/github.com".insteadOf https://github.com'
-alias gitclone-unset='git config --global --unset url.https://gitclone.com/github.com.insteadof'
+alias git-clone-set='git config --global url."https://gitclone.com/github.com".insteadOf https://github.com'
+alias git-clone-unset='git config --global --unset url.https://gitclone.com/github.com.insteadof'
 
 # ########################### #
 # THE END OF BASIC ZSH CONFIG #
