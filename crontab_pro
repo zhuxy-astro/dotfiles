@@ -30,8 +30,8 @@ MAILTO=""
 
 #00 23  *  *  * osascript -e 'display notification "and have a rest!" with title "Stop coding" ' && afplay /System/Library/PrivateFrameworks/ToneLibrary.framework/Versions/A/Resources/AlertTones/Modern/Chord.m4r
 
-00  *  *  *  * /opt/homebrew/bin/python3 /Users/ZhuXY/Projects/computer/mypath/weibo -w
+# 00  *  *  *  * /opt/homebrew/bin/python3 /Users/ZhuXY/Projects/computer/mypath/weibo -w -T
 
 # Run in PKU:
-21 */3 *  *  * /opt/homebrew/bin/python3 /Users/ZhuXY/Projects/computer/mypath/its -1
-00  *  *  *  * /Users/zhuxy/Projects/computer/mypath/remote quiet
+# 21 */3 *  *  * /opt/homebrew/bin/python3 /Users/ZhuXY/Projects/computer/mypath/its -1
+# 00  *  *  *  * /Users/zhuxy/Projects/computer/mypath/remote quiet

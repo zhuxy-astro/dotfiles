@@ -21,7 +21,7 @@ alias ipython3='python3 -m IPython'
 alias pip3='python3 -m pip'
 
 # aliases
-alias git-add-commit='git add -A && git commit -m "`date +%y%m%d`"'
+alias git-add-commit='git add -A && git commit -m "`date +\"%y-%m-%d %H:%M:%S\"`"'
 alias hostn='scutil --get LocalHostName'
 
 # find filename
