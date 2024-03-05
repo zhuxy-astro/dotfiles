@@ -37,6 +37,16 @@ endif
 call vundle#end()            " required
 "--End of Vundle
 
+" add the snippets file to the buffer list
+" I don't know why but using `&filetype` as string within vimrc will not work,
+" even with `BufRead`. Though it works after the file is loaded.
+autocmd FileType python badd $snip/python.snippets
+autocmd FileType snippets badd $snip/snippets.snippets
+autocmd FileType sh badd $snip/sh.snippets
+autocmd FileType zsh badd $snip/zsh.snippets
+autocmd FileType cpp badd $snip/cpp.snippets
+autocmd FileType tex badd $snip/tex.snippets
+
 "--------------------------------------------------------------------------
 "| basic vim configuration
 "--------------------------------------------------------------------------
@@ -63,8 +73,8 @@ set wildmenu
 :nnoremap <Leader>w :%s/\<<C-r><C-w>\>/<C-r><C-w>/g<Left><Left>
 
 " open new windows on the bottom & right
-" set splitbelow
-" set splitright
+set splitbelow
+set splitright
 
 "使用系统剪切板
 set clipboard+=unnamed
@@ -466,6 +476,9 @@ autocmd FileType python xmap <c-c><c-c> m]y:SlimeSend1 %time %paste -q<CR>`]
 "-----------------------------------------------------------------------
 "| ALE configuration
 "-----------------------------------------------------------------------
+" map \A to turn on/off ALE
+nnoremap <Leader>A :ALEToggle<CR>
+
 let g:ale_linters = {
 \   'python': ['flake8',],}
 " 'mypy'
@@ -575,3 +588,4 @@ autocmd FileType tex imap <C-b> <F9>
 " 在i模式下读取当行并吃掉，然后第一个参数给当行内容（允许含空格），第二个参数给当前tex文件的路径位置。运行后保存tex并进入i模式
 " nnoremap <C-f> : silent exec '.!echo "'.getline('.').'" ; inks "'.input('.').'" %:p:h > /dev/null '<CR>
 " 在n模式下读取当行、吃掉并输出（保留当行），然后敲入文件名，第二个参数给当前tex文件的路径位置。运行后进入n模式
+"

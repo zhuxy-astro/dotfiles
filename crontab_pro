@@ -33,5 +33,5 @@ MAILTO=""
 # 00  *  *  *  * /opt/homebrew/bin/python3 /Users/ZhuXY/Projects/computer/mypath/weibo -w -T
 
 # Run in PKU:
-# 21 */3 *  *  * /opt/homebrew/bin/python3 /Users/ZhuXY/Projects/computer/mypath/its -1
-# 00  *  *  *  * /Users/zhuxy/Projects/computer/mypath/remote quiet
+21 */3 *  *  * /opt/homebrew/bin/python3 /Users/ZhuXY/Projects/computer/mypath/its -1
+00  *  *  *  * /Users/zhuxy/Projects/computer/mypath/remote quiet

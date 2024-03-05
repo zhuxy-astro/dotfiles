@@ -13,6 +13,7 @@ then
     eval "$(/opt/homebrew/bin/brew shellenv)"
     # allow screen to output the correct color
     export screen="/opt/homebrew/bin/screen"
+    export PATH="$(brew --prefix python@3.10)/libexec/bin:$PATH"
 fi
 
 # ################ #
@@ -120,6 +121,9 @@ alias phd='cd "$phd" && ls'
 alias drop='cd ~/Desktop/Drop\ Box && ls'
 
 alias tex-md="vi "$HOME"/Documents/notes/Astronomy/tex_md.tex; open -a Obsidian"
+
+export sd="$HOME"/Projects/stable-diffusion-webui
+alias sd='cd '$sd' && ./webui.sh --no-half --opt-sub-quad-attention'
 
 # scp name for vim
 export scp_data_home="scp://2101110287@wmsk1-data.pku.edu.cn//gpfs/share/home/2101110287"
