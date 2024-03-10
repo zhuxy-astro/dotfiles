@@ -19,7 +19,14 @@ alias ipython='python3 -m IPython'
 alias ipython3='python3 -m IPython'
 
 # aliases
-alias git-add-commit='git add -A && git commit -m "`date +\"%y-%m-%d %H:%M:%S\"`"'
+git-add-commit()
+{   if [[ `git status --porcelain` ]]; then
+        git add -A
+        git commit -m "`date +\"%y-%m-%d %H:%M:%S\"` $*"
+    else
+        echo "Nothing to commit. Skipped."
+    fi
+}
 alias hostn='scutil --get LocalHostName'
 
 # find filename
