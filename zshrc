@@ -99,6 +99,7 @@ bgcheck()
 }
 
 # my own simple paths
+export proj="$HOME"/Projects
 export data="$HOME"/Projects/Data
 export phd="$HOME"/Projects/phd
 export pylib="$HOME"/Projects/pylib
@@ -115,7 +116,7 @@ export nn=$HOME"/Documents/notes/daily"
 alias down='cd ~/Downloads && ls'
 alias desk='cd ~/Desktop && ls'
 alias doc='cd ~/Documents && ls'
-alias proj='cd "$HOME"/Projects && ls'
+alias proj='cd "$proj" && ls'
 alias data='cd "$data" && ls'
 alias phd='cd "$phd" && ls'
 alias drop='cd ~/Desktop/Drop\ Box && ls'
