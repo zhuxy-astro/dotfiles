@@ -25,6 +25,7 @@ git-add-commit()
         git commit -m "`date +\"%y-%m-%d %H:%M:%S\"` $*"
     else
         echo "Nothing to commit. Skipped."
+        return 1
     fi
 }
 alias hostn='scutil --get LocalHostName'
