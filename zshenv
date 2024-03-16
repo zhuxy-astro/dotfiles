@@ -12,6 +12,7 @@ export mypath="$COMPUTER_PATH"/mypath
 PATH="${mypath}":"${PATH}"
 
 export PYTHONPATH="$PYTHONPATH:$HOME/Projects/pylib/"
+export PYTHONBREAKPOINT=ipdb.set_trace
 
 # python version
 alias pip3='python3 -m pip'

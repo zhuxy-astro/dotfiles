@@ -28,6 +28,7 @@ Plugin 'github/copilot.vim'  " , {'for': ['python', 'sh', 'cpp', 'vim'] }
     " using the alt-right will cause <esc> + f in insert mode to be slow
     imap <silent><script><expr> <S-right> copilot#Accept("\<CR>")
     let g:copilot_no_tab_map = v:true
+    imap <S-left> <Plug>(copilot-accept-word)
 if is_pro
     " python3.7 in Air is too old for ycm
     " Plugin 'ycm-core/YouCompleteMe'
