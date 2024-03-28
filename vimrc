@@ -121,11 +121,15 @@ set mouse=inv
 map <ScrollWheelUp> <C-Y>
 map <ScrollWheelDown> <C-E>
 
-" 用箭头来做显示行的上下跳转。
+" 用箭头来做显示行的上下跳转，以及在行间头末跳转
 map <Up> gk
 map <Down> gj
 imap <Up> <C-O>gk
 imap <Down> <C-O>gj
+map <Left> <BS>
+map <Right> <Space>
+imap <Left> <C-O><BS>
+imap <Right> <C-O><Space>
 
 "tab缩进
 set tabstop=4
