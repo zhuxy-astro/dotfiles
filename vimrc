@@ -65,6 +65,7 @@ set wildmenu
 " add the following line to ~/.vim/after/syntax/markdown.vim error pattern on the underscore
 " syn match markdownError "\w\@<=\w\@="
 
+nnoremap <Leader>T :!ctags -R .<CR>
 " generate tags using :MakeTags
 " command! MakeTags !ctags -R .
 " use tags for python 
@@ -76,7 +77,7 @@ command! Wq wq
 command! WQ wq
 
 " replace all occurences of the word under the cursor
-:nnoremap <Leader>w :%s/\<<C-r><C-w>\>/<C-r><C-w>/g<Left><Left>
+nnoremap <Leader>w :%s/\<<C-r><C-w>\>/<C-r><C-w>/g<Left><Left>
 
 " open new windows on the bottom & right
 set splitbelow
