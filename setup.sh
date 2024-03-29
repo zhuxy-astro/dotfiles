@@ -15,3 +15,4 @@ ln -nfs $dotpath/bash_profile ~/.bash_profile
 ln -nfs $dotpath/ipython_config.py ~/.ipython/profile_default/ipython_config.py
 ln -nfs $dotpath/ipython_kernel_config.py ~/.ipython/profile_default/ipython_kernel_config.py
 ln -nfs $dotpath/UltiSnips ~/.vim/UltiSnips
+ln -nfs $dotpath/vim_syntax ~/.vim/after/syntax

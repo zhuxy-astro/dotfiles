@@ -23,6 +23,9 @@ Plugin 'cormacrelf/vim-colors-github'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'jpalardy/vim-slime'
 Plugin 'dense-analysis/ale'
+" Plugin 'godlygeek/tabular'  " required by vim-markdown
+" Plugin 'preservim/vim-markdown'
+" Plugin 'tpope/vim-markdown'
 Plugin 'github/copilot.vim'  " , {'for': ['python', 'sh', 'cpp', 'vim'] }
     " do not use tab in copilot, but use shift-right instead
     " using the alt-right will cause <esc> + f in insert mode to be slow
@@ -64,6 +67,7 @@ set wildmenu
 
 " add the following line to ~/.vim/after/syntax/markdown.vim error pattern on the underscore
 " syn match markdownError "\w\@<=\w\@="
+" hi texOnlyMath term=NONE
 
 nnoremap <Leader>T :!ctags -R .<CR>
 " generate tags using :MakeTags
@@ -126,10 +130,10 @@ map <Up> gk
 map <Down> gj
 imap <Up> <C-O>gk
 imap <Down> <C-O>gj
-map <Left> <BS>
-map <Right> <Space>
-imap <Left> <C-O><BS>
-imap <Right> <C-O><Space>
+" map <Left> <BS>
+" map <Right> <Space>
+" imap <Left> <C-O><BS>
+" imap <Right> <C-O><Space>
 
 "tab缩进
 set tabstop=4
