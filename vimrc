@@ -23,9 +23,6 @@ Plugin 'cormacrelf/vim-colors-github'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'jpalardy/vim-slime'
 Plugin 'dense-analysis/ale'
-" Plugin 'godlygeek/tabular'  " required by vim-markdown
-" Plugin 'preservim/vim-markdown'
-" Plugin 'tpope/vim-markdown'
 Plugin 'github/copilot.vim'  " , {'for': ['python', 'sh', 'cpp', 'vim'] }
     " do not use tab in copilot, but use shift-right instead
     " using the alt-right will cause <esc> + f in insert mode to be slow
@@ -70,6 +67,7 @@ set wildmenu
 " hi texOnlyMath term=NONE
 
 nnoremap <Leader>T :!ctags -R .<CR>
+autocmd BufWritePost *.tex silent !ctags -R .
 " generate tags using :MakeTags
 " command! MakeTags !ctags -R .
 " use tags for python 
