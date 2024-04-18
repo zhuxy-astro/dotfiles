@@ -416,9 +416,9 @@ autocmd FileType python call matchadd('CellTag', g:ipython_cell_tag.'.*')
 " form cannot be set
 
 " CellPrev is the prev cell tag. In content it is the title of the present cell, and in title it is the last title.
-autocmd FileType python command! CellPrev try | silent exe '?\%<.l'.g:ipython_cell_tag | catch | exe '0' | endtry
+autocmd FileType python command! CellPrev if !search(g:ipython_cell_tag, 'bWz') | exe '0' | endif
 " In the last cell, CellNextAbove will jump to the last line of the file.
-autocmd FileType python command! CellNextAbove try | silent exe '/\%>.l'.g:ipython_cell_tag | - | catch | exe '$' | endtry
+autocmd FileType python command! CellNextAbove if search(g:ipython_cell_tag, 'W') | exe 'normal k' | else | exe '$' | endif
 
 " 对python，基于ipython cell的标题折叠
 function! IPyFolds()
@@ -438,9 +438,8 @@ autocmd FileType python setlocal foldexpr=IPyFolds()
 " map [c and ]c to jump to the previous and next cell header
 " for [c, I the jumping is stacked to avoid jumping to the current header when
 " the cursur is between headers.
-" Small bug: when cursor is on the last line which itself is a title, [c
-" will jump to two cells before.
-autocmd FileType python noremap [c :CellNextAbove<CR>:CellPrev<CR>:CellPrev<CR>jzz
+" Small but: [c cannot move when cursor is on the title below an empty cell.
+autocmd FileType python noremap [c :silent! normal j<CR>:CellPrev<CR>:CellPrev<CR>jzz
 autocmd FileType python noremap ]c :CellNextAbove<CR>jjzz
 
 " map <Leader>a and <Leader>b to insert a cell header tag above/below and enter insert mode
