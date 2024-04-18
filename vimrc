@@ -438,7 +438,7 @@ autocmd FileType python setlocal foldexpr=IPyFolds()
 " map [c and ]c to jump to the previous and next cell header
 " for [c, I the jumping is stacked to avoid jumping to the current header when
 " the cursur is between headers.
-" Small but: [c cannot move when cursor is on the title below an empty cell.
+" Small bug: [c cannot move when cursor is on the title below an empty cell.
 autocmd FileType python noremap [c :silent! normal j<CR>:CellPrev<CR>:CellPrev<CR>jzz
 autocmd FileType python noremap ]c :CellNextAbove<CR>jjzz
 
