@@ -285,7 +285,7 @@ let g:netrw_use_errorwindow=0  " disable the popup error window
 " works for both n and v mode. move one line down after executing
 " <C-/> can't be used in mac Terminal.app+tmux. pity.
 function AddComment(commentchar)
-    :silent exe 's/^\(\s*\)\('.a:commentchar.'\)*\s*\([^'.a:commentchar.']\)/\1'.a:commentchar.' \3/ge'
+    :silent exe 'keeppatterns s/^\(\s*\)\('.a:commentchar.'\)*\s*\([^'.a:commentchar.']\)/\1'.a:commentchar.' \3/ge'
     " noh
     normal j
 endfunction
@@ -293,11 +293,11 @@ endfunction
 function DelComment(commentchar)
     " The first line works for `#    a` and returns `    a`
     " where the space must >=2
-    :silent exe 's/^'.a:commentchar.'\(\s\{2,\}\)/\1/ge'
+    :silent exe 'keeppatterns s/^'.a:commentchar.'\(\s\{2,\}\)/\1/ge'
     " The second line works for `# a`, `#a`, `   #a`, `    # a`.
     " And for `    #  a`, it returns `      a`,
     " where the space is added if the space between `#` and `a` >=2
-    :silent exe 's/^\(\s*\)'.a:commentchar.'\s\{,1\}/\1/ge'
+    :silent exe 'keeppatterns s/^\(\s*\)'.a:commentchar.'\s\{,1\}/\1/ge'
     " noh
     normal j
 endfunction
