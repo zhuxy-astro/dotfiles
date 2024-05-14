@@ -79,7 +79,9 @@ command! Wq wq
 command! WQ wq
 
 " replace all occurences of the word under the cursor
-nnoremap <Leader>w :%s/\<<C-r><C-w>\>/<C-r><C-w>/g<Left><Left>
+nnoremap <Leader>R :%s/\<<C-r><C-w>\>/<C-r><C-w>/g<Left><Left>
+" replace the string under selection
+xnoremap <Leader>R y:%s/<C-r>+/<C-r>+/g<Left><Left>
 
 " open new windows on the bottom & right
 set splitbelow

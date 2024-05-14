@@ -108,10 +108,11 @@ export scr="$COMPUTER_PATH"/scripts
 export dot="$COMPUTER_PATH"/dotfiles
 export snip="$dot"/UltiSnips
 
-export nc=$HOME"/Documents/notes/Computer"
+export NOTE_BASE=$HOME"/Library/Mobile Documents/iCloud~md~obsidian/Documents/notes"
+export nc=$NOTE_BASE"/Computer"
 alias nc='note_core $nc'
-export na=$HOME"/Documents/notes/Astronomy"
-export nn=$HOME"/Documents/notes/daily"
+export na=$NOTE_BASE"/Astronomy"
+export nn=$NOTE_BASE"/daily"
 
 alias down='cd ~/Downloads && ls'
 alias desk='cd ~/Desktop && ls'
@@ -121,7 +122,7 @@ alias data='cd "$data" && ls'
 alias phd='cd "$phd" && ls'
 alias drop='cd ~/Desktop/Drop\ Box && ls'
 
-alias tex-md="vi "$HOME"/Documents/notes/Astronomy/tex_md.tex; open -a Obsidian"
+alias tex-md="vi "$NOTE_BASE"/Astronomy/tex_md.tex; open -a Obsidian"
 
 export sd="$HOME"/Projects/stable-diffusion-webui
 alias sd='cd '$sd' && ./webui.sh --no-half --opt-sub-quad-attention'
