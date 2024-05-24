@@ -132,7 +132,7 @@ export scp_data_home="scp://2101110287@wmsk1-data.pku.edu.cn//gpfs/share/home/21
 export scp_login_home="scp://2101110287@wmsk1-login.pku.edu.cn//gpfs/share/home/2101110287"
 
 # diary
-alias diary='vi -c "colorscheme default" -c "set laststatus=0" -c "set nonu" +$ '$HOME'/Documents/others/diary'
+alias diary='vi -c "colorscheme default" -c "set laststatus=0" -c "set nonu" +$ '$HOME'/Documents/others/diary.txt'
 
 # if connecting from ssh, use tmux automatically
 if [[ $- =~ i ]] && [[ -z "$TMUX" ]] && [[ -n "$SSH_TTY" ]]; then
