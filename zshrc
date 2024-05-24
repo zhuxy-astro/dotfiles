@@ -101,7 +101,7 @@ bgcheck()
 # my own simple paths
 export proj="$HOME"/Projects
 export data="$HOME"/Projects/Data
-export phd="$HOME"/Projects/phd
+export pd="$HOME"/Projects/pure_disk
 export pylib="$HOME"/Projects/pylib
 export ast="$pylib"/astro_toolbox
 export scr="$COMPUTER_PATH"/scripts
@@ -119,7 +119,7 @@ alias desk='cd ~/Desktop && ls'
 alias doc='cd ~/Documents && ls'
 alias proj='cd "$proj" && ls'
 alias data='cd "$data" && ls'
-alias phd='cd "$phd" && ls'
+alias pd='cd "$pd" && ls'
 alias drop='cd ~/Desktop/Drop\ Box && ls'
 
 alias tex-md="vi "$NOTE_BASE"/Astronomy/tex_md.tex; open -a Obsidian"
