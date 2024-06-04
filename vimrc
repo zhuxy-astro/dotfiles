@@ -76,6 +76,7 @@ autocmd BufWritePost *.tex silent !ctags -R .
 
 " use :W as :w
 command! W w
+command! Q q
 command! Wq wq
 command! WQ wq
 
