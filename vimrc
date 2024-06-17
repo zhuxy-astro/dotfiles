@@ -571,14 +571,15 @@ autocmd FileType tex set shiftwidth=2
 " all the figure labels. Very useful!
 autocmd FileType tex set iskeyword+=:
 let g:Tex_DefaultTargetFormat = 'pdf' 
-let g:Tex_CompileRule_pdf = 'xelatex -synctex=0 $*' "compile with xelatex, if want to refresh automatically, add `-interaction=nonstopmode' and `-synctex=1'
+" let g:Tex_CompileRule_pdf = 'xelatex -synctex=0 $*' "compile with xelatex, if want to refresh automatically, add `-interaction=nonstopmode' and `-synctex=1'
+let g:Tex_CompileRule_pdf = 'pdflatex -synctex=0 $*' "compile with xelatex, if want to refresh automatically, add `-interaction=nonstopmode' and `-synctex=1'
 let g:Tex_ViewRule_pdf = 'open -a pdf\ expert' "preview pdf
 let g:Tex_Folding = 0 "fold nothing
 let g:Tex_IgnoreLevel = 7 "ignore the default 7 warnings
 let g:Tex_GotoError=0 "即使有Error，编译后也回到文件。
 let g:Tex_Menus=0 "不显示任何目录，比如template，package之类
 let g:Imap_FreezeImap=1 "断绝所有快捷键
-let g:tex_flavor='xelatex -interaction=nonstopmode'
+let g:tex_flavor='pdflatex -interaction=nonstopmode'
 let g:vimtex_view_method='open -a pdf\ expert'
 let g:Tex_MultipleCompileFormats='pdf,bibtex,pdf'
 let g:Tex_BibtexFlavor='bibtex'
