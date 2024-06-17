@@ -11,5 +11,5 @@
 	excludesfile = /Users/zhuxy/.gitignore
 [pull]
 	rebase = false
-[url "https://gitclone.com/github.com"]
-	insteadOf = https://github.com
+# [url "https://gitclone.com/github.com"]
+	# insteadOf = https://github.com

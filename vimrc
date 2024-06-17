@@ -14,9 +14,9 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim' " let Vundle manage Vundle, required
 Plugin 'SirVer/ultisnips' "补全的引擎
-    " use tab in ultisnips
-    let g:UltiSnipsExpandTrigger="<tab>" "默认为<tab>
-    let g:UltiSnipsJumpForwardTrigger="<tab>" "默认为<c-b>
+    " use tab in YCM, and not in ultisnips
+    let g:UltiSnipsExpandTrigger="<c-m>" "默认为<tab>
+    let g:UltiSnipsJumpForwardTrigger="<c-m>" "默认为<c-b>
     let g:UltiSnipsJumpBackwardTrigger="kk" "默认为<c-z>
 Plugin 'vim-latex/vim-latex' "LaTeX plug
 Plugin 'cormacrelf/vim-colors-github'
@@ -32,8 +32,8 @@ Plugin 'github/copilot.vim', {'for': ['python', 'sh', 'cpp', 'vim'] }
     imap <S-left> <Plug>(copilot-accept-word)
 if is_pro
     " python3.7 in Air is too old for ycm
-    " Plugin 'ycm-core/YouCompleteMe'
-        " set updatetime=2000
+    Plugin 'ycm-core/YouCompleteMe'
+        set updatetime=2000
 endif
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
