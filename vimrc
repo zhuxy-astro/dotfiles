@@ -15,9 +15,9 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim' " let Vundle manage Vundle, required
 Plugin 'SirVer/ultisnips' "补全的引擎
     " use tab in YCM, and not in ultisnips
-    let g:UltiSnipsExpandTrigger="<c-m>" "默认为<tab>
-    let g:UltiSnipsJumpForwardTrigger="<c-m>" "默认为<c-b>
-    let g:UltiSnipsJumpBackwardTrigger="kk" "默认为<c-z>
+    let g:UltiSnipsExpandTrigger=";j" "默认为<tab>
+    let g:UltiSnipsJumpForwardTrigger=";j" "默认为<c-b>
+    let g:UltiSnipsJumpBackwardTrigger=";k" "默认为<c-z>
 Plugin 'vim-latex/vim-latex' "LaTeX plug
 Plugin 'cormacrelf/vim-colors-github'
 Plugin 'christoomey/vim-tmux-navigator'
@@ -195,7 +195,7 @@ set showcmd
 
 " 配色方案
 " colorscheme default
-" set background=dark
+set background=light
 colorscheme github
 " colorscheme lunaperche 
 " colorscheme morning
