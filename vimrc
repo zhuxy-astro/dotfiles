@@ -4,6 +4,8 @@ let computer = system('scutil --get LocalHostName')[:-2]
 let is_pro = computer == 'ZhuXYs-Pro'
 let is_air = computer == 'ZhuXYs-Air'
 
+let use_vimlatex = 0
+
 "--------------------------------------------------------------------------
 "| Vundle
 "--------------------------------------------------------------------------
@@ -18,7 +20,9 @@ Plugin 'SirVer/ultisnips' "补全的引擎
     let g:UltiSnipsExpandTrigger=";j" "默认为<tab>
     let g:UltiSnipsJumpForwardTrigger=";j" "默认为<c-b>
     let g:UltiSnipsJumpBackwardTrigger=";k" "默认为<c-z>
-Plugin 'vim-latex/vim-latex' "LaTeX plug
+if use_vimlatex
+    Plugin 'vim-latex/vim-latex' "LaTeX plug
+endif
 Plugin 'cormacrelf/vim-colors-github'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'jpalardy/vim-slime'
@@ -116,7 +120,8 @@ autocmd FileType cpp set makeprg=clear;g++\ -w\ %\ -o\ %<\ &&\ ./%<
 autocmd FileType c set makeprg=clear;gcc\ -w\ %\ -o\ %<\ &&\ ./%<
 autocmd FileType python set makeprg=clear;python3\ %
 autocmd FileType sh set makeprg=clear;source\ %
-autocmd FileType tex set makeprg=clear;cd\ %:p:h;xelatex\ %;cd\ -
+" autocmd FileType tex set makeprg=clear;cd\ %:p:h;pdflatex\ -interaction=nonstopmode\ %;bibtex\ %:r;pdflatex\ -interaction=nonstopmode\ %;pdflatex\ -interaction=nonstopmode\ -file-line-error\ %;cd\ -
+autocmd FileType tex set makeprg=clear;cd\ %:p:h;pdflatex\ -interaction=nonstopmode\ %;bibtex\ %:r;pdflatex\ -interaction=nonstopmode\ %;pdflatex\ -interaction=nonstopmode\ %;cd\ -
 
 "没有保存或文件只读时弹出确认
 set confirm
@@ -566,43 +571,53 @@ endfunction
 " this is mostly a matter of taste. but LaTeX looks good with just a bit
 " of indentation.
 autocmd FileType tex set shiftwidth=2
-" TIP: if you write your \label's as \label{fig:something}, then if you
-" type in \ref{fig: and press <C-n> you will automatically cycle through
-" all the figure labels. Very useful!
 autocmd FileType tex set iskeyword+=:
-let g:Tex_DefaultTargetFormat = 'pdf' 
-" let g:Tex_CompileRule_pdf = 'xelatex -synctex=0 $*' "compile with xelatex, if want to refresh automatically, add `-interaction=nonstopmode' and `-synctex=1'
-let g:Tex_CompileRule_pdf = 'pdflatex -synctex=0 $*' "compile with xelatex, if want to refresh automatically, add `-interaction=nonstopmode' and `-synctex=1'
-let g:Tex_ViewRule_pdf = 'open -a pdf\ expert' "preview pdf
-let g:Tex_Folding = 0 "fold nothing
-let g:Tex_IgnoreLevel = 7 "ignore the default 7 warnings
-let g:Tex_GotoError=0 "即使有Error，编译后也回到文件。
-let g:Tex_Menus=0 "不显示任何目录，比如template，package之类
-let g:Imap_FreezeImap=1 "断绝所有快捷键
-let g:tex_flavor='pdflatex -interaction=nonstopmode'
-let g:vimtex_view_method='open -a pdf\ expert'
-let g:Tex_MultipleCompileFormats='pdf,bibtex,pdf'
-let g:Tex_BibtexFlavor='bibtex'
-let g:Imap_UsePlaceHolders=0
-let g:vimtex_quickfix_mode=0
-let g:Tex_ShowErrorContext = 0  " 不要再在quickfix窗口下面显示log了
-let g:Tex_IgnoredWarnings =
-            \'Package fontspec Warning:'."\n"  " 如果在下面继续加，要在本行最后再加一个.
 
+if use_vimlatex
+    let g:Tex_ViewRule_pdf = 'open -a pdf\ expert' "preview pdf
+    let g:vimtex_view_method='open -a pdf\ expert'
 
-" Use \c and \r to save and \ll
-autocmd FileType tex nnoremap <Leader>c :w<CR>:call Tex_RunLaTeX()<CR>
-autocmd FileType tex nnoremap <Leader>r :w<CR>:call Tex_RunLaTeX()<CR>
-" Use \v to \lv
-" autocmd FileType tex nmap <Leader>v <Leader>lv
-autocmd FileType tex nmap <Leader>v :call Tex_ViewLaTeX()<CR>
-" Use c-b to map the biblography seaerch
-autocmd FileType tex nmap <C-b> hf}i<F9>
-autocmd FileType tex imap <C-b> <F9>
+    let g:Tex_Folding = 0 "fold nothing
+    let g:Tex_IgnoreLevel = 7 "ignore the default 7 warnings
+    let g:Tex_GotoError=0 "即使有Error，编译后也回到文件。
+    let g:Tex_Menus=0 "不显示任何目录，比如template，package之类
+    let g:Imap_FreezeImap=1 "断绝所有快捷键
+    let g:Imap_UsePlaceHolders=0
+    let g:vimtex_quickfix_mode=0
+    let g:Tex_ShowErrorContext = 0  " 不要再在quickfix窗口下面显示log了
+    let g:Tex_IgnoredWarnings =
+                \'Package fontspec Warning:'."\n"  " 如果在下面继续加，要在本行最后再加一个.
 
+    let g:Tex_DefaultTargetFormat = 'pdf' 
+    " let g:Tex_CompileRule_pdf = 'xelatex -synctex=0 $*' "compile with xelatex, if want to refresh automatically, add `-interaction=nonstopmode' and `-synctex=1'
+    let g:Tex_CompileRule_pdf = 'pdflatex --synctex=-1 -src-specials -interaction=nonstopmode -file-line-error-style $*'
+    " let g:Tex_CompileRule_pdf = 'arara -v $*'
+    let g:tex_flavor='pdflatex -interaction=nonstopmode'
+    let g:Tex_MultipleCompileFormats='pdf,bib,pdf,pdf'
+    " let g:Tex_BibtexFlavor='bibtex'
 
-" inoremap <C-f> <Esc>: silent exec '.!inks "'.getline('.').'" %:p:h > /dev/null '<CR>:w<CR>i
-" 在i模式下读取当行并吃掉，然后第一个参数给当行内容（允许含空格），第二个参数给当前tex文件的路径位置。运行后保存tex并进入i模式
-" nnoremap <C-f> : silent exec '.!echo "'.getline('.').'" ; inks "'.input('.').'" %:p:h > /dev/null '<CR>
-" 在n模式下读取当行、吃掉并输出（保留当行），然后敲入文件名，第二个参数给当前tex文件的路径位置。运行后进入n模式
-"
+    let g:tex_flavor='latex'
+    " let g:Tex_MultipleCompileFormats='pdf'
+
+    " Use \c and \r to save and \ll
+    autocmd FileType tex nnoremap <Leader>c :w<CR>:call Tex_RunLaTeX()<CR>
+    autocmd FileType tex nnoremap <Leader>r :w<CR>:call Tex_RunLaTeX()<CR>
+    " Use \v to \lv
+    " autocmd FileType tex nmap <Leader>v <Leader>lv
+    autocmd FileType tex nmap <Leader>v :call Tex_ViewLaTeX()<CR>
+    " Use c-b to map the biblography seaerch
+    autocmd FileType tex nmap <C-b> hf}i<F9>
+    autocmd FileType tex imap <C-b> <F9>
+
+    " inoremap <C-f> <Esc>: silent exec '.!inks "'.getline('.').'" %:p:h > /dev/null '<CR>:w<CR>i
+    " 在i模式下读取当行并吃掉，然后第一个参数给当行内容（允许含空格），第二个参数给当前tex文件的路径位置。运行后保存tex并进入i模式
+    " nnoremap <C-f> : silent exec '.!echo "'.getline('.').'" ; inks "'.input('.').'" %:p:h > /dev/null '<CR>
+    " 在n模式下读取当行、吃掉并输出（保留当行），然后敲入文件名，第二个参数给当前tex文件的路径位置。运行后进入n模式
+else
+    " Try not to use vim-latex and do things on my own!
+    autocmd FileType tex nnoremap <Leader>c :w<CR>:make<CR><CR>
+    autocmd FileType tex nnoremap <Leader>r :w<CR>:make<CR><CR>
+    autocmd FileType tex nmap <Leader>v :!open -a pdf\ expert "%:p:r".pdf<CR><CR>
+    " view log
+    autocmd FileType tex nnoremap <Leader>l :exe 'vs '.expand("%:r").'.log'<CR>
+endif
