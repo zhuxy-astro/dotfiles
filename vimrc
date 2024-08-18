@@ -137,10 +137,24 @@ map <Up> gk
 map <Down> gj
 imap <Up> <C-O>gk
 imap <Down> <C-O>gj
-" map <Left> <BS>
-" map <Right> <Space>
-" imap <Left> <C-O><BS>
-" imap <Right> <C-O><Space>
+map <Left> <BS>
+map <Right> <Space>
+function! RightArrow()
+    if col('.') == col('$')
+        return "\<C-O>\<Space>"
+    else
+        return "\<Right>"
+    endif
+endfunction
+imap <Right> <C-R>=RightArrow()<CR>
+function! LeftArrow()
+    if col('.') == 1
+        return "\<C-O>\<BS>"
+    else
+        return "\<Left>"
+    endif
+endfunction
+imap <Left> <C-R>=LeftArrow()<CR>
 
 "tab缩进
 set tabstop=4
