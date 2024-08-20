@@ -133,12 +133,12 @@ map <ScrollWheelUp> <C-Y>
 map <ScrollWheelDown> <C-E>
 
 " 用箭头来做显示行的上下跳转，以及在行间头末跳转
-map <Up> gk
-map <Down> gj
-imap <Up> <C-O>gk
-imap <Down> <C-O>gj
-map <Left> <BS>
-map <Right> <Space>
+nnoremap <Up> gk
+nnoremap <Down> gj
+inoremap <Up> <C-O>gk
+inoremap <Down> <C-O>gj
+nnoremap <Left> <BS>
+nnoremap <Right> <Space>
 function! RightArrow()
     if col('.') == col('$')
         return "\<C-O>\<Space>"
@@ -146,7 +146,7 @@ function! RightArrow()
         return "\<Right>"
     endif
 endfunction
-imap <Right> <C-R>=RightArrow()<CR>
+inoremap <Right> <C-R>=RightArrow()<CR>
 function! LeftArrow()
     if col('.') == 1
         return "\<C-O>\<BS>"
@@ -154,7 +154,7 @@ function! LeftArrow()
         return "\<Left>"
     endif
 endfunction
-imap <Left> <C-R>=LeftArrow()<CR>
+inoremap <Left> <C-R>=LeftArrow()<CR>
 
 "tab缩进
 set tabstop=4
