@@ -64,7 +64,7 @@ snippet template "Basic template" b
 \usepackage{float}
 \usepackage{adjustbox} %USAGE:\adjustbox{center}{\includegraphics...}
 \usepackage[top=3cm, bottom=2cm, left=2cm, right=2cm]{geometry}
-\usepackage{subfigure}
+\usepackage{subcaption}
 \usepackage{booktabs}%support \toprule \midrule \bottomrule in tables
 
 %% BIB SETTINGS
@@ -97,7 +97,7 @@ snippet aastex "aastex" b
 \setlength{\parindent}{2em}
 
 % \usepackage{graphicx}
-\usepackage{subfigure}
+\usepackage{subcaption}
 \newcommand{\vdag}{(v)^\dagger}
 \newcommand\aastex{AAS\TeX}
 \newcommand\latex{La\TeX}
@@ -390,6 +390,14 @@ snippet << "<<" iA
 \ll
 endsnippet
 
+snippet <~ "<~" iA
+\lesssim
+endsnippet
+
+snippet >~ ">~" iA
+\gtrsim
+endsnippet
+
 snippet ~~ "~" iA
 \sim 
 endsnippet
@@ -551,8 +559,9 @@ snippet ft "footnote"
 \\footnote{${1:${VISUAL:text}}} ${0}
 endsnippet
 snippet subfig "subfigure"
-	\\subfigure[$1]{
-		\\includegraphics[width=${2:0.3}\textwidth]{$3}}
+\\begin{subfigure}[$1]{${2:.3}\textwidth}
+  \\includegraphics[width=\textwidth]{${3}}
+\\end{subfigure}
 	${0}
 endsnippet
 
