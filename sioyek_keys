@@ -1,0 +1,34 @@
+screen_down d
+screen_down <C-d>
+screen_up u
+screen_up <C-u>
+screen_down;screen_down <space>
+screen_up;screen_up <S-space>
+
+move_left l
+
+command ：
+
+zoom_in <C-=>
+zoom_out <C-->
+fit_to_page_width_smart <C-0>
+zoom_in_cursor x
+zoom_out_cursor z
+
+prev_state H
+next_state L
+prev_state <C-[>
+prev_state <C-【>
+next_state <C-]>
+next_state <C-】>
+
+goto_window w
+
+; q
+
+execute_command_q ?
+execute_command_q ？
+execute_command_e E
+execute_command_d D
+execute_command_f F
+execute_command_p P

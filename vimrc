@@ -89,6 +89,9 @@ nnoremap <Leader>R :%s/\<<C-r><C-w>\>/<C-r><C-w>/g<Left><Left>
 " replace the string under selection
 xnoremap <Leader>R y:%s/<C-r>+/<C-r>+/g<Left><Left>
 
+" use \F to reveal the file in Finder
+noremap <Leader>F :!open -R %:p<CR>
+
 " open new windows on the bottom & right
 set splitbelow
 set splitright
