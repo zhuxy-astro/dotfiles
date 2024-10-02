@@ -591,8 +591,8 @@ autocmd FileType tex set shiftwidth=2
 autocmd FileType tex set iskeyword+=:
 
 if use_vimlatex
-    let g:Tex_ViewRule_pdf = 'open -a pdf\ expert' "preview pdf
-    let g:vimtex_view_method='open -a pdf\ expert'
+    let g:Tex_ViewRule_pdf = 'open ' "preview pdf
+    let g:vimtex_view_method='open '
 
     let g:Tex_Folding = 0 "fold nothing
     let g:Tex_IgnoreLevel = 7 "ignore the default 7 warnings
@@ -634,7 +634,9 @@ else
     " Try not to use vim-latex and do things on my own!
     autocmd FileType tex nnoremap <Leader>c :w<CR>:make<CR><CR>
     autocmd FileType tex nnoremap <Leader>r :w<CR>:make<CR><CR>
-    autocmd FileType tex nmap <Leader>v :!open -a pdf\ expert "%:p:r".pdf<CR><CR>
+    " Check if the sioyek.app is not running, if so, use app to open it. Note
+    " the necessary \| before grep!
+    autocmd FileType tex nmap <Leader>v :!if [[ `ps -A \| grep "[s]ioyek.app"` ]]; then /opt/homebrew/bin/sioyek --new-window "%:p:r".pdf; else open -a sioyek "%:p:r".pdf; fi <CR><CR>
     " view log
     autocmd FileType tex nnoremap <Leader>l :exe 'vs '.expand("%:r").'.log'<CR>
 endif
