@@ -4,7 +4,7 @@ let computer = system('scutil --get LocalHostName')[:-2]
 let is_pro = computer == 'ZhuXYs-Pro'
 let is_air = computer == 'ZhuXYs-Air'
 
-let use_vimlatex = 0
+let use_vimlatex = 0  " uninstalled already
 
 "--------------------------------------------------------------------------
 "| Vundle
@@ -22,11 +22,15 @@ Plugin 'SirVer/ultisnips' "补全的引擎
     let g:UltiSnipsJumpBackwardTrigger=";k" "默认为<c-z>
 if use_vimlatex
     Plugin 'vim-latex/vim-latex' "LaTeX plug
+    " autocmd InsertLeave * silent !macism com.apple.keylayout.ABC
+    autocmd VimEnter * silent! call system('macism com.apple.keylayout.ABC')
 endif
 Plugin 'cormacrelf/vim-colors-github'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'jpalardy/vim-slime'
 Plugin 'dense-analysis/ale'
+Plugin 'suliveevil/macism.vim'
+    let g:macosime_cjk_ime='com.apple.inputmethod.SCIM.Shuangpin'
 " enable copilot only when the file is not encrypted
 Plugin 'github/copilot.vim', {'for': ['python', 'sh', 'cpp', 'vim'] }
     " do not use tab in copilot, but use shift-right instead
@@ -36,8 +40,8 @@ Plugin 'github/copilot.vim', {'for': ['python', 'sh', 'cpp', 'vim'] }
     imap <S-left> <Plug>(copilot-accept-word)
 if is_pro
     " python3.7 in Air is too old for ycm
-    Plugin 'ycm-core/YouCompleteMe'
-        set updatetime=2000
+    " Plugin 'ycm-core/YouCompleteMe'
+        " set updatetime=2000
 endif
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -60,12 +64,20 @@ filetype plugin indent on    " required by Vundle, equals to filetype type on, f
 
 " find files. `path` is only available for `find` but not `e`.
 " `**` means all the files inside. Without **, only for the first layer.
+" But, setting ** in path will make the completion EXTREMELY slow because it will search for keywords thoughout all the files in the directory.
 " set path+=$note/**
 " set path+=$dot/**
 " set path+=$scr/**
-set path+=**
+" set path+=**
+
 " show the menu for available possibilities
+" wildmenu and wildmode are used in COMMAND mode, not in the code!
 set wildmenu
+
+" preview 会让上方蹦出来scratch窗口，很烦人
+" set the completion mode to the longest. The fuzzy option isn't so comfortable and is sometimes slow by 241002. No need to use YCM now.
+" On recursive completion, press <C-x><C-p> twice.
+set completeopt=longest,menu,fuzzy
 
 " add the following line to ~/.vim/after/syntax/markdown.vim error pattern on the underscore
 " syn match markdownError "\w\@<=\w\@="
@@ -252,9 +264,6 @@ nmap <silent> <leader>l :loadview<CR>
 
 "允许用退格键删除字符
 set backspace=2
-
-"上方不要蹦出来scratch窗口
-set completeopt-=preview
 
 " 搜索时大小写不敏感
 set ignorecase
@@ -577,7 +586,7 @@ function TocCleanedTex()
     syntax match qfFileName /^[^|]*|[^|]*|\s*\\section{/ transparent conceal
     syntax match qfFileName /^[^|]*|[^|]*|\s*\\subsection{/ transparent conceal cchar={
     syntax match qfFileName /^[^|]*|[^|]*|\s*\\subsubsection{/ transparent conceal cchar=[
-    syntax match qfFileName /^[^|]*|[^|]*|\s*\\subsubsection{/ transparent conceal cchar=(
+    syntax match qfFileName /^[^|]*|[^|]*|\s*\\subsubsubsection{/ transparent conceal cchar=(
     vertical resize 25
     setlocal nowrap 
 endfunction
