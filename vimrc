@@ -15,11 +15,6 @@ filetype off                  " required
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim' " let Vundle manage Vundle, required
-Plugin 'SirVer/ultisnips' "补全的引擎
-    " use tab in YCM, and not in ultisnips
-    let g:UltiSnipsExpandTrigger=";;" "默认为<tab>
-    let g:UltiSnipsJumpForwardTrigger=";;" "默认为<c-b>
-    let g:UltiSnipsJumpBackwardTrigger="kk" "默认为<c-z>
 if use_vimlatex
     Plugin 'vim-latex/vim-latex' "LaTeX plug
     " autocmd InsertLeave * silent !macism com.apple.keylayout.ABC
@@ -29,19 +24,22 @@ Plugin 'cormacrelf/vim-colors-github'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'jpalardy/vim-slime'
 Plugin 'dense-analysis/ale'
-" Plugin 'suliveevil/macism.vim'
-    " let g:macosime_cjk_ime='com.apple.inputmethod.SCIM.Shuangpin'
-" enable copilot only when the file is not encrypted
-Plugin 'github/copilot.vim', {'for': ['python', 'sh', 'cpp', 'vim'] }
-    " do not use tab in copilot, but use shift-right instead
-    " using the alt-right will cause <esc> + f in insert mode to be slow
-    imap <silent><script><expr> <S-right> copilot#Accept("\<CR>")
-    let g:copilot_no_tab_map = v:true
-    imap <S-left> <Plug>(copilot-accept-word)
 if is_pro
-    " python3.7 in Air is too old for ycm
+    " python and node.js in Air is too old
+    " enable copilot only when the file is not encrypted
+    Plugin 'github/copilot.vim', {'for': ['python', 'sh', 'cpp', 'vim'] }
+        " do not use tab in copilot, but use shift-right instead
+        " using the alt-right will cause <esc> + f in insert mode to be slow
+        imap <silent><script><expr> <S-right> copilot#Accept("\<CR>")
+        let g:copilot_no_tab_map = v:true
+        imap <S-left> <Plug>(copilot-accept-word)
     " Plugin 'ycm-core/YouCompleteMe'
         " set updatetime=2000
+    Plugin 'SirVer/ultisnips' "补全的引擎
+        " use tab in YCM, and not in ultisnips
+    let g:UltiSnipsExpandTrigger=";;" "默认为<tab>
+    let g:UltiSnipsJumpForwardTrigger=";;" "默认为<c-b>
+    let g:UltiSnipsJumpBackwardTrigger="kk" "默认为<c-z>
 endif
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -77,10 +75,7 @@ set wildmenu
 " preview 会让上方蹦出来scratch窗口，很烦人
 " set the completion mode to the longest. The fuzzy option isn't so comfortable and is sometimes slow by 241002. No need to use YCM now.
 " On recursive completion, press <C-x><C-p> twice.
-set completeopt=longest,menu
-if is_pro
-    set completeopt+=fuzzy
-endif
+set completeopt=longest,menu,fuzzy
 
 " add the following line to ~/.vim/after/syntax/markdown.vim error pattern on the underscore
 " syn match markdownError "\w\@<=\w\@="

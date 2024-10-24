@@ -19,6 +19,9 @@ alias pip3='python3 -m pip'
 alias ipython='python3 -m IPython'
 alias ipython3='python3 -m IPython'
 
+# vi for Air
+alias vi='vim'
+
 # clash proxy
 proxyon()
 {   export https_proxy=http://127.0.0.1:7890 http_proxy=http://127.0.0.1:7890 all_proxy=socks5://127.0.0.1:7890
