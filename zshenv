@@ -19,6 +19,16 @@ alias pip3='python3 -m pip'
 alias ipython='python3 -m IPython'
 alias ipython3='python3 -m IPython'
 
+# clash proxy
+proxyon()
+{   export https_proxy=http://127.0.0.1:7890 http_proxy=http://127.0.0.1:7890 all_proxy=socks5://127.0.0.1:7890
+    curl http://www.cip.cc/
+}
+proxyoff()
+{   unset https_proxy http_proxy all_proxy
+    curl http://www.cip.cc/
+}
+
 # aliases
 git-add-commit()
 {   if [[ `git status --porcelain` ]]; then
