@@ -77,7 +77,10 @@ set wildmenu
 " preview 会让上方蹦出来scratch窗口，很烦人
 " set the completion mode to the longest. The fuzzy option isn't so comfortable and is sometimes slow by 241002. No need to use YCM now.
 " On recursive completion, press <C-x><C-p> twice.
-set completeopt=longest,menu,fuzzy
+set completeopt=longest,menu
+if is_pro:
+    set completeopt+=fuzzy
+endif
 
 " add the following line to ~/.vim/after/syntax/markdown.vim error pattern on the underscore
 " syn match markdownError "\w\@<=\w\@="
