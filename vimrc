@@ -17,9 +17,9 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim' " let Vundle manage Vundle, required
 Plugin 'SirVer/ultisnips' "补全的引擎
     " use tab in YCM, and not in ultisnips
-    let g:UltiSnipsExpandTrigger=";j" "默认为<tab>
-    let g:UltiSnipsJumpForwardTrigger=";j" "默认为<c-b>
-    let g:UltiSnipsJumpBackwardTrigger=";k" "默认为<c-z>
+    let g:UltiSnipsExpandTrigger=";;" "默认为<tab>
+    let g:UltiSnipsJumpForwardTrigger=";;" "默认为<c-b>
+    let g:UltiSnipsJumpBackwardTrigger="kk" "默认为<c-z>
 if use_vimlatex
     Plugin 'vim-latex/vim-latex' "LaTeX plug
     " autocmd InsertLeave * silent !macism com.apple.keylayout.ABC
