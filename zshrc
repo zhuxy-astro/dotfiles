@@ -74,6 +74,11 @@ fcut()
     ffmpeg -ss "$1" -i input.mp4 -to "$2" -c copy "$3".mp4
 }
 
+cddir()
+{
+    cd `dirname $1`
+}
+
 # htop need sudo to see all the CPUs
 # NOPASSWD is set for htop in `sudo visudo`
 alias htop="sudo htop"
@@ -112,6 +117,7 @@ export NOTE_BASE=$HOME"/Library/Mobile Documents/iCloud~md~obsidian/Documents/no
 export nc=$NOTE_BASE"/Computer"
 alias nc='note_core $nc'
 export na=$NOTE_BASE"/Astronomy"
+export nd=$NOTE_BASE"/Astronomy/Data"
 export nn=$NOTE_BASE"/daily"
 
 alias down='cd ~/Downloads && ls'

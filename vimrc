@@ -29,8 +29,8 @@ Plugin 'cormacrelf/vim-colors-github'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'jpalardy/vim-slime'
 Plugin 'dense-analysis/ale'
-Plugin 'suliveevil/macism.vim'
-    let g:macosime_cjk_ime='com.apple.inputmethod.SCIM.Shuangpin'
+" Plugin 'suliveevil/macism.vim'
+    " let g:macosime_cjk_ime='com.apple.inputmethod.SCIM.Shuangpin'
 " enable copilot only when the file is not encrypted
 Plugin 'github/copilot.vim', {'for': ['python', 'sh', 'cpp', 'vim'] }
     " do not use tab in copilot, but use shift-right instead
