@@ -69,6 +69,8 @@ curl-d()
 {   curl -C - --output ~/Downloads/`basename $1` $1 
 }
 
+alias ip="curl http://www.cip.cc"
+
 fcut()
 {
     ffmpeg -ss "$1" -i input.mp4 -to "$2" -c copy "$3".mp4
