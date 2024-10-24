@@ -78,7 +78,7 @@ set wildmenu
 " set the completion mode to the longest. The fuzzy option isn't so comfortable and is sometimes slow by 241002. No need to use YCM now.
 " On recursive completion, press <C-x><C-p> twice.
 set completeopt=longest,menu
-if is_pro:
+if is_pro
     set completeopt+=fuzzy
 endif
 
