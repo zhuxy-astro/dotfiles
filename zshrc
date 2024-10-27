@@ -71,6 +71,8 @@ curl-d()
 
 alias ip="curl http://www.cip.cc"
 
+alias battery="pmset -g batt"
+
 fcut()
 {
     ffmpeg -ss "$1" -i input.mp4 -to "$2" -c copy "$3".mp4
