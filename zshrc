@@ -71,6 +71,8 @@ curl-d()
 
 alias ip="curl http://www.cip.cc"
 
+alias ssh-a="eval \$(ssh-agent -s) && ssh-add ~/.ssh/id_ed25519"
+
 alias battery="pmset -g batt"
 
 fcut()
