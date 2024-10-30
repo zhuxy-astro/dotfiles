@@ -121,10 +121,12 @@ export snip="$dot"/UltiSnips
 
 export NOTE_BASE=$HOME"/Library/Mobile Documents/iCloud~md~obsidian/Documents/notes"
 export nc=$NOTE_BASE"/Computer"
-alias nc='note_core $nc'
 export na=$NOTE_BASE"/Astronomy"
 export nd=$NOTE_BASE"/Astronomy/Data"
 export nn=$NOTE_BASE"/daily"
+alias nc='note_core $nc'
+alias na='note_core $na'
+alias nn='note_core $nn'
 
 alias down='cd ~/Downloads && ls'
 alias desk='cd ~/Desktop && ls'
