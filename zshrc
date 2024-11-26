@@ -74,6 +74,9 @@ alias ip="curl http://www.cip.cc"
 alias ssh-a="eval \$(ssh-agent -s) && ssh-add ~/.ssh/id_ed25519"
 
 alias battery="pmset -g batt"
+wake()
+{   sudo pmset -b disablesleep "$1"
+}
 
 fcut()
 {
@@ -167,9 +170,10 @@ then
     alias mysql.server='sudo /usr/local/mysql/support-files/mysql.server'
                                             
     # Setting PATH for Python 3.7     
-    PATH="/Library/Frameworks/Python.framework/Versions/3.7/bin:${PATH}"            
-    export PATH                                                                     
-                                                                                    
+    # PATH="/Library/Frameworks/Python.framework/Versions/3.7/bin:${PATH}" 
+    PATH="/usr/local/Cellar/python@3.9/3.9.15/bin:$PATH"
+    export PATH 
+
     #    . /Applications/exelis/idl82/bin/idl_setup.bash
     EXELIS_DIR=/Applications/exelis   
     IDL_DIR=/Applications/exelis/idl82      
