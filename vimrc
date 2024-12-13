@@ -36,9 +36,9 @@ if is_pro
     " Plugin 'ycm-core/YouCompleteMe'
         " set updatetime=2000
     Plugin 'SirVer/ultisnips' "补全的引擎
-        " use tab in YCM, and not in ultisnips
-    let g:UltiSnipsExpandTrigger=";;" "默认为<tab>
-    let g:UltiSnipsJumpForwardTrigger=";;" "默认为<c-b>
+        " if using tab in YCM, then not in ultisnips
+    let g:UltiSnipsExpandTrigger="<tab>" "默认为<tab>
+    let g:UltiSnipsJumpForwardTrigger="<tab>" "默认为<c-b>
     let g:UltiSnipsJumpBackwardTrigger="kk" "默认为<c-z>
 endif
 " All of your Plugins must be added before the following line
