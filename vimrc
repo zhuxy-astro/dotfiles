@@ -136,6 +136,9 @@ autocmd FileType sh set makeprg=clear;source\ %
 " autocmd FileType tex set makeprg=clear;cd\ %:p:h;pdflatex\ -interaction=nonstopmode\ %;bibtex\ %:r;pdflatex\ -interaction=nonstopmode\ %;pdflatex\ -interaction=nonstopmode\ -file-line-error\ %;cd\ -
 autocmd FileType tex set makeprg=clear;cd\ %:p:h;pdflatex\ -interaction=nonstopmode\ %;bibtex\ %:r;pdflatex\ -interaction=nonstopmode\ %;pdflatex\ -interaction=nonstopmode\ %;cd\ -
 
+" 用\m来跑真正的make
+nnoremap <Leader>m :!make<CR>
+
 "没有保存或文件只读时弹出确认
 set confirm
 
@@ -257,8 +260,8 @@ set nofoldenable
 set foldlevel=999
 " the following commands is used for saving and loading the folding
 " information
-nmap <silent> <leader>m :mkview<CR>
-nmap <silent> <leader>l :loadview<CR>
+nmap <silent> <leader>M :mkview<CR>
+nmap <silent> <leader>L :loadview<CR>
 
 "允许用退格键删除字符
 set backspace=2
@@ -524,8 +527,11 @@ autocmd FileType python xmap <c-c><c-c> m]y:SlimeSend1 %time %paste -q<CR>`]
 " map \A to turn on/off ALE
 nnoremap <Leader>A :ALEToggle<CR>
 
+" For LaTeX, I have both chktex and lacheck installed. But lacheck is more
+" verbose and raises many unnecessary warnings.
 let g:ale_linters = {
-\   'python': ['flake8',],}
+\   'python': ['flake8',],
+\   'tex': ['chktex'],}
 " 'mypy'
 
 " :ALEFix will fix the whole file
@@ -623,8 +629,7 @@ if use_vimlatex
     let g:tex_flavor='latex'
     " let g:Tex_MultipleCompileFormats='pdf'
 
-    " Use \c and \r to save and \ll
-    autocmd FileType tex nnoremap <Leader>c :w<CR>:call Tex_RunLaTeX()<CR>
+    " Use \r to save and \ll
     autocmd FileType tex nnoremap <Leader>r :w<CR>:call Tex_RunLaTeX()<CR>
     " Use \v to \lv
     " autocmd FileType tex nmap <Leader>v <Leader>lv

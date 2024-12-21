@@ -72,7 +72,7 @@ snippet template "Basic template" b
 
 %% BIB SETTINGS
 %\usepackage[square, comma, sort&compress, numbers]{natbib}
-%\bibliographystyle{unsrt}
+%\bibstyle{unsrt}
 
 %% HYPERREF
 %\usepackage[colorlinks=true,urlcolor=blue]{hyperref}
@@ -95,12 +95,10 @@ snippet aastex "aastex" b
 % \documentclass[modern]{aastex631}
 % \linespread{1.3}
 
-% \usepackage{gensymb}
-\usepackage{indentfirst}
-\setlength{\parindent}{2em}
+\usepackage{CJK}
+\usepackage{enumitem}
+\newcommand{\comment}[1]{}
 
-% \usepackage{graphicx}
-\usepackage{subcaption}
 \newcommand{\vdag}{(v)^\dagger}
 \newcommand\aastex{AAS\TeX}
 \newcommand\latex{La\TeX}

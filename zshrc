@@ -116,7 +116,8 @@ bgcheck()
 export proj="$HOME"/Projects
 export data="$HOME"/Projects/Data
 export pd="$HOME"/Projects/pure_disk
-export pdpaper="$HOME"/Documents/astronomy/pure\ disk/paper
+export paper="$HOME"/Documents/astronomy/pure\ disk/paper
+export report="$HOME"/Documents/astronomy/PKU_misc/annual\ report\ 2024/written 
 export pylib="$HOME"/Projects/pylib
 export ast="$pylib"/astro_toolbox
 export scr="$COMPUTER_PATH"/scripts
