@@ -137,7 +137,7 @@ autocmd FileType sh set makeprg=clear;source\ %
 autocmd FileType tex set makeprg=clear;cd\ %:p:h;pdflatex\ -interaction=nonstopmode\ %;bibtex\ %:r;pdflatex\ -interaction=nonstopmode\ %;pdflatex\ -interaction=nonstopmode\ %;cd\ -
 
 " 用\m来跑真正的make
-nnoremap <Leader>m :!make<CR>
+nnoremap <Leader>m :!make<CR><CR>
 
 "没有保存或文件只读时弹出确认
 set confirm
@@ -527,11 +527,9 @@ autocmd FileType python xmap <c-c><c-c> m]y:SlimeSend1 %time %paste -q<CR>`]
 " map \A to turn on/off ALE
 nnoremap <Leader>A :ALEToggle<CR>
 
-" For LaTeX, I have both chktex and lacheck installed. But lacheck is more
-" verbose and raises many unnecessary warnings.
 let g:ale_linters = {
 \   'python': ['flake8',],
-\   'tex': ['chktex'],}
+\   'tex': ['lacheck'],}
 " 'mypy'
 
 " :ALEFix will fix the whole file
