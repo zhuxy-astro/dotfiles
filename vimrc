@@ -6,6 +6,7 @@ let is_air = computer == 'ZhuXYs-Air'
 
 let use_vimlatex = 0  " uninstalled already
 
+if is_pro || is_air
 "--------------------------------------------------------------------------
 "| Vundle
 "--------------------------------------------------------------------------
@@ -44,6 +45,7 @@ endif
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 "--End of Vundle
+endif
 
 " add the snippets file to the buffer list
 " I don't know why but using `&filetype` as string within vimrc will not work,
@@ -75,7 +77,10 @@ set wildmenu
 " preview 会让上方蹦出来scratch窗口，很烦人
 " set the completion mode to the longest. The fuzzy option isn't so comfortable and is sometimes slow by 241002. No need to use YCM now.
 " On recursive completion, press <C-x><C-p> twice.
-set completeopt=longest,menu,fuzzy
+set completeopt=longest,menu
+if is_pro || is_air
+set completeopt+=fuzzy
+endif
 
 " add the following line to ~/.vim/after/syntax/markdown.vim error pattern on the underscore
 " syn match markdownError "\w\@<=\w\@="
@@ -231,7 +236,9 @@ set showcmd
 " 配色方案
 " colorscheme default
 set background=light
-colorscheme github
+if is_pro || is_air
+    colorscheme github
+endif
 " colorscheme lunaperche 
 " colorscheme morning
 " colorscheme shine
@@ -240,7 +247,10 @@ colorscheme github
 " colorscheme wildcharm
 
 "折行且顺滑滚动
-set wrap smoothscroll
+set wrap
+if is_pro || is_air
+    set wrap smoothscroll
+endif
 
 "针对tex做断行，设成72后在80格的窗口下是一整行，左边空4格indent，右边对称空四格
 autocmd FileType tex set tw=72
