@@ -11,9 +11,9 @@
 	excludesfile = /Users/zhuxy/.gitignore
 [pull]
 	rebase = false
-[http]
-	proxy = http://127.0.0.1:7890
-[https]
-	proxy = http://127.0.0.1:7890
+# [http]
+	# proxy = http://127.0.0.1:7890
+# [https]
+	# proxy = http://127.0.0.1:7890
 # [url "ssh://git@github.com/"]
 	# insteadOf = https://github.com/

@@ -6,14 +6,25 @@ case "$OSTYPE" in
     "darwin"*) localhostname=`scutil --get LocalHostName` ;; 
     "linux"*) localhostname=`hostname -s` ;; 
 esac
-is=${localhostname:0-3}
+computer_is=${localhostname:0-3}
 
-if [[ $is = 'Pro' ]]
+# python version
+alias python='python3'
+# alias pip='python3 -m pip'
+# alias pip3='python3 -m pip'
+# alias ipython='python3 -m IPython'
+# alias ipython3='python3 -m IPython'
+alias venv='python3 -m venv'
+
+if [[ $computer_is = 'Pro' ]]
 then
     eval "$(/opt/homebrew/bin/brew shellenv)"
     # allow screen to output the correct color
     export screen="/opt/homebrew/bin/screen"
-    export PATH="$(brew --prefix python@3.10)/libexec/bin:$PATH"
+
+    export PIPX_DEFAULT_PYTHON=$(which python3.12)
+    export pyvenvs="$HOME"/Projects/pyvenvs
+    alias sci='source $pyvenvs/sci/bin/activate'
 fi
 
 # ################ #
@@ -21,9 +32,6 @@ fi
 # ################ #
 
 export TERM="xterm-256color"
-
-# for crontab
-export EDITOR="vim"
 
 bindkey -v
 bindkey -v '^?' backward-delete-char
@@ -117,7 +125,6 @@ export proj="$HOME"/Projects
 export data="$HOME"/Projects/Data
 export pd="$HOME"/Projects/pure_disk
 export paper="$HOME"/Documents/astronomy/pure\ disk/paper
-export report="$HOME"/Documents/astronomy/PKU_misc/annual\ report\ 2024/written 
 export pylib="$HOME"/Projects/pylib
 export ast="$pylib"/astro_toolbox
 export scr="$COMPUTER_PATH"/scripts
@@ -163,7 +170,7 @@ fi
 # export PATH="$BOINC":"$PATH"
 
 
-if [[ $is = 'Air' ]]
+if [[ $computer_is = 'Air' ]]
 then
     # mysql
     PATH="/usr/local/mysql/bin/:${PATH}"    
@@ -213,10 +220,10 @@ fi
 # export ARCHFLAGS="-arch x86_64"
 
 # this should be at the end of the .zshrc file
-if [[ $is = 'Pro' ]]
+if [[ $computer_is = 'Pro' ]]
 then
     source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-elif [[ $is = 'Air' ]]
+elif [[ $computer_is = 'Air' ]]
 then
     source /usr/local/Cellar/zsh-autosuggestions/0.7.0/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 fi

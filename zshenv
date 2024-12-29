@@ -13,14 +13,14 @@ PATH="${mypath}":"${PATH}"
 
 export PYTHONPATH="$PYTHONPATH:$HOME/Projects/pylib/"
 export PYTHONBREAKPOINT=ipdb.set_trace
-
-# python version
-alias pip3='python3 -m pip'
-alias ipython='python3 -m IPython'
-alias ipython3='python3 -m IPython'
+# pipx path
+export PATH="$PATH:/Users/zhuxy/.local/bin"
 
 # vi for Air
 alias vi='vim'
+
+# for crontab
+export EDITOR="vim"
 
 # clash proxy
 proxyon()
