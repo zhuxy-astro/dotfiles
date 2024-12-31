@@ -4,11 +4,12 @@
 
 export SHELL='/bin/zsh'
 
-# computer path for scripts ... 
+# computer path for scripts... 
 export COMPUTER_PATH=$HOME"/Projects/computer"
-export mypath="$COMPUTER_PATH"/mypath
 
 # 自己的scripts进入path
+# export mypath="$COMPUTER_PATH"/mypath
+export mypath="$HOME"/.local/bin
 PATH="${mypath}":"${PATH}"
 
 export PYTHONPATH="$PYTHONPATH:$HOME/Projects/pylib/"

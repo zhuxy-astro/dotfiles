@@ -9,7 +9,7 @@
 SHELL=/bin/zsh
 # defining PATHs
 # including /opt/homebrew/bin here will cause python to fail to find selenium, which is strange
-PATH=/bin:/usr/bin:/sbin:/usr/sbin:/usr/local/bin:/opt/homebrew/sbin:/Users/ZhuXY/Projects/computer/mypath
+PATH=/bin:/usr/bin:/sbin:/usr/sbin:/usr/local/bin:/opt/homebrew/sbin:/Users/zhuxy/.local/bin
 # COMPUTER_PATH=/Users/ZhuXY/Projects/computer
 
 # disable sending mails
@@ -30,8 +30,8 @@ MAILTO=""
 
 #00 23  *  *  * osascript -e 'display notification "and have a rest!" with title "Stop coding" ' && afplay /System/Library/PrivateFrameworks/ToneLibrary.framework/Versions/A/Resources/AlertTones/Modern/Chord.m4r
 
-# 00  *  *  *  * /opt/homebrew/bin/python3 /Users/ZhuXY/Projects/computer/mypath/weibo -w -T
+# 00  *  *  *  * /opt/homebrew/bin/python3 /Users/zhuxy/.local/bin/weibo -w -T
 
 # Run in PKU:
-21 */3 *  *  * /opt/homebrew/bin/python3 /Users/ZhuXY/Projects/computer/mypath/its -1
-00  *  *  *  * /Users/zhuxy/Projects/computer/mypath/remote quiet
+21 */3 *  *  * /Users/zhuxy/Projects/pyvenvs/web/bin/python3 /Users/zhuxy/.local/bin/its -1
+00  *  *  *  * /Users/zhuxy/.local/bin/remote quiet

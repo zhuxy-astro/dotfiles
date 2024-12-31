@@ -9,7 +9,7 @@ esac
 computer_is=${localhostname:0-3}
 
 # python version
-alias python='python3'
+# alias python='python3'
 # alias pip='python3 -m pip'
 # alias pip3='python3 -m pip'
 # alias ipython='python3 -m IPython'
@@ -25,6 +25,7 @@ then
     export PIPX_DEFAULT_PYTHON=$(which python3.12)
     export pyvenvs="$HOME"/Projects/pyvenvs
     alias sci='source $pyvenvs/sci/bin/activate'
+    alias web='source $pyvenvs/web/bin/activate'
 fi
 
 # ################ #
