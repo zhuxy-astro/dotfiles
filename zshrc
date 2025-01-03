@@ -28,9 +28,9 @@ then
     alias web='source $pyvenvs/web/bin/activate'
 fi
 
-# ################ #
-# BASIC ZSH CONFIG #
-# ################ #
+# ######################################### #
+# BASIC ZSH CONFIG TO SET ON EVERY COMPUTER #
+# ######################################### #
 
 export TERM="xterm-256color"
 
@@ -52,6 +52,14 @@ alias bc='bc -lq'
 # tree, in order to print chinese characters properly
 alias tree='tree -N'
 
+alias du="du -sm * | sort -nr"
+alias df="df -lh"
+
+cddir()
+{
+    cd `dirname $1`
+}
+
 autoload zmv
 
 # You may need to manually set your language environment
@@ -63,22 +71,55 @@ export LC_ALL=en_US.UTF-8
 zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
 autoload -Uz compinit && compinit
 
+# clash proxy
+alias ip="curl http://www.cip.cc"
+proxyon()
+{   export https_proxy=http://127.0.0.1:7890 http_proxy=http://127.0.0.1:7890 all_proxy=socks5://127.0.0.1:7890
+    curl http://www.cip.cc/
+}
+proxyoff()
+{   unset https_proxy http_proxy all_proxy
+    curl http://www.cip.cc/
+}
+
+git-add-commit()
+{   if [[ `git status --porcelain` ]]; then
+        git add -A
+        git commit -m "`date +\"%y-%m-%d %H:%M:%S\"` $*"
+    else
+        echo "Nothing to commit. Skipped."
+        return 1
+    fi
+}
+
 alias git-clone-set='git config --global url."https://gitclone.com/github.com".insteadOf https://github.com'
 alias git-clone-unset='git config --global --unset url.https://gitclone.com/github.com.insteadof'
+
+# find filename
+findname()
+{   # name type=f depth=2 suffix=""
+    if [[ -z $4 ]]
+    then
+        suf=""
+    else
+        suf=."$4"
+    fi
+    find . -type ${2:-f} -maxdepth ${3:-2} -name "$1*$suf"
+}
+
+export EDITOR="vim"
 
 # ########################### #
 # THE END OF BASIC ZSH CONFIG #
 # ########################### #
 
-alias du="du -sm * | sort -nr"
-alias df="df -lh"
+export PYTHONBREAKPOINT=ipdb.set_trace
+alias activate='source venv/bin/activate'
 
 # curl
 curl-d()
 {   curl -C - --output ~/Downloads/`basename $1` $1 
 }
-
-alias ip="curl http://www.cip.cc"
 
 alias ssh-a="eval \$(ssh-agent -s) && ssh-add ~/.ssh/id_ed25519"
 
@@ -90,11 +131,6 @@ wake()
 fcut()
 {
     ffmpeg -ss "$1" -i input.mp4 -to "$2" -c copy "$3".mp4
-}
-
-cddir()
-{
-    cd `dirname $1`
 }
 
 # htop need sudo to see all the CPUs
@@ -173,6 +209,8 @@ fi
 
 if [[ $computer_is = 'Air' ]]
 then
+    alias vi='vim'
+
     # mysql
     PATH="/usr/local/mysql/bin/:${PATH}"    
     export PATH                             
@@ -200,8 +238,6 @@ then
     fi
     #rbenv
     if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
-
-    # export EDITOR="/usr/local/bin/vim"
 
     #HEASORT required
     #export CC=/usr/bin/clang

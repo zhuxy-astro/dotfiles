@@ -7,10 +7,10 @@
 
 # tell cron to read zsh configs
 SHELL=/bin/zsh
-# defining PATHs
+
+# defining PATHs. It seems that $PATH cannot be inherited like `export PATH=$PATH:/new/path`
 # including /opt/homebrew/bin here will cause python to fail to find selenium, which is strange
 PATH=/bin:/usr/bin:/sbin:/usr/sbin:/usr/local/bin:/opt/homebrew/sbin:/Users/zhuxy/.local/bin
-# COMPUTER_PATH=/Users/ZhuXY/Projects/computer
 
 # disable sending mails
 MAILTO=""
