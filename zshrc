@@ -6,7 +6,7 @@ case "$OSTYPE" in
     "darwin"*) localhostname=`scutil --get LocalHostName` ;; 
     "linux"*) localhostname=`hostname -s` ;; 
 esac
-computer_is=${localhostname:0-3}
+export computer_is=${localhostname:0-3}
 
 # python version
 # alias python='python3'
@@ -107,8 +107,6 @@ findname()
     find . -type ${2:-f} -maxdepth ${3:-2} -name "$1*$suf"
 }
 
-export EDITOR="vim"
-
 # ########################### #
 # THE END OF BASIC ZSH CONFIG #
 # ########################### #
@@ -169,12 +167,12 @@ export dot="$COMPUTER_PATH"/dotfiles
 export snip="$dot"/UltiSnips
 
 export NOTE_BASE=$HOME"/Library/Mobile Documents/iCloud~md~obsidian/Documents/notes"
-export nc=$NOTE_BASE"/Computer"
-export na=$NOTE_BASE"/Astronomy"
-export nd=$NOTE_BASE"/Astronomy/Data"
+export cn=$NOTE_BASE"/Computer"
+export an=$NOTE_BASE"/Astronomy"
+export dn=$NOTE_BASE"/Astronomy/Data"
 export nn=$NOTE_BASE"/daily"
-alias nc='note_core $nc'
-alias na='note_core $na'
+alias cn='note_core $cn'
+alias an='note_core $an'
 alias nn='note_core $nn'
 
 alias down='cd ~/Downloads && ls'
@@ -209,14 +207,12 @@ fi
 
 if [[ $computer_is = 'Air' ]]
 then
-    alias vi='vim'
-
     # mysql
     PATH="/usr/local/mysql/bin/:${PATH}"    
     export PATH                             
     alias mysql.server='sudo /usr/local/mysql/support-files/mysql.server'
                                             
-    # Setting PATH for Python 3.7     
+    # Setting PATH for Python 3.9
     # PATH="/Library/Frameworks/Python.framework/Versions/3.7/bin:${PATH}" 
     PATH="/usr/local/Cellar/python@3.9/3.9.15/bin:$PATH"
     export PATH 
@@ -227,11 +223,8 @@ then
     export IDL_DIR EXELIS_DIR           
     alias exelislicense=$IDL_DIR/bin/exelislicense
     alias idl=$IDL_DIR/bin/idl              
-    if [ -x $IDL_DIR/bin/idlde ]; then                                              
-      alias idlde=$IDL_DIR/bin/idlde
-    fi                                      
-    if [ -x $IDL_DIR/bin/idlhelp ]; then                                            
-      alias idlhelp=$IDL_DIR/bin/idlhelp                                            
+    if [ -x $IDL_DIR/bin/idlhelp ]; then 
+      alias idlhelp=$IDL_DIR/bin/idlhelp
     fi
     if [ -x $IDL_DIR/bin/idlrpc ]; then
       alias idlrpc=$IDL_DIR/bin/idlrpc
@@ -255,6 +248,9 @@ fi
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
+
+# ensure MYPATH is prioritized
+export PATH="$MYPATH:$PATH"
 
 # this should be at the end of the .zshrc file
 if [[ $computer_is = 'Pro' ]]
