@@ -78,8 +78,8 @@ set wildmenu
 " set the completion mode to the longest. The fuzzy option isn't so comfortable and is sometimes slow by 241002. No need to use YCM now.
 " On recursive completion, press <C-x><C-p> twice.
 set completeopt=longest,menu
-if is_pro || is_air
-set completeopt+=fuzzy
+if has('patch-9.1.0463')
+    set completeopt+=fuzzy
 endif
 
 " add the following line to ~/.vim/after/syntax/markdown.vim error pattern on the underscore
@@ -236,9 +236,7 @@ set showcmd
 " 配色方案
 " colorscheme default
 set background=light
-if is_pro || is_air
-    colorscheme github
-endif
+colorscheme github
 " colorscheme lunaperche 
 " colorscheme morning
 " colorscheme shine
@@ -248,7 +246,7 @@ endif
 
 "折行且顺滑滚动
 set wrap
-if is_pro || is_air
+if exists('&smoothscroll')
     set wrap smoothscroll
 endif
 

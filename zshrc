@@ -28,18 +28,11 @@ then
     alias web='source $pyvenvs/web/bin/activate'
 fi
 
-# ######################################### #
-# BASIC ZSH CONFIG TO SET ON EVERY COMPUTER #
-# ######################################### #
+# ########################################### #
+# BASIC SHELL CONFIG TO SET ON EVERY COMPUTER #
+# ########################################### #
 
 export TERM="xterm-256color"
-
-bindkey -v
-bindkey -v '^?' backward-delete-char
-bindkey '^[[A' up-line-or-search
-bindkey '^[[B' down-line-or-search
-
-export PS1="%(?::%F{red}%?⏎ )%F{green}%* %F{cyan}%c%f "
 
 # highlight in grep and ls
 alias grep='grep --color=auto'
@@ -66,10 +59,6 @@ autoload zmv
 # When this is set, there will be no error when connecting to a remote Linux
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
-
-# ignore cases
-zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
-autoload -Uz compinit && compinit
 
 # clash proxy
 alias ip="curl http://www.cip.cc"
@@ -107,9 +96,27 @@ findname()
     find . -type ${2:-f} -maxdepth ${3:-2} -name "$1*$suf"
 }
 
-# ########################### #
-# THE END OF BASIC ZSH CONFIG #
-# ########################### #
+# ensure ~/.local/bin is prioritized
+export PATH="~/.local/bin:$PATH"
+
+# ######################################### #
+# BASIC ZSH CONFIG TO SET ON EVERY COMPUTER #
+# ######################################### #
+
+bindkey -v
+bindkey -v '^?' backward-delete-char
+bindkey '^[[A' up-line-or-search
+bindkey '^[[B' down-line-or-search
+
+# ignore cases
+zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
+autoload -Uz compinit && compinit
+
+export PS1="%(?::%F{red}%?⏎ )%F{green}%* %F{cyan}%c%f "
+
+# ############################# #
+# THE END OF BASIC SHELL CONFIG #
+# ############################# #
 
 export PYTHONBREAKPOINT=ipdb.set_trace
 alias activate='source venv/bin/activate'
@@ -248,9 +255,6 @@ fi
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
-
-# ensure MYPATH is prioritized
-export PATH="$MYPATH:$PATH"
 
 # this should be at the end of the .zshrc file
 if [[ $computer_is = 'Pro' ]]
