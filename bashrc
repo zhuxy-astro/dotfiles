@@ -32,7 +32,7 @@ alias grep='grep --color=auto'
 #PS1='\[\e[35m\]\t \[\e[0m\]\h:\W \u\$ '
 #PS1='\[\e[35m\]\t \[\e[0m\]#\# \h:\W\$ '
 # export PS1='\[\e[35m\]\t \[\e[0m\]#\# \W\$ '
-export PS1='\[\e[32m\]\t \[\e[0m\]#\# \[\e[36m\]\W \[\e[0m\]'
+export PS1='\[$(if [ $? -ne 0 ]; then echo "\[\e[31m\]$?⏎ "; fi)\[\e[32m\]\t \[\e[0m\]#\# \[\e[36m\]\W \[\e[0m\]'
 
 #oldwangyiyun
 alias wyy='open /Users/ZhuXY/Documents/computer/install/旧网易云.app'
