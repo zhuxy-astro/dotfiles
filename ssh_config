@@ -20,11 +20,6 @@ Host pkudata
     User 2101110287
     Hostname wmsk1-data.pku.edu.cn
 
-Host tng-server
-    HostName data-eu.tng-project.org
-    User tnguser
-    # User zhuxy@stu.pku.edu.cn
-
 # This will make the ssh connection available for other shell window as long as a connection is running
 Host *
    ControlMaster auto
