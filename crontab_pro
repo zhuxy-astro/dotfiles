@@ -13,7 +13,7 @@ SHELL=/bin/zsh
 PATH=/bin:/usr/bin:/sbin:/usr/sbin:/usr/local/bin:/opt/homebrew/sbin:/Users/zhuxy/.local/bin
 
 # disable sending mails
-MAILTO=""
+# MAILTO=""
 
 # Example of job definition:
 # *: any value
@@ -35,3 +35,4 @@ MAILTO=""
 # Run in PKU:
 21 */3 *  *  * /Users/zhuxy/Projects/pyvenvs/web/bin/python3 /Users/zhuxy/.local/bin/its -1
 00  *  *  *  * /Users/zhuxy/.local/bin/remote quiet
+30 13  *  *  2 /Users/zhuxy/Projects/pyvenvs/ctrl/bin/python3 /Users/zhuxy/.local/bin/iphone

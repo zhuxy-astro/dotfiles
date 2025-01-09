@@ -65,10 +65,12 @@ alias ip="curl http://www.cip.cc"
 proxyon()
 {   export https_proxy=http://127.0.0.1:7890 http_proxy=http://127.0.0.1:7890 all_proxy=socks5://127.0.0.1:7890
     curl http://www.cip.cc/
+    return $?
 }
 proxyoff()
 {   unset https_proxy http_proxy all_proxy
     curl http://www.cip.cc/
+    return $?
 }
 
 git-add-commit()
@@ -119,7 +121,22 @@ export PS1="%(?::%F{red}%?⏎ )%F{green}%* %F{cyan}%c%f "
 # ############################# #
 
 export PYTHONBREAKPOINT=ipdb.set_trace
-alias activate='source venv/bin/activate'
+
+activate()
+{   if [[ $? -eq 0 && -f venv/bin/activate ]]
+    then
+        source venv/bin/activate
+    elif [[ -f "$1/bin/activate" ]]
+    then
+        source "$1/bin/activate"
+    elif [[ -f "$pyvenvs/$1/bin/activate" ]] 
+    then
+        source "$pyvenvs/$1/bin/activate"
+    else
+        echo "No venv found. Nothing is done."
+        return 1
+    fi
+}
 
 # curl
 curl-d()
@@ -198,6 +215,8 @@ alias sd='cd '$sd' && ./webui.sh --no-half --opt-sub-quad-attention'
 # scp name for vim
 export scp_data_home="scp://2101110287@wmsk1-data.pku.edu.cn//gpfs/share/home/2101110287"
 export scp_login_home="scp://2101110287@wmsk1-login.pku.edu.cn//gpfs/share/home/2101110287"
+alias sshfs-data="sshfs 2101110287@wmsk1-data.pku.edu.cn:/gpfs/share/home/2101110287 /tmp/sshfs_data"
+alias sshfs-login="sshfs 2101110287@wmsk1-login.pku.edu.cn:/gpfs/share/home/2101110287 /tmp/sshfs_login"
 
 # diary
 alias diary='vi -c "let b:copilot_enabled=v:false" -c "colorscheme default" -c "set laststatus=0" -c "set nonu" +$ '$HOME'/Documents/others/diary'
