@@ -183,6 +183,7 @@ bgcheck()
 export proj="$HOME"/Projects
 export data="$HOME"/Projects/Data
 export pd="$HOME"/Projects/pure_disk
+export ft="$HOME"/Projects/fromation\ time
 export paper="$HOME"/Documents/astronomy/pure\ disk/paper
 export pylib="$HOME"/Projects/pylib
 export ast="$pylib"/astro_toolbox
@@ -215,8 +216,8 @@ alias sd='cd '$sd' && ./webui.sh --no-half --opt-sub-quad-attention'
 # scp name for vim
 export scp_data_home="scp://2101110287@wmsk1-data.pku.edu.cn//gpfs/share/home/2101110287"
 export scp_login_home="scp://2101110287@wmsk1-login.pku.edu.cn//gpfs/share/home/2101110287"
-alias sshfs-data="sshfs 2101110287@wmsk1-data.pku.edu.cn:/gpfs/share/home/2101110287 /tmp/sshfs_data"
-alias sshfs-login="sshfs 2101110287@wmsk1-login.pku.edu.cn:/gpfs/share/home/2101110287 /tmp/sshfs_login"
+alias sshfs-data="sshfs 2101110287@wmsk1-data.pku.edu.cn:/gpfs/share/home/2101110287 /tmp/sshfs_pku"
+alias sshfs-login="sshfs 2101110287@wmsk1-login.pku.edu.cn:/gpfs/share/home/2101110287 /tmp/sshfs_pku"
 
 # diary
 alias diary='vi -c "let b:copilot_enabled=v:false" -c "colorscheme default" -c "set laststatus=0" -c "set nonu" +$ '$HOME'/Documents/others/diary'
