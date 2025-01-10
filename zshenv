@@ -11,7 +11,7 @@ export COMPUTER_PATH=$HOME"/Projects/computer"
 export PYTHONPATH="$PYTHONPATH:$HOME/Projects/pylib/"
 
 # pipx path and also mypath
-export MYPATH="/Users/zhuxy/.local/bin"
+export MYPATH="$HOME/.local/bin"
 export PATH="$MYPATH:$PATH"
 
 export EDITOR="vim"

@@ -25,23 +25,19 @@ Plugin 'cormacrelf/vim-colors-github'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'jpalardy/vim-slime'
 Plugin 'dense-analysis/ale'
-if is_pro
-    " python and node.js in Air is too old
-    " enable copilot only when the file is not encrypted
-    Plugin 'github/copilot.vim', {'for': ['python', 'sh', 'cpp', 'vim'] }
-        " do not use tab in copilot, but use shift-right instead
-        " using the alt-right will cause <esc> + f in insert mode to be slow
-        imap <silent><script><expr> <S-right> copilot#Accept("\<CR>")
-        let g:copilot_no_tab_map = v:true
-        imap <S-left> <Plug>(copilot-accept-word)
-    " Plugin 'ycm-core/YouCompleteMe'
-        " set updatetime=2000
-    Plugin 'SirVer/ultisnips' "补全的引擎
-        " if using tab in YCM, then not in ultisnips
-    let g:UltiSnipsExpandTrigger="<tab>" "默认为<tab>
-    let g:UltiSnipsJumpForwardTrigger="<tab>" "默认为<c-b>
-    let g:UltiSnipsJumpBackwardTrigger="kk" "默认为<c-z>
-endif
+Plugin 'github/copilot.vim'
+    " do not use tab in copilot, but use shift-right instead
+    " using the alt-right will cause <esc> + f in insert mode to be slow
+    imap <silent><script><expr> <S-right> copilot#Accept("\<CR>")
+    let g:copilot_no_tab_map = v:true
+    imap <S-left> <Plug>(copilot-accept-word)
+" Plugin 'ycm-core/YouCompleteMe'
+    " set updatetime=2000
+Plugin 'SirVer/ultisnips' "补全的引擎
+    " if using tab in YCM, then not in ultisnips
+let g:UltiSnipsExpandTrigger="<tab>" "默认为<tab>
+let g:UltiSnipsJumpForwardTrigger="<tab>" "默认为<c-b>
+let g:UltiSnipsJumpBackwardTrigger="kk" "默认为<c-z>
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 "--End of Vundle
