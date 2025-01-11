@@ -8,24 +8,11 @@ case "$OSTYPE" in
 esac
 export computer_is=${localhostname:0-3}
 
-# python version
-# alias python='python3'
-# alias pip='python3 -m pip'
-# alias pip3='python3 -m pip'
-# alias ipython='python3 -m IPython'
-# alias ipython3='python3 -m IPython'
-alias venv='python3 -m venv'
-
 if [[ $computer_is = 'Pro' ]]
 then
     eval "$(/opt/homebrew/bin/brew shellenv)"
     # allow screen to output the correct color
     export screen="/opt/homebrew/bin/screen"
-
-    export PIPX_DEFAULT_PYTHON=$(which python3.12)
-    export pyvenvs="$HOME"/Projects/pyvenvs
-    alias sci='source $pyvenvs/sci/bin/activate'
-    alias web='source $pyvenvs/web/bin/activate'
 fi
 
 # ########################################### #
@@ -98,8 +85,9 @@ findname()
     find . -type ${2:-f} -maxdepth ${3:-2} -name "$1*$suf"
 }
 
-# ensure ~/.local/bin is prioritized
-export PATH="$HOME/.local/bin:$PATH"
+# ensure $HOME/.local/bin is prioritized
+export MYPATH="$HOME/.local/bin"
+export PATH="$MYPATH:$PATH"
 
 # ######################################### #
 # BASIC ZSH CONFIG TO SET ON EVERY COMPUTER #
@@ -120,7 +108,18 @@ export PS1="%(?::%F{red}%?⏎ )%F{green}%* %F{cyan}%c%f "
 # THE END OF BASIC SHELL CONFIG #
 # ############################# #
 
+# python version
+# alias ipython='python3 -m IPython'
+# alias ipython3='python3 -m IPython'
+
 export PYTHONBREAKPOINT=ipdb.set_trace
+
+export PIPX_DEFAULT_PYTHON=$(which python3.12)
+
+alias venv='python3 -m venv'
+export pyvenvs="$HOME"/Projects/pyvenvs
+alias sci='source $pyvenvs/sci/bin/activate'
+alias web='source $pyvenvs/web/bin/activate'
 
 activate()
 {   if [[ $? -eq 0 && -f venv/bin/activate ]]
@@ -140,10 +139,10 @@ activate()
 
 # curl
 curl-d()
-{   curl -C - --output ~/Downloads/`basename $1` $1 
+{   curl -C - --output $HOME/Downloads/`basename $1` $1 
 }
 
-alias ssh-a="eval \$(ssh-agent -s) && ssh-add ~/.ssh/id_ed25519"
+alias ssh-a="eval \$(ssh-agent -s) && ssh-add $HOME/.ssh/id_ed25519"
 
 alias battery="pmset -g batt"
 wake()
@@ -201,12 +200,12 @@ alias an='note_core $an'
 alias nn='note_core $nn'
 
 alias down='cd ~/Downloads && ls'
-alias desk='cd ~/Desktop && ls'
-alias doc='cd ~/Documents && ls'
+alias desk='cd $HOME/Desktop && ls'
+alias doc='cd $HOME/Documents && ls'
 alias proj='cd "$proj" && ls'
 alias data='cd "$data" && ls'
 alias pd='cd "$pd" && ls'
-alias drop='cd ~/Desktop/Drop\ Box && ls'
+alias drop='cd $HOME/Desktop/Drop\ Box && ls'
 
 alias tex-md="vi "$NOTE_BASE"/Astronomy/tex_md.tex; open -a Obsidian"
 
@@ -241,7 +240,7 @@ then
                                             
     # Setting PATH for Python 3.9
     # PATH="/Library/Frameworks/Python.framework/Versions/3.7/bin:${PATH}" 
-    PATH="/usr/local/Cellar/python@3.9/3.9.15/bin:$PATH"
+    PATH="$(brew --prefix python@3.9)/libexec/bin:$PATH"
     export PATH 
 
     #    . /Applications/exelis/idl82/bin/idl_setup.bash
