@@ -108,12 +108,8 @@ export PS1="%(?::%F{red}%?⏎ )%F{green}%* %F{cyan}%c%f "
 # THE END OF BASIC SHELL CONFIG #
 # ############################# #
 
-# python version
-# alias ipython='python3 -m IPython'
-# alias ipython3='python3 -m IPython'
-
+# python
 export PYTHONBREAKPOINT=ipdb.set_trace
-
 export PIPX_DEFAULT_PYTHON=$(which python3.12)
 
 alias venv='python3 -m venv'
@@ -217,6 +213,10 @@ export scp_data_home="scp://2101110287@wmsk1-data.pku.edu.cn//gpfs/share/home/21
 export scp_login_home="scp://2101110287@wmsk1-login.pku.edu.cn//gpfs/share/home/2101110287"
 alias sshfs-data="sshfs 2101110287@wmsk1-data.pku.edu.cn:/gpfs/share/home/2101110287 /tmp/sshfs_pku"
 alias sshfs-login="sshfs 2101110287@wmsk1-login.pku.edu.cn:/gpfs/share/home/2101110287 /tmp/sshfs_pku"
+alias getbuf-data="scp -q pkudata:~/buffer ~/buffer && pbcopy < ~/buffer"
+alias getbuf-login="scp -q pkulogin:~/buffer ~/buffer && pbcopy < ~/buffer"
+alias sendbuf-data="scp -q ~/buffer pkudata:~/buffer"
+alias sendbuf-login="scp -q ~/buffer pkulogin:~/buffer"
 
 # diary
 alias diary='vi -c "let b:copilot_enabled=v:false" -c "colorscheme default" -c "set laststatus=0" -c "set nonu" +$ '$HOME'/Documents/others/diary'
@@ -238,9 +238,9 @@ then
     export PATH                             
     alias mysql.server='sudo /usr/local/mysql/support-files/mysql.server'
                                             
-    # Setting PATH for Python 3.9
+    # Setting PATH for Python 3.12
     # PATH="/Library/Frameworks/Python.framework/Versions/3.7/bin:${PATH}" 
-    PATH="$(brew --prefix python@3.9)/libexec/bin:$PATH"
+    PATH="$(brew --prefix python@3.12)/libexec/bin:$PATH"
     export PATH 
 
     #    . /Applications/exelis/idl82/bin/idl_setup.bash
@@ -260,7 +260,8 @@ then
 
     # my own nvm and node.js installation, for running copilot in vim
     export NVM_DIR="$HOME/.nvm"
-    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+    # [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm by default
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh --no-use"  # This loads nvm faster
     [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
     #HEASORT required

@@ -110,6 +110,13 @@ set splitright
 "使用系统剪切板
 set clipboard+=unnamed
 
+" manually paste from buffer
+let home = $HOME
+nnoremap <leader>p :call setreg('*', join(readfile(home."/buffer"), "\n"))<CR>p
+" manually copy into buffer and tmux
+nnoremap <leader>y :call writefile(split(getreg(''), "\n"), home.'/buffer')<CR>:call system('tmux loadb - < ~/buffer')<CR>
+vmap <leader>y y\y
+
 "显示行号
 set nu
 
