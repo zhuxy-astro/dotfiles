@@ -239,9 +239,10 @@ set showcmd
 
 " 配色方案
 set background=light
-if !empty(globpath(&rtp, 'colors/github.vim'))
+" complicated to determine if the github color scheme is available
+try
     colorscheme github
-else
+catch /.*/
     " colorscheme default
     colorscheme wildcharm
     " colorscheme lunaperche 
@@ -249,7 +250,7 @@ else
     " colorscheme morning
     " colorscheme retrobox
     " colorscheme slate
-endif
+endtry
 
 "折行且顺滑滚动
 set wrap
