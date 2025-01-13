@@ -6,7 +6,8 @@ let is_air = computer == 'ZhuXYs-Air'
 
 let use_vimlatex = 0  " uninstalled already
 
-if exists('*vundle#begin')
+let has_vundle = isdirectory(expand('~/.vim/bundle/Vundle.vim'))
+if has_vundle
 "--------------------------------------------------------------------------
 "| Vundle
 "--------------------------------------------------------------------------
@@ -22,7 +23,6 @@ if use_vimlatex
     autocmd VimEnter * silent! call system('macism com.apple.keylayout.ABC')
 endif
 Plugin 'cormacrelf/vim-colors-github'
-    colorscheme github
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'jpalardy/vim-slime'
 Plugin 'dense-analysis/ale'
@@ -240,7 +240,9 @@ set showcmd
 " 配色方案
 set termguicolors
 set background=light
-if !exists("g:colors_name") || g:colors_name !=# "github"
+if !empty(globpath(&rtp, 'colors/github.vim'))
+    colorscheme github
+else
     " colorscheme default
     colorscheme wildcharm
     " colorscheme lunaperche 
