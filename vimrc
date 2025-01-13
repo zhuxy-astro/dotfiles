@@ -514,14 +514,20 @@ autocmd FileType python noremap <Leader>q :SlimeSend1 exit<CR>
 " map <Leader>Q to restart ipython
 autocmd FileType python noremap <Leader>Q :SlimeSend1 exit<CR>:SlimeSend1 ipython<CR>
 
+" unify the command for running cell
+if exists('$DISPLAY') && !empty($DISPLAY)
+    let ipython_cmd = '%time %paste -q'
+else
+    let ipython_cmd = '%time %run -i ~/buffer'
+endif
 " Run cell (\r) and jump to next cell (\c)
 " mark ] to the above of next cell
-autocmd FileType python noremap <Leader>c :CellNextAbove<CR>m]:CellPrev<CR>V`]y:SlimeSend1 %time %paste -q<CR>`]jjzz
-autocmd FileType python noremap <Leader>r :mkview<CR>:CellNextAbove<CR>m]:CellPrev<CR>V`]y:SlimeSend1 %time %paste -q<CR>:loadview<CR>
+autocmd FileType python nmap <Leader>c :CellNextAbove<CR>m]:CellPrev<CR>V`]\y:exec('SlimeSend1'.ipython_cmd)<CR>`]jjzz
+autocmd FileType python nmap <Leader>r :mkview<CR>:CellNextAbove<CR>m]:CellPrev<CR>V`]\y:exec('SlimeSend1'.ipython_cmd)<CR>:loadview<CR>
 autocmd FileType python noremap <Leader>v :CellNextAbove<CR>m]:CellPrev<CR>V`]
 
 " Run from the beginning to this cell
-autocmd FileType python noremap <Leader>C :mkview<CR>:CellNextAbove<CR>Vggy:SlimeSend1 %time %paste -q<CR>:loadview<CR>
+autocmd FileType python nmap <Leader>C :mkview<CR>:CellNextAbove<CR>Vgg\y:exec('SlimeSend1'.ipython_cmd)<CR>:loadview<CR>
 
 autocmd FileType python noremap <Leader>L :SlimeSend1 %clear<CR>
 autocmd FileType python noremap <Leader>X :SlimeSend1 plt.close('all')<CR>
@@ -530,7 +536,7 @@ autocmd FileType python noremap <Leader>p :SlimeSend1 %rerun<CR>
 " map <c-c> to send the current line or current selection to IPython
 autocmd FileType python nmap <c-c><c-c> <Plug>SlimeLineSend
 " mark ] to current cursor position
-autocmd FileType python xmap <c-c><c-c> m]y:SlimeSend1 %time %paste -q<CR>`]
+autocmd FileType python xmap <c-c><c-c> m]\y:exec('SlimeSend1'.ipython_cmd)<CR>`]
 
 "-----------------------------------------------------------------------
 "| ALE configuration
