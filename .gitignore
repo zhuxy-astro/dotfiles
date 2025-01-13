@@ -1,1 +1,6 @@
-gitignore
+**/.DS_store
+**/.DS_Store
+**/tags
+
+**/*.swp
+**/*.swo
