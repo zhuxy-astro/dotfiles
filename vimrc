@@ -238,7 +238,6 @@ set showcmd
 "set fillchars=stlnc:/
 
 " 配色方案
-set termguicolors
 set background=light
 if !empty(globpath(&rtp, 'colors/github.vim'))
     colorscheme github
