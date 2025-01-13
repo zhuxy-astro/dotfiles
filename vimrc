@@ -6,7 +6,7 @@ let is_air = computer == 'ZhuXYs-Air'
 
 let use_vimlatex = 0  " uninstalled already
 
-if is_pro || is_air
+if exists('*vundle#begin')
 "--------------------------------------------------------------------------
 "| Vundle
 "--------------------------------------------------------------------------
@@ -22,6 +22,7 @@ if use_vimlatex
     autocmd VimEnter * silent! call system('macism com.apple.keylayout.ABC')
 endif
 Plugin 'cormacrelf/vim-colors-github'
+    colorscheme github
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'jpalardy/vim-slime'
 Plugin 'dense-analysis/ale'
@@ -115,7 +116,7 @@ let home = $HOME
 nnoremap <leader>p :call setreg('*', join(readfile(home."/buffer"), "\n"))<CR>p
 " manually copy into buffer and tmux
 nnoremap <leader>y :call writefile(split(getreg(''), "\n"), home.'/buffer')<CR>:call system('tmux loadb - < ~/buffer')<CR>
-vmap <leader>y y\y
+vmap <leader>y y\y<CR>
 
 "显示行号
 set nu
@@ -237,15 +238,17 @@ set showcmd
 "set fillchars=stlnc:/
 
 " 配色方案
-" colorscheme default
+set termguicolors
 set background=light
-colorscheme github
-" colorscheme lunaperche 
-" colorscheme morning
-" colorscheme shine
-" colorscheme retrobox
-" colorscheme slate
-" colorscheme wildcharm
+if !exists("g:colors_name") || g:colors_name !=# "github"
+    " colorscheme default
+    colorscheme wildcharm
+    " colorscheme lunaperche 
+    " colorscheme shine
+    " colorscheme morning
+    " colorscheme retrobox
+    " colorscheme slate
+endif
 
 "折行且顺滑滚动
 set wrap
