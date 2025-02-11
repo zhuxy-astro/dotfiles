@@ -109,6 +109,10 @@ export PS1="%(?::%F{red}%?⏎ )%F{green}%* %F{cyan}%c%f "
 # ############################# #
 
 # python
+# Setting PATH for Python 3.12
+PATH="$(brew --prefix python@3.12)/libexec/bin:$PATH"
+export PATH 
+
 export PYTHONBREAKPOINT=ipdb.set_trace
 export PIPX_DEFAULT_PYTHON=$(which python3.12)
 
@@ -238,10 +242,7 @@ then
     export PATH                             
     alias mysql.server='sudo /usr/local/mysql/support-files/mysql.server'
                                             
-    # Setting PATH for Python 3.12
     # PATH="/Library/Frameworks/Python.framework/Versions/3.7/bin:${PATH}" 
-    PATH="$(brew --prefix python@3.12)/libexec/bin:$PATH"
-    export PATH 
 
     #    . /Applications/exelis/idl82/bin/idl_setup.bash
     EXELIS_DIR=/Applications/exelis   

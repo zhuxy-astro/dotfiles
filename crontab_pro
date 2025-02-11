@@ -35,4 +35,3 @@ PATH=/bin:/usr/bin:/sbin:/usr/sbin:/usr/local/bin:/opt/homebrew/sbin:/Users/zhux
 # Run in PKU:
 21 */3 *  *  * /Users/zhuxy/Projects/pyvenvs/web/bin/python3 /Users/zhuxy/.local/bin/its -1
 00  *  *  *  * /Users/zhuxy/.local/bin/remote quiet
-30 12  *  *  2 /Users/zhuxy/Projects/pyvenvs/ctrl/bin/python3 /Users/zhuxy/.local/bin/iphone
