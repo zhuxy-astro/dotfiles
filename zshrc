@@ -37,7 +37,7 @@ alias df="df -lh"
 
 cddir()
 {
-    cd `dirname $1`
+    cd "`dirname $1`"
 }
 
 autoload zmv
