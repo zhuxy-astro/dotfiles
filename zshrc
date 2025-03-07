@@ -63,7 +63,7 @@ proxyoff()
 git-add-commit()
 {   if [[ `git status --porcelain` ]]; then
         git add -A
-        git commit -m "`date +\"%y-%m-%d %H:%M:%S\"` $*"
+        git commit -m "`TZ=Asia/Shanghai date +\"%y-%m-%d %H:%M:%S\"` $*"
     else
         echo "Nothing to commit. Skipped."
         return 1
