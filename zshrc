@@ -259,11 +259,9 @@ then
     #rbenv
     if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
-    # my own nvm and node.js installation, for running copilot in vim
-    export NVM_DIR="$HOME/.nvm"
-    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm by default
-    # [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" --no-use  # This loads nvm faster, but sometimes does not work
-    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+    # Use fnm instead of nvm for faster loading. This is used to enable node.js for running copilot in vim.
+    # For future use, if it is inconvenient, consider to install node.js.pkg directly from the official website.
+    eval "$(fnm env --use-on-cd --shell zsh)"
 
     #HEASORT required
     #export CC=/usr/bin/clang
