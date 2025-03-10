@@ -182,7 +182,7 @@ bgcheck()
 export proj="$HOME"/Projects
 export data="$HOME"/Projects/Data
 export pd="$HOME"/Projects/pure_disk
-export ft="$HOME"/Projects/fromation\ time
+export ft="$HOME"/Projects/formation_time
 export paper="$HOME"/Documents/astronomy/pure\ disk/paper
 export pylib="$HOME"/Projects/pylib
 export ast="$pylib"/astro_toolbox

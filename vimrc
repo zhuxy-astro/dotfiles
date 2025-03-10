@@ -525,23 +525,29 @@ if exists('$DISPLAY') && !empty($DISPLAY)
 else
     let ipython_cmd = '%time %run -i ~/buffer'
 endif
-" Run cell (\r) and jump to next cell (\c)
+" \c: Run cell and jump to next cell in normal mode; Run the current selection
+" (using copy-paste) in visual mode
 " mark ] to the above of next cell
 autocmd FileType python nmap <Leader>c :CellNextAbove<CR>m]:CellPrev<CR>V`]\y:exec('SlimeSend1'.ipython_cmd)<CR>`]jjzz
+" mark ] to current cursor position
+autocmd FileType python xmap <Leader>c m]\y:exec('SlimeSend1'.ipython_cmd)<CR>`]
+
+" \r: Run cell
 autocmd FileType python nmap <Leader>r :mkview<CR>:CellNextAbove<CR>m]:CellPrev<CR>V`]\y:exec('SlimeSend1'.ipython_cmd)<CR>:loadview<CR>
+" \v: Select current cell
 autocmd FileType python noremap <Leader>v :CellNextAbove<CR>m]:CellPrev<CR>V`]
 
-" Run from the beginning to this cell
+" \C: Run from the beginning to this cell
 autocmd FileType python nmap <Leader>C :mkview<CR>:CellNextAbove<CR>Vgg\y:exec('SlimeSend1'.ipython_cmd)<CR>:loadview<CR>
 
 autocmd FileType python noremap <Leader>L :SlimeSend1 %clear<CR>
 autocmd FileType python noremap <Leader>X :SlimeSend1 plt.close('all')<CR>
 autocmd FileType python noremap <Leader>p :SlimeSend1 %rerun<CR>
 
-" map <c-c> to send the current line or current selection to IPython
+" <c-c>: Send the current line or current selection to IPython, using full
+" text instead of copy-paste
 autocmd FileType python nmap <c-c><c-c> <Plug>SlimeLineSend
-" mark ] to current cursor position
-autocmd FileType python xmap <c-c><c-c> m]\y:exec('SlimeSend1'.ipython_cmd)<CR>`]
+autocmd FileType python xmap <c-c><c-c> m]\y:exec(line("'<").",".line("'>").'SlimeSend')<CR>`]
 
 "-----------------------------------------------------------------------
 "| ALE configuration
