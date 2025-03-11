@@ -51,19 +51,21 @@ export LC_ALL=en_US.UTF-8
 alias ip="curl http://www.cip.cc"
 proxyon()
 {   export https_proxy=http://127.0.0.1:7890 http_proxy=http://127.0.0.1:7890 all_proxy=socks5://127.0.0.1:7890
-    curl http://www.cip.cc/
     return $?
 }
 proxyoff()
 {   unset https_proxy http_proxy all_proxy
-    curl http://www.cip.cc/
     return $?
 }
 
 git-add-commit()
 {   if [[ `git status --porcelain` ]]; then
         git add -A
-        git commit -m "`TZ=Asia/Shanghai date +\"%y-%m-%d %H:%M:%S\"` $*"
+        if [[ -z $* ]]; then
+            git commit -m "`TZ=Asia/Shanghai date +\"%y-%m-%d %H:%M:%S\"`"
+        else
+            git commit -m "$*"
+        fi
     else
         echo "Nothing to commit. Skipped."
         return 1
@@ -158,24 +160,11 @@ fcut()
 # NOPASSWD is set for htop in `sudo visudo`
 alias htop="sudo htop"
 
-# set tmux session "bg"
-startbg()
-{
-    tmux ls | grep "^bg: " 2> /dev/null
-    no_bg=$?
-    if [[ no_bg -eq 1 ]]
-    then
-        tmux new -d -s "bg"
-    fi
-}
-
 # tmux set checking at "bg"
 bgcheck()
 {
-    startbg
-    # tmux a -t bg \; new-window "weibo" \; detach
+    tmux new -A -s "bg"
     tmux a -t bg \; new-window "caffeinate; echo caffeinate" \; detach
-    #tmux a -t bg \; new-window "its" \; detach
 }
 
 # my own simple paths

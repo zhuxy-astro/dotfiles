@@ -260,6 +260,7 @@ endif
 
 "针对tex做断行，设成72后在80格的窗口下是一整行，左边空4格indent，右边对称空四格
 autocmd FileType tex set tw=72
+autocmd FileType python set tw=80
 
 "如果最后一行是一个在窗口大小下显示不完整的长行，至少显示出部分，而不是只显示很多个@
 set display=lastline
@@ -532,22 +533,22 @@ autocmd FileType python nmap <Leader>c :CellNextAbove<CR>m]:CellPrev<CR>V`]\y:ex
 " mark ] to current cursor position
 autocmd FileType python xmap <Leader>c m]\y:exec('SlimeSend1'.ipython_cmd)<CR>`]
 
-" \r: Run cell
+" <c-c>: Send the current selection to IPython, using full text instead of copy-paste
+autocmd FileType python nmap <c-c><c-c> :CellNextAbove<CR>m]:CellPrev<CR>V`]\y:exec(line("'<").",".line("'>").'SlimeSend')<CR>`]jjzz
+autocmd FileType python xmap <c-c><c-c> m]\y:exec(line("'<").",".line("'>").'SlimeSend')<CR>`]
+
+" \r: Run cell without jumping to next cell
 autocmd FileType python nmap <Leader>r :mkview<CR>:CellNextAbove<CR>m]:CellPrev<CR>V`]\y:exec('SlimeSend1'.ipython_cmd)<CR>:loadview<CR>
 " \v: Select current cell
 autocmd FileType python noremap <Leader>v :CellNextAbove<CR>m]:CellPrev<CR>V`]
-
 " \C: Run from the beginning to this cell
 autocmd FileType python nmap <Leader>C :mkview<CR>:CellNextAbove<CR>Vgg\y:exec('SlimeSend1'.ipython_cmd)<CR>:loadview<CR>
 
-autocmd FileType python noremap <Leader>L :SlimeSend1 %clear<CR>
-autocmd FileType python noremap <Leader>X :SlimeSend1 plt.close('all')<CR>
-autocmd FileType python noremap <Leader>p :SlimeSend1 %rerun<CR>
+" \l: Send the current line to IPython
+autocmd FileType python nmap <Leader>l <Plug>SlimeLineSend
 
-" <c-c>: Send the current line or current selection to IPython, using full
-" text instead of copy-paste
-autocmd FileType python nmap <c-c><c-c> <Plug>SlimeLineSend
-autocmd FileType python xmap <c-c><c-c> m]\y:exec(line("'<").",".line("'>").'SlimeSend')<CR>`]
+" \x: Close all the figures in matplotlib
+autocmd FileType python noremap <Leader>X :SlimeSend1 plt.close('all')<CR>
 
 "-----------------------------------------------------------------------
 "| ALE configuration
