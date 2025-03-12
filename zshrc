@@ -144,6 +144,7 @@ curl-d()
 {   curl -C - --output $HOME/Downloads/`basename $1` $1 
 }
 
+# this will enable the authentication for the ssh key in the long run, no need to input the password every time
 alias ssh-a="eval \$(ssh-agent -s) && ssh-add $HOME/.ssh/id_ed25519"
 
 alias battery="pmset -g batt"
