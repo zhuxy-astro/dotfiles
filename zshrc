@@ -118,6 +118,9 @@ export PATH
 export PYTHONBREAKPOINT=ipdb.set_trace
 export PIPX_DEFAULT_PYTHON=$(which python3.12)
 
+# include my own python packages
+# export PYTHONPATH="$PYTHONPATH:$HOME/Projects/pylib/astro_toolbox"
+
 alias venv='python3 -m venv'
 export pyvenvs="$HOME"/Projects/pyvenvs
 alias sci='source $pyvenvs/sci/bin/activate'

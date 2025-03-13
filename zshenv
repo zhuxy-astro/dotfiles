@@ -7,9 +7,6 @@ export SHELL='/bin/zsh'
 # computer path for scripts
 export COMPUTER_PATH=$HOME"/Projects/computer"
 
-# include my own python lib
-export PYTHONPATH="$PYTHONPATH:$HOME/Projects/pylib/"
-
 # pipx path and also mypath
 export MYPATH="$HOME/.local/bin"
 export PATH="$MYPATH:$PATH"
