@@ -49,14 +49,8 @@ export LC_ALL=en_US.UTF-8
 
 # clash proxy
 alias ip="curl http://www.cip.cc"
-proxyon()
-{   export https_proxy=http://127.0.0.1:7890 http_proxy=http://127.0.0.1:7890 all_proxy=socks5://127.0.0.1:7890
-    return $?
-}
-proxyoff()
-{   unset https_proxy http_proxy all_proxy
-    return $?
-}
+alias proxyon="export https_proxy=http://127.0.0.1:7890 http_proxy=http://127.0.0.1:7890 all_proxy=socks5://127.0.0.1:7890"
+alias proxyoff="unset https_proxy http_proxy all_proxy"
 
 git-add-commit()
 {   if [[ `git status --porcelain` ]]; then
@@ -117,9 +111,6 @@ export PATH
 
 export PYTHONBREAKPOINT=ipdb.set_trace
 export PIPX_DEFAULT_PYTHON=$(which python3.12)
-
-# include my own python packages
-# export PYTHONPATH="$PYTHONPATH:$HOME/Projects/pylib/astro_toolbox"
 
 alias venv='python3 -m venv'
 export pyvenvs="$HOME"/Projects/pyvenvs
